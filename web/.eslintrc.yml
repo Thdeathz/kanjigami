@@ -1,0 +1,106 @@
+root: true
+parser: '@typescript-eslint/parser'
+parserOptions:
+  ecmaVersion: 2020
+  sourceType: module
+  ecmaFeatures:
+    jsx: true
+env:
+  browser: true
+  node: true
+  es6: true
+settings:
+  react:
+    version: detect
+  import/resolver:
+    node:
+      extensions:
+        - .ts
+        - .tsx
+plugins:
+  - '@typescript-eslint'
+  - prettier
+  - react
+  - react-hooks
+  - jsx-a11y
+  - import
+  - unused-imports
+extends:
+  - next/core-web-vitals
+  - 'plugin:@typescript-eslint/recommended'
+  - airbnb
+  - prettier
+  - 'plugin:jsx-a11y/recommended'
+  - 'plugin:prettier/recommended'
+  - 'plugin:sonarjs/recommended'
+  - 'plugin:security/recommended'
+  - 'plugin:react-hooks/recommended'
+  - 'plugin:import/typescript'
+  - 'plugin:import/recommended'
+  - 'plugin:import/errors'
+  - 'plugin:import/warnings'
+rules:
+  no-unused-vars: 'off'
+  '@typescript-eslint/no-unused-vars':
+    - warn
+    - argsIgnorePattern: ^_
+  '@typescript-eslint/no-explicit-any': error
+  react/react-in-jsx-scope: 'off'
+  react/function-component-definition: 'off'
+  react/jsx-filename-extension:
+    - 1
+    - extensions:
+        - .ts
+        - .tsx
+        - .js
+        - .jsx
+  react/require-default-props: 'off'
+  react/jsx-props-no-spreading: 'off'
+  react/jsx-curly-brace-presence: 'off'
+  import/extensions:
+    - error
+    - ignorePackages
+    - js: never
+      jsx: never
+      ts: never
+      tsx: never
+  jsx-a11y/anchor-is-valid:
+    - error
+    - components:
+        - Link
+      specialLink:
+        - hrefLeft
+        - hrefRight
+      aspects:
+        - invalidHref
+        - preferButton
+  no-nested-ternary: 'off'
+  import/prefer-default-export: 'off'
+  import/no-extraneous-dependencies: 'off'
+  prettier/prettier:
+    - error
+    - printWidth: 120
+  max-len:
+    - error
+    - code: 120
+      tabWidth: 2
+      ignoreComments: true
+      ignoreTrailingComments: true
+      ignoreUrls: true
+      ignoreStrings: true
+  no-use-before-define: 0
+  import/order:
+    - error
+    - groups:
+        - builtin
+        - external
+        - internal
+        - index
+        - parent
+        - sibling
+      newlines-between: always
+      alphabetize:
+        order: asc
+  unused-imports/no-unused-imports: error
+  no-shadow: 'off'
+  '@typescript-eslint/no-shadow': ['error']

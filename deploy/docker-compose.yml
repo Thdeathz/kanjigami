@@ -1,0 +1,53 @@
+services:
+  api:
+    image: api:latest
+    restart: unless-stopped
+    ports:
+      - 3500:3500
+    tty: true
+    command: >
+      yarn prisma migrate reset --force &&
+      yarn seed &&
+      yarn prod
+    links:
+      - postgres
+      - redis
+    depends_on:
+      - postgres
+      - redis
+
+  web:
+    image: web:latest
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    tty: true
+    links:
+      - api
+    depends_on:
+      - api
+
+  redis:
+    image: redis:7.2-alpine
+    restart: unless-stopped
+    volumes:
+      - ./.data/redis:/data
+    command: >
+      redis-server
+      --requirepass ${REDIS_PASSWORD:-redis}
+    ports:
+      - ${REDIS_PORT:-6379}:6379
+    networks:
+      - default
+
+  postgres:
+    image: postgres:11-alpine
+    restart: unless-stopped
+    volumes:
+      - ./.data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_DB=${POSTGRES_DB:-postgres}
+    ports:
+      - ${POSTGRES_PORT:-5432}:5432

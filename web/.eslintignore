@@ -1,0 +1,7 @@
+# Uncheck sharkaUI library
+src/components/ui/*
+
+# Uncheck config file
+.eslintrc.js
+*.config.js
+*.config.ts
