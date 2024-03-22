@@ -7,6 +7,8 @@ import { Controller, ControllerProps, FieldPath, FieldValues, FormProvider, useF
 
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
+import { Button } from './button'
+import { Input, InputProps } from './input'
 
 const Form = FormProvider
 
@@ -67,7 +69,7 @@ const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 
     return (
       <FormItemContext.Provider value={{ id }}>
-        <div ref={ref} className={cn('space-y-2', className)} {...props} />
+        <div ref={ref} className={cn('form-item-container', className)} {...props} />
       </FormItemContext.Provider>
     )
   }
@@ -80,7 +82,14 @@ const FormLabel = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const { error, formItemId } = useFormField()
 
-  return <Label ref={ref} className={cn(error && 'text-destructive', className)} htmlFor={formItemId} {...props} />
+  return (
+    <Label
+      ref={ref}
+      className={cn('text-base tracking-[0.2px] text-default-link', error && 'text-danger-text', className)}
+      htmlFor={formItemId}
+      {...props}
+    />
+  )
 })
 FormLabel.displayName = 'FormLabel'
 
@@ -125,7 +134,7 @@ const FormMessage = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<
       <p
         ref={ref}
         id={formMessageId}
-        className={cn('text-[0.8rem] font-medium text-destructive', className)}
+        className={cn('text-[0.8rem] font-medium text-danger-text', className)}
         {...props}
       >
         {body}
@@ -135,4 +144,23 @@ const FormMessage = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<
 )
 FormMessage.displayName = 'FormMessage'
 
-export { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField }
+interface FormInputProps extends InputProps {
+  label: string
+}
+
+const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(({ label, className, ...props }, ref) => {
+  return (
+    <FormItem className="form-item-container">
+      <FormLabel>{label}</FormLabel>
+      <FormControl className="mt-1.5">
+        <Input ref={ref} {...props} className={cn(className, '')} />
+      </FormControl>
+
+      <div className="mt-0.5 h-[1.2rem]">
+        <FormMessage />
+      </div>
+    </FormItem>
+  )
+})
+
+export { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField, FormInput }

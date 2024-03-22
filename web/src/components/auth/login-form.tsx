@@ -8,8 +8,7 @@ import { toast } from 'sonner'
 import * as z from 'zod'
 
 import { Button } from '@/components/ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { Form, FormField, FormInput } from '@/components/ui/form'
 import { useLoginMutation } from '@/data/auth'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 import { LoginSchema } from '@/schema/auth-schema'
@@ -56,43 +55,25 @@ export default function LoginForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="space-y-4">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="superman@example.com" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => <FormInput label="Email" {...field} placeholder="superman@example.com" />}
+        />
 
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="******" type="password" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => <FormInput label="Password" {...field} placeholder="******" type="password" />}
+        />
 
-        <div className="my-2 mb-2 flex w-full items-center justify-end">
+        <div className="flex w-full items-center justify-end">
           <Button type="button" variant="link">
             <Link href="/forgot-password">Forgot password ?</Link>
           </Button>
         </div>
 
-        <Button type="submit" className="w-full" disabled={isPending}>
+        <Button type="submit" variant="primary" className="w-full" disabled={isPending}>
           {isPending ? <Loading /> : 'Login'}
         </Button>
       </form>

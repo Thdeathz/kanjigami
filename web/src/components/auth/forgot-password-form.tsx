@@ -6,13 +6,11 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as z from 'zod'
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import Loading from '@/components/loading'
+import { Button } from '@/components/ui/button'
+import { Form, FormField, FormInput } from '@/components/ui/form'
 import { useForgotPasswordMutation } from '@/data/auth'
 import { ForgotPasswordSchema } from '@/schema/auth-schema'
-
-import Loading from '../loading'
-import { Button } from '../ui/button'
 
 export default function ForgotPasswordForm() {
   const { mutateAsync } = useForgotPasswordMutation()
@@ -46,18 +44,10 @@ export default function ForgotPasswordForm() {
         <FormField
           control={form.control}
           name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="superman@example.com" type="email" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => <FormInput label="Email" {...field} placeholder="superman@example.com" type="email" />}
         />
 
-        <Button disabled={isPending} type="submit" className="mt-6 w-full">
+        <Button disabled={isPending} type="submit" className="mt-2 w-full">
           {isPending ? <Loading /> : 'Send reset password email'}
         </Button>
       </form>

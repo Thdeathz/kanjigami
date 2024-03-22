@@ -374,6 +374,10 @@ body {
   font-family: 'Saira Stencil One';
 }
 
+.form-item-container:has(*:focus) label {
+  color: var(--clr-brand) !important;
+}
+
 .button__border {
   --btn-size: 158px;
   --offset: calc(var(--btn-size) / 10);

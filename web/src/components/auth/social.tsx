@@ -14,8 +14,9 @@ export const Social = () => {
 
   return (
     <div className="flex w-full items-center gap-x-2">
-      <Button size="lg" className="w-full" onClick={() => onClick('google')}>
+      <Button className="w-full" onClick={() => onClick('google')}>
         <FcGoogle className="h-5 w-5" />
+        <span className="ml-2">Sign in with Google</span>
       </Button>
     </div>
   )

@@ -7,8 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as z from 'zod'
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { Form, FormField, FormInput } from '@/components/ui/form'
 import { useResetPasswordMutation } from '@/data/auth'
 import { ResetPasswordSchema } from '@/schema/auth-schema'
 
@@ -56,18 +55,10 @@ export default function ResetPasswordForm() {
         <FormField
           control={form.control}
           name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>New password</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="******" type="password" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => <FormInput label="New password" {...field} placeholder="******" type="password" />}
         />
 
-        <Button disabled={isPending} type="submit" className="mt-6 w-full">
+        <Button disabled={isPending} type="submit" className="mt-2 w-full">
           {isPending ? <Loading /> : 'Reset password'}
         </Button>
       </form>

@@ -3,6 +3,7 @@ import React from 'react'
 
 import './globals.css'
 import './fonts.css'
+import Footer from '@/components/layout/footer'
 import Navbar from '@/components/layout/navbar'
 import Sidebar from '@/components/layout/sidebar'
 import Providers from '@/components/providers'
@@ -24,10 +25,12 @@ export default function RootLayout({
           <div className="flex h-screen w-screen overflow-y-auto bg-default-bg text-default-text">
             <Sidebar />
 
-            <div className="w-0 shrink grow">
+            <div className="h-max w-0 shrink grow">
               <Navbar />
 
               {children}
+
+              <Footer />
             </div>
           </div>
         </Providers>
