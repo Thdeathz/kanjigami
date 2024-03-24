@@ -31,7 +31,13 @@ const config = {
         'side-link':
           'linear-gradient(95.67deg,rgb(var(--rgb-sidebar-highlight)) 0,rgba(var(--rgb-sidebar-highlight),0) 92.54%)',
         panel: 'var(--panel-bg)',
-        stack: 'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,rgba(var(--rgba-tile-bottom)) 101.76%)'
+        stack: 'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,rgba(var(--rgba-tile-bottom)) 101.76%)',
+        'leaderboard-top':
+          'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,rgba(var(--rgba-tile-bottom)) 101.76%)',
+        'leaderboard-top-1': 'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,var(--gold-shadow-color) 101.76%)',
+        'leaderboard-top-2':
+          'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,var(--silver-shadow-color) 101.76%)',
+        'leaderboard-top-3': 'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,var(--bronze-shadow-color) 101.76%)'
       },
       borderWidth: {
         'app-icon': '1.5px'
@@ -43,7 +49,8 @@ const config = {
         'app-icon-hover': '-4px -4px 0px rgba(0, 0, 0, 0.8)',
         panel: 'var(--panel-shadow)',
         'stack-dark': '0 8px 36px rgba(0,0,0,.1), 0 24px 74px rgba(0,0,0,.15), inset 1px 1px 3px hsla(0,0%,100%,.1)',
-        'stack-light': '0px 0 20px rgba(0, 0, 0, 0.1)'
+        'stack-light': '0px 0 20px rgba(0, 0, 0, 0.1)',
+        hard: 'var(--hard-shadow)'
       },
       dropShadow: {
         'plus-badge': '0 0 14px yellow'
@@ -52,6 +59,11 @@ const config = {
         'auto-22%': 'repeat(auto-fill, minmax(22%, 1fr))'
       },
       colors: {
+        crown: {
+          gold: 'var(--clr-gold-crown)',
+          silver: 'var(--clr-silver-crown)',
+          bronze: 'var(--clr-bronze-crown)'
+        },
         default: {
           bg: 'var(--clr-bg)',
           btn: 'var(--clr-btn)',

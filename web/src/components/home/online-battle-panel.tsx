@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator'
 export default function OnlineBattlePanel() {
   return (
     <Panel className="flex gap-12">
-      <div className="flex basis-[30%] flex-col items-start justify-between">
+      <div className="flex basis-1/3 flex-col items-start justify-between">
         <div className="flex w-full flex-col gap-5">
           <div className="flex items-center justify-start gap-2">
             <Badge variant="danger">Finished</Badge>

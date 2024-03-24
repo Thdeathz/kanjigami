@@ -3,9 +3,8 @@
 import Autoplay from 'embla-carousel-autoplay'
 import Image from 'next/image'
 
+import HomeSection from '@/components/home/homepage/home-section'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-
-import HomeSection from './home-section'
 
 const imagesList = [
   {

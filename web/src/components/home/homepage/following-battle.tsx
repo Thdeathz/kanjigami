@@ -2,7 +2,7 @@
 
 import { BsStack } from 'react-icons/bs'
 
-import HomeSection from '@/components/home/home-section'
+import HomeSection from '@/components/home/homepage/home-section'
 import StackCard from '@/components/home/stack-card'
 import { Button } from '@/components/ui/button'
 

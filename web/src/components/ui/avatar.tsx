@@ -4,6 +4,7 @@ import * as React from 'react'
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
 
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
@@ -41,14 +42,26 @@ type UserAvatarProps = {
   src?: string
   fallback?: string
   alt: string
+  isPlus?: boolean
 } & React.ComponentProps<typeof Avatar>
 
-const UserAvatar = ({ src, fallback, alt, ...props }: UserAvatarProps) => {
+const UserAvatar = ({ src, fallback, alt, isPlus = false, className, ...props }: UserAvatarProps) => {
   return (
-    <Avatar {...props}>
-      <AvatarImage src={src} alt={alt} />
-      <AvatarFallback>{fallback ?? 'U'}</AvatarFallback>
-    </Avatar>
+    <div className="relative">
+      <Avatar className={cn(isPlus && 'plus-avatar-mask', className)} {...props}>
+        <AvatarImage src={src} alt={alt} />
+        <AvatarFallback>{fallback ?? 'U'}</AvatarFallback>
+      </Avatar>
+      {isPlus && (
+        <Image
+          src="/images/plus-badge.svg"
+          alt="plus-badge"
+          width="30"
+          height="15"
+          className="plus-badge absolute bottom-[-4px] right-1/2 z-[2] translate-x-1/2"
+        />
+      )}
+    </div>
   )
 }
 

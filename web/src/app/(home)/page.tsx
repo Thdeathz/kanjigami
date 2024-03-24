@@ -1,7 +1,7 @@
-import FollowingBattle from '@/components/home/following-battle'
-import LatestBattle from '@/components/home/latest-battle'
+import FollowingBattle from '@/components/home/homepage/following-battle'
+import LatestBattle from '@/components/home/homepage/latest-battle'
+import Thumbnail from '@/components/home/homepage/thumbnail'
 import RootNotification from '@/components/home/root-notification'
-import Thumbnail from '@/components/home/thumbnail'
 
 export default async function Home() {
   return (

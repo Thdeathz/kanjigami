@@ -82,6 +82,7 @@ body {
     --clr-btn: #cbd1d8;
     --clr-btn-hover: #b6c0c9;
     --clr-btn-primary: #0060ca;
+    --clr-btn-primary-hover: #0050b0;
     --clr-btn-danger: #923c3c;
     --clr-btn-text: #fff;
     --clr-btn-secondary-text: #545657;
@@ -248,7 +249,6 @@ body {
     --clr-btn: #323f4a;
     --clr-btn-hover: #43515e;
     --clr-btn-primary: #0060ca;
-    --clr-btn-primary-hover: #0050b0;
     --clr-btn-danger: #923c3c;
     --clr-btn-danger-hover: #7f2f2f;
     --clr-btn-text: #fff;
@@ -414,6 +414,26 @@ body {
     DejaVu Sans Mono,
     Lucida Console,
     monospace;
+}
+
+.plus-avatar-mask {
+  mask-image: linear-gradient(to top, transparent 13px, white 13px),
+    linear-gradient(
+      to right,
+      white calc(50% - 18px),
+      transparent calc(50% - 18px),
+      transparent calc(50% + 18px),
+      white calc(50% + 18px)
+    );
+  mask-size: 100% 100%;
+  mask-position: bottom;
+  mask-repeat: no-repeat;
+  border-radius: 50%;
+}
+
+.side-leaderboard-item:hover .plus-badge,
+.plus-badge:hover {
+  filter: drop-shadow(0 0 14px yellow);
 }
 
 @property --border-x {

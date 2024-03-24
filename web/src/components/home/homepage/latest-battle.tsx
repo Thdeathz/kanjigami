@@ -2,10 +2,9 @@
 
 import { RiSwordFill } from 'react-icons/ri'
 
-import { Button } from '../ui/button'
-
-import HomeSection from './home-section'
-import OnlineBattlePanel from './online-battle-panel'
+import HomeSection from '@/components/home/homepage/home-section'
+import OnlineBattlePanel from '@/components/home/online-battle-panel'
+import { Button } from '@/components/ui/button'
 
 export default function LatestBattle() {
   return (
