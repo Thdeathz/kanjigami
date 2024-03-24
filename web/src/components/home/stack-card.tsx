@@ -5,7 +5,7 @@ import { BsBookmarksFill } from 'react-icons/bs'
 export default function StackCard() {
   return (
     <div className="relative rounded-2xl bg-stack p-[0.6rem] shadow-stack-light transition-transform duration-200 hover:scale-105 dark:shadow-stack-dark">
-      <Link href="/kanji" className="absolute right-0 top-0 h-full w-full rounded-2xl" />
+      <Link href="/stacks" className="absolute right-0 top-0 h-full w-full rounded-2xl" />
       <Image
         src="/images/lock.png"
         alt="kanji-stack"

@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { BsStack } from 'react-icons/bs'
+import { RiSwordFill } from 'react-icons/ri'
 
 import { BattleStatus } from '@/@types/battle'
 import Battles from '@/components/home/battles'
@@ -21,7 +21,11 @@ export default function BattlesPage({
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader icon={<BsStack />} title="Kanji stack" description="Play game and learn more kanji">
+      <PageHeader
+        icon={<RiSwordFill />}
+        title="Online battles"
+        description="Compete with players around the world and learn kanji"
+      >
         <Filter />
       </PageHeader>
 

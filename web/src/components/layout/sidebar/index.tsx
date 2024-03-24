@@ -43,7 +43,7 @@ export default function Sidebar() {
 
         <SideSection title="play">
           <SideLink link="/battles" icon={<RiSwordFill />} title="Online battles" />
-          <SideLink link="/kanji" icon={<BsStack />} title="Kanji stack" />
+          <SideLink link="/stacks" icon={<BsStack />} title="Kanji stacks" />
           <SideLink link="/leaderboard" icon={<BsTrophyFill />} title="Leaderboards" />
         </SideSection>
 

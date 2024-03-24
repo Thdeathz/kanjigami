@@ -37,7 +37,9 @@ const config = {
         'leaderboard-top-1': 'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,var(--gold-shadow-color) 101.76%)',
         'leaderboard-top-2':
           'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,var(--silver-shadow-color) 101.76%)',
-        'leaderboard-top-3': 'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,var(--bronze-shadow-color) 101.76%)'
+        'leaderboard-top-3':
+          'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,var(--bronze-shadow-color) 101.76%)',
+        filter: 'linear-gradient(95deg,rgb(var(--rgb-tile-active-top)) 0,rgb(var(--rgb-tile-active-bottom)) 100%)'
       },
       borderWidth: {
         'app-icon': '1.5px'

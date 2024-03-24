@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import OnlineCard from '@/components/online-card'
+import OnlineCard from '@/components/home/online-card'
 import { UserAvatar } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
