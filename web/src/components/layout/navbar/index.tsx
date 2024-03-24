@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 
 export default function Navbar() {
   return (
-    <nav className="sticky top-0 flex h-[60px] w-full items-center justify-end bg-navbar px-4 py-3 backdrop-blur-[20px]">
+    <nav className="sticky top-0 z-50 flex h-[60px] w-full items-center justify-end bg-navbar px-4 py-3 backdrop-blur-[20px]">
       <div className="w-full">{/* TODO: breadcrumb menu */}</div>
 
       <RankWidget />

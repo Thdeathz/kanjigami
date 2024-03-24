@@ -6,9 +6,9 @@
 @font-face {
   font-family: 'ClashGrotesk';
   src:
-    url('../../public/fonts/ClashGrotesk-Regular.woff2') format('woff2'),
-    url('../../public/fonts/ClashGrotesk-Regular.woff') format('woff'),
-    url('../../public/fonts/ClashGrotesk-Regular.ttf') format('truetype');
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Regular.woff2') format('woff2'),
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Regular.woff') format('woff'),
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Regular.ttf') format('truetype');
   font-weight: 400;
   font-display: swap;
   font-style: normal;
@@ -17,9 +17,9 @@
 @font-face {
   font-family: 'ClashGrotesk';
   src:
-    url('../../public/fonts/ClashGrotesk-Medium.woff2') format('woff2'),
-    url('../../public/fonts/ClashGrotesk-Medium.woff') format('woff'),
-    url('../../public/fonts/ClashGrotesk-Medium.ttf') format('truetype');
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Medium.woff2') format('woff2'),
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Medium.woff') format('woff'),
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Medium.ttf') format('truetype');
   font-weight: 500;
   font-display: swap;
   font-style: normal;
@@ -28,9 +28,9 @@
 @font-face {
   font-family: 'ClashGrotesk';
   src:
-    url('../../public/fonts/ClashGrotesk-Semibold.woff2') format('woff2'),
-    url('../../public/fonts/ClashGrotesk-Semibold.woff') format('woff'),
-    url('../../public/fonts/ClashGrotesk-Semibold.ttf') format('truetype');
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Semibold.woff2') format('woff2'),
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Semibold.woff') format('woff'),
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Semibold.ttf') format('truetype');
   font-weight: 600;
   font-display: swap;
   font-style: normal;
@@ -39,9 +39,41 @@
 @font-face {
   font-family: 'ClashGrotesk';
   src:
-    url('../../public/fonts/ClashGrotesk-Bold.woff2') format('woff2'),
-    url('../../public/fonts/ClashGrotesk-Bold.woff') format('woff'),
-    url('../../public/fonts/ClashGrotesk-Bold.ttf') format('truetype');
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Bold.woff2') format('woff2'),
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Bold.woff') format('woff'),
+    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IBMPlexMono';
+  src: url('../../public/fonts/IBMPlexMono/IBMPlexMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IBMPlexMono';
+  src: url('../../public/fonts/IBMPlexMono/IBMPlexMono-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IBMPlexMono';
+  src: url('../../public/fonts/IBMPlexMono/IBMPlexMono-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IBMPlexMono';
+  src: url('../../public/fonts/IBMPlexMono/IBMPlexMono-Bold.ttf') format('truetype');
   font-weight: 700;
   font-display: swap;
   font-style: normal;

@@ -153,16 +153,15 @@ body {
 
     --tile-overlay-color: #fff;
 
-    --pill-bg: #d7d7d7;
-    --pill-bg-key: rgb(0 0 0 / 10%);
-    --pill-bg-danger: #ff2c2c;
-    --pill-bg-warning: #faec86;
-    --pill-bg-success: #afc470;
-    --pill-text-key: var(--clr-text-lightest);
-    --pill-text-danger: #fff;
-    --pill-text-warning: #625601;
-    --pill-text-success: #202b00;
-    --pill-shadow-key: rgba(0 0 0 / 15%);
+    --badge-bg: #d7d7d7;
+    --badge-bg-key: rgb(0 0 0 / 10%);
+    --badge-bg-danger: #ff2c2c;
+    --badge-bg-warning: #faec86;
+    --badge-bg-success: #afc470;
+    --badge-text-key: var(--clr-text-lightest);
+    --badge-text-warning: #625601;
+    --badge-text-success: #202b00;
+    --badge-shadow-key: rgba(0 0 0 / 15%);
 
     --hard-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1), inset 1px 1px 3px rgba(255, 255, 255, 0.1);
 
@@ -170,7 +169,7 @@ body {
     --silver-shadow-color: #e1e1e1;
     --bronze-shadow-color: #fbecde;
 
-    --target-border-color: #fff;
+    --stack-border-color: #fff;
 
     --podium-rgb-1: 210, 215, 220;
     --podium-rgb-0: 225, 230, 235;
@@ -326,16 +325,15 @@ body {
 
     --tile-overlay-color: #13161b;
 
-    --pill-bg: #2d363f;
-    --pill-bg-key: rgb(255 255 255 / 10%);
-    --pill-bg-danger: rgb(163, 72, 61);
-    --pill-bg-warning: #ffdf0022;
-    --pill-bg-success: #4a6302;
-    --pill-text-key: rgb(255 255 255 / 60%);
-    --pill-text-danger: #fff;
-    --pill-text-warning: #ffdf00;
-    --pill-text-success: #fff;
-    --pill-shadow-key: rgba(255, 255, 255, 0.2);
+    --badge-bg: #2d363f;
+    --badge-bg-key: rgb(255 255 255 / 10%);
+    --badge-bg-danger: rgb(163, 72, 61);
+    --badge-bg-warning: #ffdf0022;
+    --badge-bg-success: #4a6302;
+    --badge-text-key: rgb(255 255 255 / 60%);
+    --badge-text-warning: #ffdf00;
+    --badge-text-success: #fff;
+    --badge-shadow-key: rgba(255, 255, 255, 0.2);
 
     --hard-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1), 0px 24px 50px rgba(0, 0, 0, 0.15),
       inset 1px 1px 3px rgba(255, 255, 255, 0.1);
@@ -344,7 +342,7 @@ body {
     --silver-shadow-color: #1d1d1d;
     --bronze-shadow-color: #1f1308;
 
-    --target-border-color: #111217;
+    --stack-border-color: #111217;
 
     --podium-rgb-0: 29, 35, 43;
     --podium-rgb-1: 24, 29, 35;
@@ -402,6 +400,20 @@ body {
   animation:
     border-rotation -0.64s linear 6s infinite,
     border-x -0.64s linear 6s infinite;
+}
+
+.root-noti {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #fff 25px, #fff calc(100% - 25px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #fff 25px, #fff calc(100% - 25px), transparent);
+}
+
+.font-secondary {
+  font-family:
+    IBMPlexMono,
+    Menlo,
+    DejaVu Sans Mono,
+    Lucida Console,
+    monospace;
 }
 
 @property --border-x {

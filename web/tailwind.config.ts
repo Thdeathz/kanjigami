@@ -13,6 +13,9 @@ const config = {
       }
     },
     extend: {
+      aspectRatio: {
+        '4/3': '4/3'
+      },
       minHeight: {
         content: 'calc(100vh - 3.75rem - 2.5rem)'
       },
@@ -27,19 +30,26 @@ const config = {
         sidebar: 'linear-gradient(175deg,rgb(var(--rgb-gray-1)) 0,rgba(var(--rgb-gray-0),.7) 85%)',
         'side-link':
           'linear-gradient(95.67deg,rgb(var(--rgb-sidebar-highlight)) 0,rgba(var(--rgb-sidebar-highlight),0) 92.54%)',
-        panel: 'var(--panel-bg)'
+        panel: 'var(--panel-bg)',
+        stack: 'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,rgba(var(--rgba-tile-bottom)) 101.76%)'
       },
       borderWidth: {
         'app-icon': '1.5px'
       },
       boxShadow: {
         btn: 'inset 1px 1px 2px rgba(var(--rgb-white), 0.1)',
+        badge: 'inset 1px 1px 2px hsla(0, 0%, 100%, 0.1)',
         'app-icon': '4px 4px 0px rgba(0, 0, 0, 0.8)',
         'app-icon-hover': '-4px -4px 0px rgba(0, 0, 0, 0.8)',
-        panel: 'var(--panel-shadow)'
+        panel: 'var(--panel-shadow)',
+        'stack-dark': '0 8px 36px rgba(0,0,0,.1), 0 24px 74px rgba(0,0,0,.15), inset 1px 1px 3px hsla(0,0%,100%,.1)',
+        'stack-light': '0px 0 20px rgba(0, 0, 0, 0.1)'
       },
       dropShadow: {
         'plus-badge': '0 0 14px yellow'
+      },
+      gridTemplateColumns: {
+        'auto-22%': 'repeat(auto-fill, minmax(22%, 1fr))'
       },
       colors: {
         default: {
@@ -48,14 +58,25 @@ const config = {
           'btn-hover': 'var(--clr-btn-hover)',
           'btn-text': 'var(--clr-btn-text)',
           text: 'var(--clr-text)',
-          'text-light': 'var(--clr-text-lightest-final)',
+          'text-light': 'var(--clr-text-light)',
+          'text-lightest': 'var(--clr-text-lightest-final)',
           link: 'var(--clr-link)',
-          heading: 'var(--clr-heading)'
+          heading: 'var(--clr-heading)',
+          brand: 'var(--clr-brand)',
+          stack: 'var(--stack-border-color)'
         },
         danger: {
           text: 'var(--clr-red)',
           btn: 'var(--clr-btn-danger)',
           'btn-hover': 'var(--clr-btn-danger-hover)'
+        },
+        badge: {
+          danger: 'var(--badge-bg-danger)',
+          default: 'var(--badge-bg)',
+          warning: 'var(--badge-bg-warning)',
+          'warning-text': 'var(--badge-text-warning)',
+          success: 'var(--badge-bg-success)',
+          'success-text': 'var(--badge-text-success)'
         },
         border: 'hsl(var(--border))',
         'border-bright': 'var(--clr-border-brighter)',

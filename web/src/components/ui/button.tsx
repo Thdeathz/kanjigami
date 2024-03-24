@@ -10,14 +10,15 @@ const buttonVariants = cva(
   {
     variants: {
       shape: {
-        default: 'rounded-[1000px] px-3 py-[0.35rem]',
+        default: 'rounded-[1000px] px-[0.9rem] py-[0.35rem]',
         circle: 'rounded-full aspect-square'
       },
       variant: {
-        default: 'shadow-btn bg-default-btn hover:bg-btn-hover',
-        primary: 'shadow-btn bg-primary-btn hover:bg-btn-hover',
-        danger: 'shadow-btn bg-danger-btn hover:bg-btn-hover',
-        link: 'text-primary underline-offset-4 hover:underline'
+        default: 'shadow-btn bg-default-btn hover:bg-default-btn-hover',
+        primary: 'shadow-btn bg-primary-btn text-white hover:bg-primary-btn-hover',
+        danger: 'shadow-btn bg-danger-btn hover:bg-danger-btn-hover',
+        link: 'text-primary underline-offset-4 hover:underline',
+        outline: 'border border-border-2 bg-transparent hover:bg-border-2'
       },
       size: {
         default: 'h-[2.5rem]',
