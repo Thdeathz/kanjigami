@@ -39,7 +39,10 @@ const config = {
           'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,var(--silver-shadow-color) 101.76%)',
         'leaderboard-top-3':
           'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,var(--bronze-shadow-color) 101.76%)',
-        filter: 'linear-gradient(95deg,rgb(var(--rgb-tile-active-top)) 0,rgb(var(--rgb-tile-active-bottom)) 100%)'
+        filter: 'linear-gradient(95deg,rgb(var(--rgb-tile-active-top)) 0,rgb(var(--rgb-tile-active-bottom)) 100%)',
+        'top-user': 'linear-gradient(180deg,rgb(var(--podium-rgb-0)) 0,rgba(var(--podium-rgb-0),0) 100%)',
+        'top-user-after':
+          'radial-gradient(167.5% 203.72% at 48.5% -21.62%,rgb(var(--podium-rgb-1)) 0,rgba(var(--podium-rgb-0),.5) 100%);'
       },
       borderWidth: {
         'app-icon': '1.5px'
@@ -109,7 +112,8 @@ const config = {
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
-          'btn-text': 'var(--clr-btn-secondary-text)'
+          'btn-text': 'var(--clr-btn-secondary-text)',
+          podium: 'var(--podium-text-color)'
         },
         'section-heading': 'var(--clr-section-heading)',
         sidebar: {

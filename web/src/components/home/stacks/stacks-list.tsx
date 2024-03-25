@@ -1,3 +1,5 @@
+'use client'
+
 import StackCard from '@/components/home/stack-card'
 
 export default function StacksList() {

@@ -3,6 +3,7 @@ import React from 'react'
 
 import './globals.css'
 import './fonts.css'
+import './colors.css'
 import Footer from '@/components/layout/footer'
 import Navbar from '@/components/layout/navbar'
 import Sidebar from '@/components/layout/sidebar'

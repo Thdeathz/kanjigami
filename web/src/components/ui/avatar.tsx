@@ -42,17 +42,17 @@ type UserAvatarProps = {
   src?: string
   fallback?: string
   alt: string
-  isPlus?: boolean
+  plus?: boolean
 } & React.ComponentProps<typeof Avatar>
 
-const UserAvatar = ({ src, fallback, alt, isPlus = false, className, ...props }: UserAvatarProps) => {
+const UserAvatar = ({ src, fallback, alt, plus = false, className, ...props }: UserAvatarProps) => {
   return (
     <div className="relative">
-      <Avatar className={cn(isPlus && 'plus-avatar-mask', className)} {...props}>
+      <Avatar className={cn(plus && 'plus-avatar-mask', className)} {...props}>
         <AvatarImage src={src} alt={alt} />
         <AvatarFallback>{fallback ?? 'U'}</AvatarFallback>
       </Avatar>
-      {isPlus && (
+      {plus && (
         <Image
           src="/images/plus-badge.svg"
           alt="plus-badge"
