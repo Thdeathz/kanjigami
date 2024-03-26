@@ -42,7 +42,9 @@ const config = {
         filter: 'linear-gradient(95deg,rgb(var(--rgb-tile-active-top)) 0,rgb(var(--rgb-tile-active-bottom)) 100%)',
         'top-user': 'linear-gradient(180deg,rgb(var(--podium-rgb-0)) 0,rgba(var(--podium-rgb-0),0) 100%)',
         'top-user-after':
-          'radial-gradient(167.5% 203.72% at 48.5% -21.62%,rgb(var(--podium-rgb-1)) 0,rgba(var(--podium-rgb-0),.5) 100%);'
+          'radial-gradient(167.5% 203.72% at 48.5% -21.62%,rgb(var(--podium-rgb-1)) 0,rgba(var(--podium-rgb-0),.5) 100%);',
+        'main-profile':
+          'linear-gradient(45deg,rgba(var(--rgb-tile-top),.45),rgba(var(--rgb-tile-bottom),.45)),linear-gradient(to bottom,rgba(0,0,0,.8),#000),url(/images/profile-bg.jpg)'
       },
       borderWidth: {
         'app-icon': '1.5px'
@@ -95,7 +97,7 @@ const config = {
           success: 'var(--badge-bg-success)',
           'success-text': 'var(--badge-text-success)'
         },
-        border: 'hsl(var(--border))',
+        border: 'var(--clr-border)',
         'border-bright': 'var(--clr-border-brighter)',
         'border-1': 'var(--clr-border-1)',
         input: 'var(--clr-input)',

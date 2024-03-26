@@ -108,6 +108,17 @@ body {
   @apply bg-top-user-after;
 }
 
+.profile-stats::before {
+  inset: 0;
+  content: '';
+  position: absolute;
+  border-radius: 16px;
+  border: 2px solid var(--clr-border);
+  -webkit-mask-image: radial-gradient(circle at center -1rem, transparent 0, transparent 1.75rem, #fff 0, #fff 100%);
+  mask-image: radial-gradient(circle at center -1rem, transparent 0, transparent 1.75rem, #fff 0, #fff 100%);
+  pointer-events: none;
+}
+
 @property --border-x {
   syntax: '<length>';
   inherits: false;
