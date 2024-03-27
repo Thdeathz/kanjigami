@@ -5,11 +5,7 @@ export default function FilterBox() {
   return (
     <div className="mt-4">
       <Panel className="p-2">
-        <FilterItem title="All-time" isActive />
-
-        <FilterItem title="Kanji stack" />
-
-        <FilterItem title="Online battle" />
+        <FilterItem title="following amid fawn" />
       </Panel>
     </div>
   )

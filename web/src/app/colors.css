@@ -98,7 +98,7 @@
 
     --star-img: url(/images/icons/star_l.svg);
 
-    --table-header-bg: white;
+    --table-header-bg: rgba(0, 0, 0, 0.1);
     --table-row-bg: rgba(0, 0, 0, 0.05);
 
     /* NEW - V2 */
@@ -267,7 +267,7 @@
 
     --star-img: url(/images/icons/star.svg);
 
-    --table-header-bg: rgba(0, 0, 0, 0.7);
+    --table-header-bg: rgba(0, 0, 0, 0.2);
     --table-row-bg: rgba(0, 0, 0, 0.15);
 
     /* NEW - V2 */

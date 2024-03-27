@@ -84,7 +84,8 @@ const config = {
           link: 'var(--clr-link)',
           heading: 'var(--clr-heading)',
           brand: 'var(--clr-brand)',
-          stack: 'var(--stack-border-color)'
+          stack: 'var(--stack-border-color)',
+          'table-header': 'var(--table-header-bg)'
         },
         danger: {
           text: 'var(--clr-red)',

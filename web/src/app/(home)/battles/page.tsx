@@ -10,6 +10,10 @@ import RootNotification from '@/components/home/root-notification'
 import SideLeaderboard from '@/components/home/side-leaderboard'
 import Loading from '@/components/loading'
 
+export const metadata = () => ({
+  title: 'Battles | 漢字ガミ'
+})
+
 export default function BattlesPage({
   searchParams
 }: {
