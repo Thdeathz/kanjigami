@@ -2,7 +2,7 @@
  * An array of public routes that are accessible to all users.
  * @type {string[]}
  */
-export const publicRoutes: string[] = ['/', '/battles', '/stacks', '/leaderboard', '/player', '/me', '/setting']
+export const publicRoutes: string[] = ['/', '/battles', '/stacks', '/leaderboard', '/player', '/me', '/settings']
 
 /**
  * An array of authentication routes that are only accessible to unauthenticated users.

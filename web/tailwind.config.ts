@@ -43,7 +43,9 @@ const config = {
         'top-user': 'linear-gradient(180deg,rgb(var(--podium-rgb-0)) 0,rgba(var(--podium-rgb-0),0) 100%)',
         'top-user-after':
           'radial-gradient(167.5% 203.72% at 48.5% -21.62%,rgb(var(--podium-rgb-1)) 0,rgba(var(--podium-rgb-0),.5) 100%);',
-        'main-profile':
+        'main-profile-light':
+          'linear-gradient( 45deg, rgba(var(--rgb-tile-top), 0.45), rgba(var(--rgb-tile-bottom), 0.45) ), linear-gradient( to bottom, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.8) ), url(/images/profile-bg.jpg)',
+        'main-profile-dark':
           'linear-gradient(45deg,rgba(var(--rgb-tile-top),.45),rgba(var(--rgb-tile-bottom),.45)),linear-gradient(to bottom,rgba(0,0,0,.8),#000),url(/images/profile-bg.jpg)'
       },
       borderWidth: {

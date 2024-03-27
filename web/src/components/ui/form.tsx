@@ -7,7 +7,6 @@ import { Controller, ControllerProps, FieldPath, FieldValues, FormProvider, useF
 
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
-import { Button } from './button'
 import { Input, InputProps } from './input'
 
 const Form = FormProvider
@@ -115,7 +114,12 @@ const FormDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttribu
     const { formDescriptionId } = useFormField()
 
     return (
-      <p ref={ref} id={formDescriptionId} className={cn('text-[0.8rem] text-muted-foreground', className)} {...props} />
+      <div
+        ref={ref}
+        id={formDescriptionId}
+        className={cn('pt-2 font-medium tracking-[0.2px] text-default-text-light', className)}
+        {...props}
+      />
     )
   }
 )
@@ -146,21 +150,38 @@ FormMessage.displayName = 'FormMessage'
 
 interface FormInputProps extends InputProps {
   label: string
+  helperText?: React.ReactNode
+  prefix?: string
 }
 
-const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(({ label, className, ...props }, ref) => {
-  return (
-    <FormItem className="form-item-container">
-      <FormLabel>{label}</FormLabel>
-      <FormControl className="mt-1.5">
-        <Input ref={ref} {...props} className={cn(className, '')} />
-      </FormControl>
+const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
+  ({ label, helperText, className, prefix, ...props }, ref) => {
+    return (
+      <FormItem className="form-item-container">
+        <FormLabel>{label}</FormLabel>
+        {prefix ? (
+          <div className="mt-1.5 flex items-center">
+            <p className="rounded-s-full border border-e-0 border-border-bright bg-input px-4 py-3 font-medium text-default-text-light">
+              {prefix}
+            </p>
+            <FormControl>
+              <Input ref={ref} {...props} className={cn('rounded-s-[0]', className)} />
+            </FormControl>
+          </div>
+        ) : (
+          <FormControl className="mt-1.5">
+            <Input ref={ref} {...props} className={cn(className, '')} />
+          </FormControl>
+        )}
 
-      <div className="mt-0.5 h-[1.2rem]">
-        <FormMessage />
-      </div>
-    </FormItem>
-  )
-})
+        {helperText && <FormDescription>{helperText}</FormDescription>}
+
+        <div className="mt-0.5 h-[1.2rem]">
+          <FormMessage />
+        </div>
+      </FormItem>
+    )
+  }
+)
 
 export { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField, FormInput }

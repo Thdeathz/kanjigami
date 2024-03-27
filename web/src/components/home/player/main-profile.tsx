@@ -1,13 +1,13 @@
 import { GiJewelCrown, GiLaurelCrown } from 'react-icons/gi'
 
-import { UserAvatar } from '../ui/avatar'
-import { Button } from '../ui/button'
+import { UserAvatar } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 
 import ProfileStats from './profile-stats'
 
 export default function MainProfile() {
   return (
-    <div className="mt-24 w-full rounded-2xl bg-main-profile p-8">
+    <div className="mt-24 w-full rounded-2xl bg-main-profile-light p-8 dark:bg-main-profile-dark">
       <div className="flex">
         <div className="w-full" />
 

@@ -17,3 +17,7 @@ export interface IFormItemError {
   message: string
   field: string
 }
+
+export interface IFile extends File {
+  preview?: string
+}

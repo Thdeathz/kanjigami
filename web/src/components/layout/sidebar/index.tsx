@@ -50,7 +50,7 @@ export default function Sidebar() {
         <SideSection title="about you">
           <SideLink link="/player" icon={<FaUser />} title="Profile" />
           <SideLink link="/me" icon={<FaChartArea />} title="Stats" />
-          <SideLink link="/setting" icon={<RiSettings3Fill />} title="Settings" />
+          <SideLink link="/settings" icon={<RiSettings3Fill />} title="Settings" />
         </SideSection>
       </div>
 

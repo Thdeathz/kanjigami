@@ -3,7 +3,7 @@ import { type IconType } from 'react-icons'
 import { BsStack } from 'react-icons/bs'
 import { RiSwordFill } from 'react-icons/ri'
 
-import StatsItem from './stats-item'
+import StatsItem from '@/components/home/player/stats-item'
 
 type BattleStatsWrapperProps = {
   icon: React.ReactElement<IconType>
