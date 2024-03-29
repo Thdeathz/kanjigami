@@ -10,7 +10,8 @@ export const publicRoutes: RegExp[] = [
   /\/player/,
   /\/me/,
   /\/settings/,
-  /\/battles\/S+/
+  /\/battles\/S+/,
+  /\/stacks\/S+/
 ]
 
 /**

@@ -46,8 +46,8 @@
     --clr-inner-header-highlight: #cbd5e0;
     --clr-tile-header: #e2e8f0;
 
-    --clr-box-bg: #e2e8f0;
-    --clr-box-bg-darker: #ebeff3;
+    --clr-dialog-bg: #e2e8f0;
+    --clr-dialog-bg-darker: #ebeff3;
     --clr-editor-bg: #f6f9fb;
 
     --clr-colorlist: #fff;
@@ -131,7 +131,7 @@
     --rgb-brand: 255, 223, 0;
 
     --panel-bg: linear-gradient(94.5deg, rgba(255, 255, 255, 0.75) 0.19%, rgba(245, 245, 245, 0.5625) 100%);
-    --glow-shadow: 0 0 30px rgba(var(--rgb-brand), 0.15), 0 0 0 2px var(--clr-brand), 0px 10px 50px rgba(0, 0, 0, 0.15);
+    --glory-shadow: 0 0 30px rgba(var(--rgb-brand), 0.15), 0px 10px 50px rgba(0, 0, 0, 0.15);
 
     --panel-shadow: 0px 20px 50px rgba(0, 0, 0, 0.07);
 
@@ -215,8 +215,8 @@
     --clr-inner-header-highlight: #2a313a;
     --clr-tile-header: #212a32;
 
-    --clr-box-bg: #13181c;
-    --clr-box-bg-darker: #121518;
+    --clr-dialog-bg: #13181c;
+    --clr-dialog-bg-darker: #121518;
     --clr-editor-bg: #07080b;
 
     --clr-colorlist: #000;
@@ -303,7 +303,7 @@
 
     --panel-bg: linear-gradient(94.5deg, rgba(29, 35, 43, 0.75) 0.19%, rgba(24, 29, 35, 0.5625) 100%);
 
-    --glow-shadow: 0 0 30px rgba(var(--rgb-brand), 0.3), 0 0 0 2px var(--clr-brand), 0px 10px 50px rgba(0, 0, 0, 0.5);
+    --glory-shadow: 0 0 30px rgba(var(--rgb-brand), 0.3), 0px 10px 50px rgba(0, 0, 0, 0.5);
 
     --panel-shadow: 0 0 30px rgba(var(--rgb-brand), 0), 0px 20px 50px rgba(0, 0, 0, 0.2),
       inset 1px 1px 3px rgba(255, 255, 255, 0.1);

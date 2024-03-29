@@ -1,9 +1,24 @@
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
+import { VariantProps, cva } from 'class-variance-authority'
 
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('rounded-2xl bg-panel shadow-panel backdrop-blur-[20px]', className)} {...props} />
+const cardVariants = cva('rounded-2xl backdrop-blur-[20px]', {
+  variants: {
+    theme: {
+      default: 'bg-panel shadow-panel',
+      secondary: 'bg-panel-secondary shadow-panel-secondary'
+    }
+  },
+  defaultVariants: {
+    theme: 'default'
+  }
+})
+
+interface CardProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {}
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(({ className, theme, ...props }, ref) => (
+  <div ref={ref} className={cn(cardVariants({ theme }), className)} {...props} />
 ))
 Card.displayName = 'Card'
 
@@ -38,8 +53,12 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 )
 CardFooter.displayName = 'CardFooter'
 
-const Panel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <Card ref={ref}>
+interface PanelProps extends React.HTMLAttributes<HTMLDivElement> {
+  theme?: CardProps['theme']
+}
+
+const Panel = React.forwardRef<HTMLDivElement, PanelProps>(({ className, theme, ...props }, ref) => (
+  <Card theme={theme} ref={ref}>
     <CardContent className={cn('p-8', className)} {...props} />
   </Card>
 ))

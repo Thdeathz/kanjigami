@@ -33,6 +33,8 @@ const config = {
         'side-link':
           'linear-gradient(95.67deg,rgb(var(--rgb-sidebar-highlight)) 0,rgba(var(--rgb-sidebar-highlight),0) 92.54%)',
         panel: 'var(--panel-bg)',
+        'panel-secondary':
+          'radial-gradient(82.25% 100% at 50% 0,rgba(var(--rgb-gray-1),.75) 37.28%,rgba(var(--rgb-gray-0),0) 100%)',
         stack: 'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,rgba(var(--rgba-tile-bottom)) 101.76%)',
         'leaderboard-top':
           'linear-gradient(95.41deg,rgba(var(--rgba-tile-top)) 0,rgba(var(--rgba-tile-bottom)) 101.76%)',
@@ -59,11 +61,14 @@ const config = {
         'app-icon': '4px 4px 0px rgba(0, 0, 0, 0.8)',
         'app-icon-hover': '-4px -4px 0px rgba(0, 0, 0, 0.8)',
         panel: 'var(--panel-shadow)',
+        'panel-secondary':
+          '0 0 30px rgba(var(--rgb-brand),0),0 20px 50px rgba(0,0,0,.1),inset 0 1px 3px hsla(0,0%,100%,.1)',
         'stack-dark': '0 8px 36px rgba(0,0,0,.1), 0 24px 74px rgba(0,0,0,.15), inset 1px 1px 3px hsla(0,0%,100%,.1)',
         'stack-light': '0px 0 20px rgba(0, 0, 0, 0.1)',
         hard: 'var(--hard-shadow)',
         timer: '0 10px 5px -5px rgba(0, 0, 0, .2)',
-        'timer-item': 'inset 0 1px 2px 0 hsla(0, 0%, 100%, .1)'
+        'timer-item': 'inset 0 1px 2px 0 hsla(0, 0%, 100%, .1)',
+        glory: 'var(--glory-shadow)'
       },
       dropShadow: {
         'plus-badge': '0 0 14px yellow'
@@ -90,7 +95,9 @@ const config = {
           heading: 'var(--clr-heading)',
           brand: 'var(--clr-brand)',
           stack: 'var(--stack-border-color)',
-          'table-header': 'var(--table-header-bg)'
+          'table-header': 'var(--table-header-bg)',
+          dialog: 'var(--clr-dialog-bg)',
+          'inner-header': 'var(--clr-inner-header)'
         },
         danger: {
           text: 'var(--clr-red)',

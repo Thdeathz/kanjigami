@@ -1,17 +1,15 @@
 import { BsBookmarksFill } from 'react-icons/bs'
 
 import CardWrapper from './card-wrapper'
+import UserHiScore from './user-hi-score'
 
 export default function StackCard() {
   return (
-    <CardWrapper link="/stacks">
+    <CardWrapper link="/stacks/10">
       <div className="p-2">
         <h5 className="mb-2 text-lg font-semibold text-default-heading">井上 菜摘</h5>
 
-        <div className="font-medium leading-5">
-          <p className="text-default-text-lightest">Your hi-score</p>
-          <p className="font-secondary text-default-text-light">Not played</p>
-        </div>
+        <UserHiScore />
 
         <button
           type="button"
