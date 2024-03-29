@@ -20,7 +20,9 @@ const config = {
         content: 'calc(100vh - 3.75rem - 2.5rem)'
       },
       backgroundColor: {
-        logo: 'rgb(var(--rgb-gray-0))'
+        logo: 'rgb(var(--rgb-gray-0))',
+        timer: 'var(--clr-timer)',
+        'online-round-bottom': 'rgb(var(--rgb-tile-active-bottom))'
       },
       backgroundImage: {
         'auth-blur-r': 'linear-gradient(to left,var(--clr-bg),transparent)',
@@ -59,13 +61,16 @@ const config = {
         panel: 'var(--panel-shadow)',
         'stack-dark': '0 8px 36px rgba(0,0,0,.1), 0 24px 74px rgba(0,0,0,.15), inset 1px 1px 3px hsla(0,0%,100%,.1)',
         'stack-light': '0px 0 20px rgba(0, 0, 0, 0.1)',
-        hard: 'var(--hard-shadow)'
+        hard: 'var(--hard-shadow)',
+        timer: '0 10px 5px -5px rgba(0, 0, 0, .2)',
+        'timer-item': 'inset 0 1px 2px 0 hsla(0, 0%, 100%, .1)'
       },
       dropShadow: {
         'plus-badge': '0 0 14px yellow'
       },
       gridTemplateColumns: {
-        'auto-22%': 'repeat(auto-fill, minmax(22%, 1fr))'
+        'auto-22%': 'repeat(auto-fill, minmax(22%, 1fr))',
+        'auto-fill': 'repeat(auto-fill, minmax(14rem, 1fr))'
       },
       colors: {
         crown: {

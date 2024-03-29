@@ -57,7 +57,7 @@ export default function OnlineBattlePanel() {
             </div>
           </Button>
 
-          <Button variant="primary" className="grow">
+          <Button link="/battles/10" variant="primary" className="relative grow">
             Play
           </Button>
         </div>

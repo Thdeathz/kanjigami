@@ -14,9 +14,9 @@ export default auth(async (req) => {
   const token = req.auth
 
   const isAuthApiRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname)
-  const isProtectedRoutes = protectedRoutes.includes(nextUrl.pathname)
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname)
+  const isPublicRoute = publicRoutes.find((each) => each.test(nextUrl.pathname))
+  const isProtectedRoutes = protectedRoutes.find((each) => each.test(nextUrl.pathname))
+  const isAuthRoute = authRoutes.find((each) => each.test(nextUrl.pathname))
 
   // no effect if is next-auth api route
   if (isAuthApiRoute) return

@@ -28,7 +28,7 @@ export default function Filter() {
 
   return (
     <div className="flex-center mt-4 gap-4">
-      <Button onClick={() => handleFilter('latest')} variant={isLatest ? 'primary' : 'default'}>
+      <Button onClick={() => handleFilter('ongoing')} variant={isLatest ? 'primary' : 'default'}>
         Latest battles
       </Button>
 
@@ -36,7 +36,7 @@ export default function Filter() {
         Upcoming battles
       </Button>
 
-      <Button onClick={() => handleFilter('past')} variant={isPast ? 'primary' : 'default'}>
+      <Button onClick={() => handleFilter('finished')} variant={isPast ? 'primary' : 'default'}>
         Past battles
       </Button>
     </div>

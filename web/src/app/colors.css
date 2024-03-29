@@ -96,6 +96,8 @@
     --clr-silver-crown: #b0b0b0;
     --clr-bronze-crown: #c5701d;
 
+    --clr-timer: #e7dada;
+
     --star-img: url(/images/icons/star_l.svg);
 
     --table-header-bg: rgba(0, 0, 0, 0.1);
@@ -264,6 +266,8 @@
     --clr-gold-crown: #ffdf00;
     --clr-silver-crown: #c0c0c0;
     --clr-bronze-crown: #cd7f32;
+
+    --clr-timer: #272d34;
 
     --star-img: url(/images/icons/star.svg);
 

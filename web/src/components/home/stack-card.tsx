@@ -1,19 +1,10 @@
-import Image from 'next/image'
-import Link from 'next/link'
 import { BsBookmarksFill } from 'react-icons/bs'
+
+import CardWrapper from './card-wrapper'
 
 export default function StackCard() {
   return (
-    <div className="relative rounded-2xl bg-stack p-[0.6rem] shadow-stack-light transition-transform duration-200 hover:scale-105 dark:shadow-stack-dark">
-      <Link href="/stacks" className="absolute right-0 top-0 h-full w-full rounded-2xl" />
-      <Image
-        src="/images/lock.png"
-        alt="kanji-stack"
-        width="300"
-        height="300"
-        className="aspect-4/3 w-full rounded-[0.4rem] border-[3px] border-default-stack"
-      />
-
+    <CardWrapper link="/stacks">
       <div className="p-2">
         <h5 className="mb-2 text-lg font-semibold text-default-heading">井上 菜摘</h5>
 
@@ -29,6 +20,6 @@ export default function StackCard() {
           <BsBookmarksFill />
         </button>
       </div>
-    </div>
+    </CardWrapper>
   )
 }

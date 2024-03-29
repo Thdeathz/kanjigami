@@ -6,21 +6,21 @@ type Props = {
 }
 
 export default function Battles({ status }: Props) {
-  if (status === 'latest') {
-    return <BattlesList title="Latest battles" />
+  if (status === 'ongoing') {
+    return <BattlesList title="Ongoing battles" />
   }
 
   if (status === 'upcoming') {
     return <BattlesList title="Upcoming battles" />
   }
 
-  if (status === 'past') {
+  if (status === 'finished') {
     return <BattlesList title="Past battles" />
   }
 
   return (
     <>
-      <BattlesList title="Latest battles" />
+      <BattlesList title="Ongoing battles" />
       <BattlesList title="Upcoming battles" />
       <BattlesList title="Past battles" />
     </>

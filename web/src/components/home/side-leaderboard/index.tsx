@@ -24,7 +24,9 @@ export default function SideLeaderboard() {
       <SideLeaderboardItem />
 
       <motion.div variants={grid.item()}>
-        <Button className="w-full">See top 100</Button>
+        <Button link="/leaderboard" className="w-full">
+          See top 100
+        </Button>
       </motion.div>
     </motion.div>
   )

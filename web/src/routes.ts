@@ -1,19 +1,28 @@
 /**
  * An array of public routes that are accessible to all users.
- * @type {string[]}
+ * @type {RegExp[]}
  */
-export const publicRoutes: string[] = ['/', '/battles', '/stacks', '/leaderboard', '/player', '/me', '/settings']
+export const publicRoutes: RegExp[] = [
+  /\//,
+  /\/battles/,
+  /\/stacks/,
+  /\/leaderboard/,
+  /\/player/,
+  /\/me/,
+  /\/settings/,
+  /\/battles\/S+/
+]
 
 /**
  * An array of authentication routes that are only accessible to unauthenticated users.
  */
-export const authRoutes: string[] = ['/login', '/register', '/forgot-password', '/reset-password']
+export const authRoutes: RegExp[] = [/\/login/, /\/register/, /\/forgot-password/, /\/reset-password/]
 
 /**
  * An array of protected routes that are only accessible to authenticated users.s
- * @type {string[]}
+ * @type {RegExp[]}
  */
-export const protectedRoutes: string[] = []
+export const protectedRoutes: RegExp[] = []
 
 /**
  * The prefix for the API routes.
