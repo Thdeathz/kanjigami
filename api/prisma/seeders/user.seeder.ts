@@ -1,6 +1,6 @@
 import userFactory from '../factories/user.factory'
 
-import prisma from './prismaClient'
+import prisma from './prism-client'
 
 const userSeeder = async () => {
   console.log('🌱 Seeding Users...')
