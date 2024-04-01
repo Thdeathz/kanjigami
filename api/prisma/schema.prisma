@@ -109,6 +109,7 @@ model Example {
 
 model Stack {
   id          String   @id @default(cuid())
+  slug        Int      @default(autoincrement())
   name        String
   description String?
   image       String?
@@ -121,6 +122,8 @@ model Stack {
   words  Word[]
   topics Topic[]
   games  GameStack[]
+
+  @@unique([slug, id])
 }
 
 model Topic {
