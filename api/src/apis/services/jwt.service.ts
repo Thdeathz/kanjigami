@@ -72,9 +72,18 @@ const signVerifyToken = async (id: string): Promise<string | undefined> => {
   })
 }
 
+const decodeAccessToken = async (token: string): Promise<JwtPayload> => {
+  return new Promise((resolve) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string, (error, decoded) => {
+      resolve(decoded as JwtPayload)
+    })
+  })
+}
+
 export default {
   signNewAccessToken,
   signNewRefreshToken,
   revokeToken,
   signVerifyToken,
+  decodeAccessToken,
 }

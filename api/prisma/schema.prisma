@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -61,10 +62,11 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  accounts Account[]
-  stacks   Stack[]
-  events   Event[]
-  gameLogs GameLog[]
+  accounts       Account[]
+  stacks         Stack[]
+  events         Event[]
+  gameLogs       GameLog[]
+  followedStacks Stack[] @relation("FollowedStacks")
 }
 
 model Kanji {
@@ -109,7 +111,7 @@ model Example {
 
 model Stack {
   id          String   @id @default(cuid())
-  slug        Int      @default(autoincrement())
+  slug        Int      @unique @default(autoincrement())
   name        String
   description String?
   image       String?
@@ -119,11 +121,10 @@ model Stack {
 
   author User @relation(fields: [authorId], references: [id])
 
-  words  Word[]
-  topics Topic[]
-  games  GameStack[]
-
-  @@unique([slug, id])
+  words         Word[]
+  topics        Topic[]
+  games         GameStack[]
+  followedUsers User[] @relation("FollowedStacks")
 }
 
 model Topic {
@@ -163,7 +164,7 @@ model GameStack {
 
 model Event {
   id          String       @id @default(cuid())
-  slug        Int          @default(autoincrement())
+  slug        Int          @unique @default(autoincrement())
   name        String
   description String?
   type        BattleType
@@ -174,8 +175,6 @@ model Event {
 
   rounds  Round[]
   joiners User[]
-
-  @@unique([slug, id])
 }
 
 model Round {

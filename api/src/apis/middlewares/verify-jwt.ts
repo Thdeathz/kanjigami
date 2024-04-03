@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import type { RequestHandler } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import passport from 'passport'
 
+import jwtService from '../services/jwt.service'
 import redisService from '../services/redis.service'
 import HttpError from '../utils/http-error'
 
@@ -15,6 +17,20 @@ export const verifyResetPasswordToken = passport.authenticate('jwt-reset-passwor
   session: false,
   failWithError: true,
 })
+
+export const getCurrentUser: RequestHandler = async (req, res, next) => {
+  const authHeader = (req.headers.authorization || req.headers.Authorization) as string | undefined
+
+  if (authHeader?.startsWith('Bearer ')) {
+    const token: string = authHeader.split(' ')[1]
+
+    const decodedData = await jwtService.decodeAccessToken(token)
+
+    ;(req as any).user = decodedData
+  }
+
+  next()
+}
 
 export const verifyCachedToken = (tokenCategory: string) => async (req, res, next) => {
   if (!req.user.id || !req.body.token) throw new HttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)

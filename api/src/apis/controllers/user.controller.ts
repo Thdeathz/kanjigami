@@ -12,16 +12,12 @@ import makeResponse from '@/apis/utils/make-response'
  * @access Private
  */
 export const getAllUsers: RequestHandler = async (req, res) => {
-  const cachedUsers = await redisService.hGet(CACHE_KEY.USERS, { type: 'list' })
+  let users = await redisService.hGet(CACHE_KEY.USERS, { type: 'list' })
 
-  if (cachedUsers) {
-    return res
-      .status(StatusCodes.OK)
-      .json(makeResponse.defaultResponse('Get all users success', StatusCodes.OK, cachedUsers))
+  if (!users) {
+    users = await userService.getAllUsers()
+    await redisService.hSet(CACHE_KEY.USERS, { type: 'list' }, users)
   }
-
-  const users = await userService.getAllUsers()
-  await redisService.hSet(CACHE_KEY.USERS, { type: 'list' }, users)
 
   return res.status(StatusCodes.OK).json(makeResponse.defaultResponse('Get all users success', StatusCodes.OK, users))
 }

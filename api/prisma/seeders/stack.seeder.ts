@@ -1,4 +1,4 @@
-import { Topic, User, UserRole, Word } from '@prisma/client'
+import { Topic, User, Word } from '@prisma/client'
 
 import stackFactory from '../factories/stack.factory'
 
@@ -6,7 +6,7 @@ import prisma from './prism-client'
 
 const stackSeeder = async (users: User[], words: Word[], topics: Topic[]) => {
   console.log('🌱 Seeding Stacks...')
-  const stacksData = await stackFactory(users.find((user) => user.role === UserRole.ADMIN)!, words, topics)
+  const stacksData = await stackFactory(users, words, topics)
 
   const stacks = await Promise.all(
     stacksData.map(
@@ -29,6 +29,11 @@ const stackSeeder = async (users: User[], words: Word[], topics: Topic[]) => {
             topics: {
               connect: stack.topic.map((topic) => ({
                 id: topic.id,
+              })),
+            },
+            followedUsers: {
+              connect: stack.followedUsers.map((user) => ({
+                id: user.id,
               })),
             },
           },

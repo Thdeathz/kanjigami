@@ -27,15 +27,8 @@ const resetPasswordOptions: StrategyOptionsWithoutRequest = {
 passport.use(
   'jwt-access-token',
   new JwtStrategy(accessTokenOptions, async (payload, done) => {
-    const { id } = payload as JwtPayload
-
-    try {
-      const foundedUser = await userService.getUserById(id)
-
-      return done(null, foundedUser)
-    } catch (error) {
-      done(error, false)
-    }
+    const foundedUser = payload as JwtPayload
+    return done(null, foundedUser)
   }),
 )
 
