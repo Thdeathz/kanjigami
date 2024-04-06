@@ -1,4 +1,4 @@
-import { TopUser } from '../@types/game-log'
+import { IUserStats, TopUser } from '../@types/game-log'
 import prisma from '../databases/init.prisma'
 
 const getEventRoundLeaderboard = async (limit: number, eventId?: string) => {
@@ -127,8 +127,44 @@ const getStacksLeaderboard = async (stackId?: string) => {
   }))
 }
 
+const getUserStats = async (userId: string) => {
+  const eventStats = await prisma.$queryRaw<IUserStats>`
+    SELECT 
+      SUM("GameLog"."point") as "point",
+      AVG("GameLog"."time") as "time",
+      COUNT("GameLog"."id") as "totalGame"
+    FROM "GameLog"
+    WHERE "GameLog"."userId" = ${userId}
+    AND "GameLog"."roundId" IS NOT NULL
+  `
+
+  const stackStats = await prisma.$queryRaw<IUserStats>`
+    SELECT 
+      SUM("GameLog"."point") as "point",
+      AVG("GameLog"."time") as "time",
+      COUNT("GameLog"."id") as "totalGame"
+    FROM "GameLog"
+    WHERE "GameLog"."userId" = ${userId}
+    AND "GameLog"."gameStackId" IS NOT NULL
+  `
+
+  return {
+    event: {
+      point: Number(eventStats[0]?.point),
+      time: eventStats[0]?.time?.toFixed(2) ?? 0,
+      totalGame: Number(eventStats[0]?.totalGame),
+    },
+    stack: {
+      point: Number(stackStats[0]?.point),
+      time: stackStats[0]?.time?.toFixed(2) ?? 0,
+      totalGame: Number(stackStats[0]?.totalGame),
+    },
+  }
+}
+
 export default {
   getEventRoundLeaderboard,
   getAllTimeLeaderboard,
   getStacksLeaderboard,
+  getUserStats,
 }

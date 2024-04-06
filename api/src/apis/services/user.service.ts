@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt'
 import { StatusCodes } from 'http-status-codes'
 
+import gameLogService from './game-log.service'
+
 import prisma from '@/apis/databases/init.prisma'
 import HttpError from '@/apis/utils/http-error'
 
@@ -102,6 +104,25 @@ const updateUserPassword = async (id: string, password: string) => {
   })
 }
 
+const getUserProfile = async (id: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      name: true,
+      score: true,
+    },
+  })
+
+  if (!user) throw new HttpError(StatusCodes.NOT_FOUND, 'User not found')
+
+  const stats = await gameLogService.getUserStats(user.id)
+
+  return { user, stats }
+}
+
 export default {
   getUserByEmail,
   getUserById,
@@ -109,4 +130,5 @@ export default {
   checkDuplicateEmail,
   createNewUser,
   updateUserPassword,
+  getUserProfile,
 }
