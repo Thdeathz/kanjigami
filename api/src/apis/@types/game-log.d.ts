@@ -4,4 +4,5 @@ export declare interface TopUser {
   image: string
   point: number
   time: number
+  totalGame?: number
 }

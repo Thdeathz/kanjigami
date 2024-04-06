@@ -160,7 +160,7 @@ const getEventBySlug = async (slug: string, userId: string) => {
 
   return {
     ...returnEvent,
-    leaderboards: await gameLogService.getEventRoundLeaderboard(event.id, 10),
+    leaderboards: await gameLogService.getEventRoundLeaderboard(10, event.id),
   }
 }
 
