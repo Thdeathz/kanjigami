@@ -1,6 +1,7 @@
 import { Router } from 'express'
 
 import authRoutes from '@/apis/routes/v1/auth.route'
+import eventRoutes from '@/apis/routes/v1/event.route'
 import stackRoutes from '@/apis/routes/v1/stack.route'
 import userRoutes from '@/apis/routes/v1/user.route'
 
@@ -11,5 +12,7 @@ router.use('/auth', authRoutes)
 router.use('/users', userRoutes)
 
 router.use('/stacks', stackRoutes)
+
+router.use('/events', eventRoutes)
 
 export default router
