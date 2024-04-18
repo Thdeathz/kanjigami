@@ -105,7 +105,14 @@ export default function RankWidget() {
             </div>
           ) : (
             <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }}>
-              <Image src="/images/bronze.png" width="72" height="36" alt="rank-icon" className="object-contain" />
+              <Image
+                src="/images/bronze.png"
+                width="72"
+                height="36"
+                alt="rank-icon"
+                priority
+                className="object-contain"
+              />
             </motion.div>
           )}
         </div>

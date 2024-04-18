@@ -14,7 +14,7 @@ type Props = {
 
 export default function SectionWrapper({ children, title, className }: Props) {
   return (
-    <div className={cn('flex flex-col gap-4', className)}>
+    <div className={cn('mb-8 flex flex-col gap-4', className)}>
       <h3 className="text-[1.375rem] font-semibold leading-[1.4] text-default-heading">{title}</h3>
 
       <motion.div className="flex flex-col gap-8" variants={grid.container(0)} initial="hidden" animate="enter">

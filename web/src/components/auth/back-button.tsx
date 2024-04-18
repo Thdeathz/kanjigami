@@ -12,7 +12,7 @@ interface BackButtonProps {
 export const BackButton = ({ label, href }: BackButtonProps) => {
   return (
     <div className="flex-center mt-2 w-full">
-      <Button size="sm" className="w-min whitespace-nowrap font-normal" variant="link" asChild>
+      <Button size="sm" className="w-min whitespace-nowrap font-normal" variant="link">
         <Link href={href}>{label}</Link>
       </Button>
     </div>

@@ -10,13 +10,13 @@ import { cn } from '@/lib/utils'
 const lightStickVariants = cva('battle-lights-container', {
   variants: {
     status: {
-      ongoing: 'battle-lights-container--ongoing',
-      upcoming: 'battle-lights-container--upcoming',
-      finished: 'battle-lights-container--finished'
+      ONGOING: 'battle-lights-container--ongoing',
+      UPCOMING: 'battle-lights-container--upcoming',
+      FINISHED: 'battle-lights-container--finished'
     }
   },
   defaultVariants: {
-    status: 'ongoing'
+    status: 'ONGOING'
   }
 })
 

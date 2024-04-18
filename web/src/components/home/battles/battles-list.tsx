@@ -2,35 +2,55 @@
 
 import { motion } from 'framer-motion'
 
+import { BattleStatus } from '@/@types/battle'
 import SectionWrapper from '@/components/home/battles/section-wrapper'
 import OnlineBattlePanel from '@/components/home/online-battle-panel'
-import { Button } from '@/components/ui/button'
+import Loading from '@/components/loading'
+import { useGetAllBattlesQuery } from '@/data/battle'
 import { grid } from '@/lib/animation-variants'
 
-type Props = {
-  title: string
+import ShowMoreButton from './show-more-button'
+
+type BattlesListDataProps = {
+  status: Props['status']
+  page: Props['page']
 }
 
-export default function BattlesList({ title }: Props) {
+function BattlesListData({ status, page }: BattlesListDataProps) {
+  const { data: battles, isLoading } = useGetAllBattlesQuery(status, page)
+
+  if (isLoading) {
+    return <Loading className="text-4xl" />
+  }
+
+  if (!battles) {
+    return <p>Empty</p>
+  }
+
+  return (
+    <>
+      {battles.map((battle) => (
+        <motion.div key={battle.id} variants={grid.item()}>
+          <OnlineBattlePanel battleData={battle} />
+        </motion.div>
+      ))}
+    </>
+  )
+}
+
+type Props = {
+  status: BattleStatus
+  title: string
+  page: string
+  showMore?: boolean
+}
+
+export default function BattlesList({ status, title, page, showMore = false }: Props) {
   return (
     <SectionWrapper title={title}>
-      <motion.div variants={grid.item()}>
-        <OnlineBattlePanel />
-      </motion.div>
+      <BattlesListData status={status} page={page} />
 
-      <motion.div variants={grid.item()}>
-        <OnlineBattlePanel />
-      </motion.div>
-
-      <motion.div variants={grid.item()}>
-        <OnlineBattlePanel />
-      </motion.div>
-
-      <div className="flex-center">
-        <Button variant="link" className="w-min">
-          Show more
-        </Button>
-      </div>
+      {showMore && <ShowMoreButton currentPage={page} />}
     </SectionWrapper>
   )
 }

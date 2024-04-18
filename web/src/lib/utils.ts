@@ -50,3 +50,15 @@ export const getDateDifference = (date1: Date, date2: Date): IRemainingTime => {
 
   return { days, hours, minutes, seconds }
 }
+
+/**
+ * Returns the time difference from now
+ * @param {Date} inputDate - The input date
+ * @returns {string} The time difference from now
+ */
+export function getTimeDifferenceFromNow(inputDate: Date): string {
+  const now = new Date()
+  const diffTime = Math.abs(now.getTime() - inputDate.getTime())
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  return `${diffDays} days ago`
+}

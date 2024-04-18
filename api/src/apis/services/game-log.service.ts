@@ -1,4 +1,6 @@
-import { IUserStats, TopUser } from '../@types/game-log'
+import { Prisma } from '@prisma/client'
+
+import { EventsTopUser, IUserStats, TopUser } from '../@types/game-log'
 import prisma from '../databases/init.prisma'
 
 const getEventRoundLeaderboard = async (limit: number, eventId?: string) => {
@@ -162,9 +164,43 @@ const getUserStats = async (userId: string) => {
   }
 }
 
+const getEventsTopUsers = async (eventIds: string[]) => {
+  const topUsers = await prisma.$queryRaw<EventsTopUser[]>`
+    WITH ranked_users AS (
+      SELECT 
+        "User"."id", 
+        "User"."image", 
+        "User"."name", 
+        "Round"."eventId",
+        SUM("GameLog"."point") as "point",
+        AVG("GameLog"."time") as "time",
+        ROW_NUMBER() OVER (PARTITION BY "Round"."eventId" ORDER BY SUM("GameLog"."point") DESC) as rank
+      FROM "GameLog"
+      JOIN "User" ON "GameLog"."userId" = "User"."id"
+      JOIN "Round" ON "GameLog"."roundId" = "Round"."id"
+      WHERE "Round"."eventId" IN (${Prisma.join(eventIds)})
+      GROUP BY "User"."id", "Round"."eventId"
+    )
+    SELECT * FROM ranked_users WHERE rank <= 3
+  `
+
+  // Convert totalPoints from bigInt to number
+  return topUsers.map((user) => ({
+    user: {
+      id: user.id,
+      image: user.image,
+      name: user.name,
+    },
+    point: Number(user.point),
+    time: user.time.toFixed(2),
+    eventId: user.eventId,
+  }))
+}
+
 export default {
   getEventRoundLeaderboard,
   getAllTimeLeaderboard,
   getStacksLeaderboard,
   getUserStats,
+  getEventsTopUsers,
 }

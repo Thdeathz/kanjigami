@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { FaCrown } from 'react-icons/fa'
 
+import { ITopUser } from '@/@types/battle'
 import { UserAvatar } from '@/components/ui/avatar'
 import { grid } from '@/lib/animation-variants'
 import { cn } from '@/lib/utils'
@@ -24,7 +25,9 @@ const sideLeaderboardItemVariants = cva(
   }
 )
 
-export interface SideLeaderboardItemProps extends VariantProps<typeof sideLeaderboardItemVariants> {}
+export interface SideLeaderboardItemProps extends VariantProps<typeof sideLeaderboardItemVariants> {
+  topUser: ITopUser
+}
 
 function getCrownClass(top: SideLeaderboardItemProps['top']) {
   if (top === '1') return 'text-crown-gold'
@@ -34,12 +37,12 @@ function getCrownClass(top: SideLeaderboardItemProps['top']) {
   return ''
 }
 
-export default function SideLeaderboardItem({ top = 'default' }: SideLeaderboardItemProps) {
+export default function SideLeaderboardItem({ top = 'default', topUser }: SideLeaderboardItemProps) {
   const crownClass = getCrownClass(top)
 
   return (
     <motion.div className={cn(sideLeaderboardItemVariants({ top }))} variants={grid.item()}>
-      <UserAvatar src="/images/default-avatar.jpg" alt="user" plus />
+      <UserAvatar src={topUser.user.image} alt={topUser.user.name} plus />
 
       <div className="leading-[18px]">
         <div className="flex gap-1">
@@ -47,14 +50,14 @@ export default function SideLeaderboardItem({ top = 'default' }: SideLeaderboard
 
           <Link
             href="/player"
-            className="font-semibold text-default-link transition-colors group-hover:text-default-brand"
+            className="w-32 truncate font-semibold text-default-link transition-colors group-hover:text-default-brand"
           >
-            Kantan kanji
+            {topUser.user.name}
           </Link>
         </div>
 
         <p className="font-secondary mt-0.5 text-sm">
-          1546242 <span>(43 Targets)</span>
+          {topUser.point} <span>(avg {topUser.time}s)</span>
         </p>
       </div>
     </motion.div>

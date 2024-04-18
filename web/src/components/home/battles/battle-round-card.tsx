@@ -5,6 +5,7 @@ import { FaCrown } from 'react-icons/fa'
 
 import { BattleStatus } from '@/@types/battle'
 import { UserAvatar } from '@/components/ui/avatar'
+import battle from '@/constants/battle'
 
 import CardWrapper from '../card-wrapper'
 
@@ -50,7 +51,7 @@ export default function BattleRoundCard({ status }: Props) {
       link="/battles/10"
       className="card-item pointer-events-auto z-10 cursor-pointer hover:scale-105 hover:opacity-100 group-hover:opacity-40"
     >
-      {status === 'upcoming' ? <CountDownToStart /> : <TopUserInfo />}
+      {status === battle.STATUS.UPCOMING ? <CountDownToStart /> : <TopUserInfo />}
     </CardWrapper>
   )
 }

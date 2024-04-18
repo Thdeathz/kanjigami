@@ -73,7 +73,9 @@ const getAllEvents = async ({ page, offset }: PaginationRequest, status?: string
     },
   })
 
-  return { total, events: eventTransformer.getAllEvents(events as EventsResponse[]) }
+  const topUsers = await gameLogService.getEventsTopUsers(events.map((event) => event.id))
+
+  return { total, events: eventTransformer.getAllEvents(events as EventsResponse[], topUsers) }
 }
 
 const getEventBySlug = async (slug: string, userId: string) => {

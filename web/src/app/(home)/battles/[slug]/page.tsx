@@ -4,7 +4,6 @@ import RoundsList from '@/components/home/battles/rounds-list'
 import SectionWrapper from '@/components/home/battles/section-wrapper'
 import PageHeader from '@/components/home/page-header'
 import RootNotification from '@/components/home/root-notification'
-import SideLeaderboard from '@/components/home/side-leaderboard'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 
@@ -30,12 +29,12 @@ export default function BattleDetail({ params }: Props) {
         description="Depraedor aureus thermae amplexus virga trans trepide cras."
         badge={
           <>
-            <Badge variant="danger">Finished</Badge>
+            <Badge variant="FINISHED">Finished</Badge>
             <Badge>Code golf</Badge>
             <Badge>318 players</Badge>
           </>
         }
-        showLightStick="finished"
+        showLightStick="FINISHED"
       >
         <div className="flex-center gap-2">
           <Separator />
@@ -58,7 +57,8 @@ export default function BattleDetail({ params }: Props) {
 
         <div className="w-[18rem]">
           <SectionWrapper title="Battle leaders">
-            <SideLeaderboard />
+            {/* TODO: <SideLeaderboard /> */}
+            <p>Leaderboard</p>
           </SectionWrapper>
         </div>
       </div>

@@ -12,3 +12,7 @@ export interface IUserStats {
   time: number
   totalGame: number
 }
+
+export interface EventsTopUser extends TopUser {
+  eventId: string
+}

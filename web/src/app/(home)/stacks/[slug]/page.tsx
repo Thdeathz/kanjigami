@@ -1,7 +1,6 @@
 import SectionWrapper from '@/components/home/battles/section-wrapper'
 import PageHeader from '@/components/home/page-header'
 import RootNotification from '@/components/home/root-notification'
-import SideLeaderboard from '@/components/home/side-leaderboard'
 import GamesList from '@/components/home/stacks/games-list'
 import KanjisList from '@/components/home/stacks/kanjis-list'
 
@@ -37,7 +36,8 @@ export default function StackDetail({ params }: Props) {
 
         <div className="w-[18rem]">
           <SectionWrapper title="Stack leaders">
-            <SideLeaderboard />
+            {/* TODO: <SideLeaderboard /> */}
+            <p>Leaderboard</p>
           </SectionWrapper>
         </div>
       </div>

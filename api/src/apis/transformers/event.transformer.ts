@@ -16,7 +16,18 @@ export interface EventsResponse extends Event {
   }[]
 }
 
-const getAllEvents = (events: EventsResponse[]) =>
+interface EventsTopUser {
+  user: {
+    id: string
+    image: string
+    name: string
+  }
+  point: number
+  time: string
+  eventId: string
+}
+
+const getAllEvents = (events: EventsResponse[], topUsers: EventsTopUser[]) =>
   events.map((event) => ({
     id: event.id,
     name: event.name,
@@ -45,6 +56,7 @@ const getAllEvents = (events: EventsResponse[]) =>
         },
       }
     }),
+    topUsers: topUsers.filter((user) => user.eventId === event.id).sort((a, b) => b.point - a.point),
   }))
 
 export interface EventDetailResponse extends Event {

@@ -18,18 +18,18 @@ function TimeItem({ value, label, size = 'normal', type, isHiddenSeparator = fal
           <p className="text-xs font-medium uppercase">{label}</p>
         </div>
 
-        {!isHiddenSeparator && <p className="text-2xl font-semibold">:</p>}
+        {!isHiddenSeparator && <p className="px-1 text-2xl font-semibold">:</p>}
       </div>
     )
 
   return (
-    <div className="font-semibold">
+    <div className="font-medium">
       <span>
         {value.toString().padStart(2, '0')}
         {label}
       </span>
 
-      {!isHiddenSeparator && <span className="font-secondary"> :</span>}
+      {!isHiddenSeparator && <span className="font-secondary px-1">:</span>}
     </div>
   )
 }

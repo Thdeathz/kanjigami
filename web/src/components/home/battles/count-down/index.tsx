@@ -23,7 +23,7 @@ function CountDown({ size = 'normal', maxLength = 4, type = 'normal', endTime, o
 
   const update = () => {
     const now = new Date()
-    const endTimeTest = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
+    const endTimeTest = endTime ?? new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
     const countTo = new Date(endTimeTest)
     if (now > countTo) {
       clearInterval(intervalRef.current)
@@ -68,7 +68,7 @@ function CountDown({ size = 'normal', maxLength = 4, type = 'normal', endTime, o
   if (!isShowDays && !isShowHours && !isShowMinutes && !isShowSecondes) return <Loading />
 
   return (
-    <div className="flex-center gap-1">
+    <div className="flex items-center">
       {isShowDays && (
         <TimeItem
           value={remaining.days}
