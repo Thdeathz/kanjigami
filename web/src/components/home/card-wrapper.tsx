@@ -8,9 +8,10 @@ type Props = {
   link: string
   className?: string
   children: React.ReactNode
+  imageUrl?: string
 }
 
-export default function CardWrapper({ link, className, children }: Props) {
+export default function CardWrapper({ imageUrl = '/images/lock.png', link, className, children }: Props) {
   return (
     <div
       className={cn(
@@ -20,7 +21,7 @@ export default function CardWrapper({ link, className, children }: Props) {
     >
       <Link href={link} className="absolute right-0 top-0 h-full w-full rounded-2xl" />
       <Image
-        src="/images/lock.png"
+        src={imageUrl}
         alt="kanji-stack"
         width="300"
         height="300"

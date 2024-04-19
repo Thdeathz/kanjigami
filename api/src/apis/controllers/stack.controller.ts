@@ -25,23 +25,12 @@ export const getAllStacks: RequestHandler = async (req, res) => {
       page,
       offset,
     },
-    user.id,
+    user?.id,
     filter,
     search?.trim(),
   )
 
-  res.json(
-    makeResponse.pagination(
-      'Get all stacks success',
-      StatusCodes.OK,
-      {
-        stacks,
-      },
-      total,
-      offset,
-      page,
-    ),
-  )
+  res.json(makeResponse.pagination('Get all stacks success', StatusCodes.OK, stacks, total, offset, page))
 }
 
 /**

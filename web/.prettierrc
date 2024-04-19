@@ -19,6 +19,6 @@
   "endOfLine": "auto",
   "plugins": ["prettier-plugin-tailwindcss"],
   "tailwindcss": {
-    "config": "./tailwind.config.js"
+    "config": "./tailwind.config.ts"
   }
 }
