@@ -7,5 +7,9 @@ type Props = {
 }
 
 export default function Loading({ className }: Props) {
-  return <AiOutlineLoading className={cn('animate-spin', className)} />
+  return (
+    <div className="flex-center w-full">
+      <AiOutlineLoading className={cn('animate-spin', className)} />
+    </div>
+  )
 }

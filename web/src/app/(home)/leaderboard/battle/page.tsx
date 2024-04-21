@@ -12,10 +12,10 @@ export default function LeaderBoardPage() {
   return (
     <div className="flex flex-col gap-12">
       <PageHeader icon={<BsTrophyFill />} title="Leaderboards">
-        <FilterBox type="all-time" />
+        <FilterBox type="event" />
       </PageHeader>
 
-      <LeaderboardsList type="all-time" />
+      <LeaderboardsList type="event" />
     </div>
   )
 }

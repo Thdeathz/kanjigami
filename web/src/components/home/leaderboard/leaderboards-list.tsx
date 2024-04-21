@@ -2,20 +2,35 @@
 
 import { motion } from 'framer-motion'
 
+import { LeaderboardType } from '@/@types/leaderboard'
+import Loading from '@/components/loading'
+import { useGetAllTimeLeaderboardQuery } from '@/data/leaderboard'
 import { grid } from '@/lib/animation-variants'
 
-import TopUser from './top-user'
+import TopUser, { TopUserProps } from './top-user'
 import TopUserItem from './top-user-item'
 
-export default function LeaderboardsList() {
+type Props = {
+  type: LeaderboardType
+}
+
+export default function LeaderboardsList({ type }: Props) {
+  const { data: topUsers, isLoading } = useGetAllTimeLeaderboardQuery(type)
+
+  if (isLoading) {
+    return <Loading className="text-4xl" />
+  }
+
+  if (!topUsers) {
+    return <p>Leaderboard empty.</p>
+  }
+
   return (
     <div className="mx-auto flex flex-col gap-4">
       <div className="flex w-[55rem] items-end gap-2">
-        <TopUser top="2" />
-
-        <TopUser top="1" />
-
-        <TopUser top="3" />
+        {topUsers.slice(0, 3).map((topUser, index) => (
+          <TopUser key={topUser.user.id} top={String(index + 1) as TopUserProps['top']} topUser={topUser} />
+        ))}
       </div>
 
       <table>
@@ -25,29 +40,9 @@ export default function LeaderboardsList() {
           initial="hidden"
           animate="enter"
         >
-          <TopUserItem />
-
-          <TopUserItem />
-
-          <TopUserItem />
-
-          <TopUserItem />
-
-          <TopUserItem />
-
-          <TopUserItem />
-
-          <TopUserItem />
-
-          <TopUserItem />
-
-          <TopUserItem />
-
-          <TopUserItem />
-
-          <TopUserItem />
-
-          <TopUserItem />
+          {topUsers.slice(3).map((topUser, index) => (
+            <TopUserItem key={topUser.user.id} topUser={topUser} index={index + 4} />
+          ))}
         </motion.tbody>
       </table>
     </div>

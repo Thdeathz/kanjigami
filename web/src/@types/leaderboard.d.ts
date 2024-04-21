@@ -6,4 +6,7 @@ export interface ITopUser {
   }
   point: number
   time: string
+  totalGame?: number
 }
+
+export type LeaderboardType = 'all-time' | 'event' | 'stack'

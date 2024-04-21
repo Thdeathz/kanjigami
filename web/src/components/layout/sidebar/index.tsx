@@ -44,7 +44,12 @@ export default function Sidebar() {
         <SideSection title="play">
           <SideLink link="/battles" icon={<RiSwordFill />} title="Online battles" />
           <SideLink link="/stacks" icon={<BsStack />} title="Kanji stacks" />
-          <SideLink link="/leaderboard" icon={<BsTrophyFill />} title="Leaderboards" />
+          <SideLink
+            link="/leaderboard"
+            icon={<BsTrophyFill />}
+            title="Leaderboards"
+            matchRegex={/\/leaderboard\/\S+/}
+          />
         </SideSection>
 
         <SideSection title="about you">
