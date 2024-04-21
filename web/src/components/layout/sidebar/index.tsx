@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import React from 'react'
 import { BsStack, BsTrophyFill } from 'react-icons/bs'
 import { FaChartArea, FaHome, FaUser } from 'react-icons/fa'
@@ -9,6 +6,7 @@ import { RiSettings3Fill, RiSwordFill } from 'react-icons/ri'
 import AppLogo from '@/components/layout/sidebar/app-logo'
 import SideLink from '@/components/layout/sidebar/side-link'
 import UpgradePlusButton from '@/components/layout/sidebar/upgrade-plus'
+import { auth } from '@/server/auth'
 
 type SideSectionProps = {
   title?: string
@@ -29,9 +27,11 @@ function SideSection({ title, children }: SideSectionProps) {
   )
 }
 
-export default function Sidebar() {
+export default async function Sidebar() {
+  const session = await auth()
+
   return (
-    <motion.aside className="sticky top-0 flex flex-col bg-sidebar">
+    <aside className="sticky top-0 flex flex-col bg-sidebar">
       <div className="flex-center h-[3.75rem] bg-logo px-6">
         <AppLogo />
       </div>
@@ -44,22 +44,24 @@ export default function Sidebar() {
         <SideSection title="play">
           <SideLink link="/battles" icon={<RiSwordFill />} title="Online battles" />
           <SideLink link="/stacks" icon={<BsStack />} title="Kanji stacks" />
-          <SideLink
-            link="/leaderboard"
-            icon={<BsTrophyFill />}
-            title="Leaderboards"
-            matchRegex={/\/leaderboard\/\S+/}
-          />
+          <SideLink link="/leaderboard" icon={<BsTrophyFill />} title="Leaderboards" matchRegex="\/leaderboard\/\S+" />
         </SideSection>
 
-        <SideSection title="about you">
-          <SideLink link="/player" icon={<FaUser />} title="Profile" />
-          <SideLink link="/me" icon={<FaChartArea />} title="Stats" />
-          <SideLink link="/settings" icon={<RiSettings3Fill />} title="Settings" />
-        </SideSection>
+        {session && (
+          <SideSection title="about you">
+            <SideLink
+              link={`/player/${session.user.name}`}
+              icon={<FaUser />}
+              title="Profile"
+              matchRegex="\/player\/\S+"
+            />
+            <SideLink link="/me" icon={<FaChartArea />} title="Stats" />
+            <SideLink link="/settings" icon={<RiSettings3Fill />} title="Settings" />
+          </SideSection>
+        )}
       </div>
 
       <UpgradePlusButton />
-    </motion.aside>
+    </aside>
   )
 }

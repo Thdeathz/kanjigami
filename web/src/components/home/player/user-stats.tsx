@@ -3,6 +3,7 @@ import { type IconType } from 'react-icons'
 import { BsStack } from 'react-icons/bs'
 import { RiSwordFill } from 'react-icons/ri'
 
+import { IUserStats } from '@/@types/user'
 import StatsItem from '@/components/home/player/stats-item'
 
 type BattleStatsWrapperProps = {
@@ -24,19 +25,24 @@ function BattleStatsWrapper({ icon, title, children }: BattleStatsWrapperProps) 
   )
 }
 
-export default function UserStats() {
+type Props = {
+  event: IUserStats
+  stack: IUserStats
+}
+
+export default function UserStats({ event, stack }: Props) {
   return (
     <div className="flex gap-8">
       <BattleStatsWrapper icon={<RiSwordFill />} title="Online battle stats">
-        <StatsItem label="Global rank" value="0" />
-        <StatsItem label="Battles played" value="0" />
-        <StatsItem label="Totals score" value="0" />
+        <StatsItem label="Battles played" value={event.totalGame} />
+        <StatsItem label="Avg time" value={event.time} />
+        <StatsItem label="Totals score" value={event.point} />
       </BattleStatsWrapper>
 
       <BattleStatsWrapper icon={<BsStack />} title="Kanji stack stats">
-        <StatsItem label="Games played" value="0" />
-        <StatsItem label="Avg time" value="0" />
-        <StatsItem label="Totals score" value="0" />
+        <StatsItem label="Games played" value={stack.totalGame} />
+        <StatsItem label="Avg time" value={stack.time} />
+        <StatsItem label="Totals score" value={stack.point} />
       </BattleStatsWrapper>
     </div>
   )

@@ -1,6 +1,6 @@
 type StatsItemProps = {
   label: string
-  value: string
+  value: string | number
 }
 
 export default function StatsItem({ label, value }: StatsItemProps) {

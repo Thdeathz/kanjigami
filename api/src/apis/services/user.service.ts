@@ -112,6 +112,7 @@ const getUserProfile = async (name: string) => {
     select: {
       id: true,
       name: true,
+      image: true,
       email: true,
       score: true,
     },
