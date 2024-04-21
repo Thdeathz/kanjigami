@@ -9,6 +9,6 @@ const router = Router()
 
 router.route('/').get(verifyAccessToken, checkHasRole(UserRole.ADMIN), getAllUsers)
 
-router.route('/:id').get(getUserProfile)
+router.route('/profile').get(getUserProfile)
 
 export default router

@@ -22,7 +22,7 @@ const userFactory = async () => {
   Array.from({ length: 50 }).forEach(() => {
     const email = faker.internet.email()
     const password = '$2b$10$S1DyrPjcRntNMjTdhAyeXu5zfp9EB0xyvLOvy90/LQTmTd75zdfqa'
-    const name = faker.internet.userName()
+    const name = faker.internet.displayName()
     const image = faker.image.avatar()
     const role = UserRole.USER
 

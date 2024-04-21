@@ -51,7 +51,7 @@ model Account {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
+  name          String?   @unique
   email         String?   @unique
   password      String?
   image         String?
@@ -125,6 +125,10 @@ model Stack {
   topics        Topic[]
   games         GameStack[]
   followedUsers User[] @relation("FollowedStacks")
+
+  // This config still not working with Postgres
+  // Hope it will be work soon, check here: https://github.com/prisma/prisma/issues/8950
+  // @@fulltext([name])
 }
 
 model Topic {

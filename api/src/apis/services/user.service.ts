@@ -104,14 +104,15 @@ const updateUserPassword = async (id: string, password: string) => {
   })
 }
 
-const getUserProfile = async (id: string) => {
+const getUserProfile = async (name: string) => {
   const user = await prisma.user.findUnique({
     where: {
-      id,
+      name,
     },
     select: {
       id: true,
       name: true,
+      email: true,
       score: true,
     },
   })

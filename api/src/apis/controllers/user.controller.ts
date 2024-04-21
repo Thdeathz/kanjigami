@@ -24,12 +24,12 @@ export const getAllUsers: RequestHandler = async (req, res) => {
 
 /**
  * @desc Get user profile
- * @route GET /users/:id
- * @access Private
+ * @route GET /users/profile
+ * @access Public
  */
 export const getUserProfile: RequestHandler = async (req, res) => {
-  const { id } = req.params
-  const data = await userService.getUserProfile(id)
+  const player = req.query.player as string
+  const data = await userService.getUserProfile(player)
 
   return res.status(StatusCodes.OK).json(makeResponse.defaultResponse('Get user profile success', StatusCodes.OK, data))
 }
