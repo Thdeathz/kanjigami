@@ -1,11 +1,12 @@
-import Link from 'next/link'
-
 import NotificationButton from '@/components/layout/navbar/notification-button'
 import RankWidget from '@/components/layout/navbar/rank-widget'
 import ThemeButton from '@/components/layout/navbar/theme-button'
-import { Button } from '@/components/ui/button'
+import UserButton from '@/components/layout/navbar/user-button'
+import { auth } from '@/server/auth'
 
-export default function Navbar() {
+export default async function Navbar() {
+  const session = await auth()
+
   return (
     <nav className="sticky top-0 z-50 flex h-[60px] w-full items-center justify-end bg-navbar px-4 py-3 backdrop-blur-[20px]">
       <div className="w-full">{/* TODO: breadcrumb menu */}</div>
@@ -17,9 +18,7 @@ export default function Navbar() {
 
         <NotificationButton />
 
-        <Link href="/login">
-          <Button>Sign In / Sign Up</Button>
-        </Link>
+        <UserButton user={session?.user} />
       </div>
     </nav>
   )

@@ -20,6 +20,7 @@ const login = async ({ email, password }: ILoginRequest) => {
     id: foundedUser.id,
     name: foundedUser.name,
     email: foundedUser.email,
+    image: foundedUser.image,
     role: foundedUser.role,
   }
 }

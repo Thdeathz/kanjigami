@@ -16,6 +16,7 @@ const getUserByEmail = async (email: string) => {
       email: true,
       password: true,
       name: true,
+      image: true,
       role: true,
     },
   })

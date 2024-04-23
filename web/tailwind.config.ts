@@ -68,7 +68,9 @@ const config = {
         hard: 'var(--hard-shadow)',
         timer: '0 10px 5px -5px rgba(0, 0, 0, .2)',
         'timer-item': 'inset 0 1px 2px 0 hsla(0, 0%, 100%, .1)',
-        glory: 'var(--glory-shadow)'
+        glory: 'var(--glory-shadow)',
+        'popover-light': '0 10px 80px rgba(0,0,0,.25)',
+        'popover-dark': '0 10px 80px rgba(0,0,0,.75)'
       },
       dropShadow: {
         'plus-badge': '0 0 14px yellow'
@@ -150,10 +152,6 @@ const config = {
         accent: {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))'
-        },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))'
         },
         card: {
           DEFAULT: 'hsl(var(--card))',

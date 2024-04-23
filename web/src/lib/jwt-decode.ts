@@ -10,6 +10,7 @@ const decode = (token: string) => {
       id: decodedData.id,
       name: decodedData.name,
       email: decodedData.email,
+      image: decodedData.image,
       role: decodedData.role
     },
     exp: Number(decodedData.exp) * 1000

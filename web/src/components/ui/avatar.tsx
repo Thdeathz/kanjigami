@@ -5,17 +5,30 @@ import * as AvatarPrimitive from '@radix-ui/react-avatar'
 
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
+import { VariantProps, cva } from 'class-variance-authority'
 
-const Avatar = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Root
-    ref={ref}
-    className={cn('relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full', className)}
-    {...props}
-  />
-))
+const avatarVariants = cva('relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full', {
+  variants: {
+    size: {
+      large: 'h-12 w-12',
+      normal: 'h-10 w-10',
+      small: 'h-8 w-8'
+    }
+  },
+  defaultVariants: {
+    size: 'normal'
+  }
+})
+
+export interface AvatarProps
+  extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>,
+    VariantProps<typeof avatarVariants> {}
+
+const Avatar = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Root>, AvatarProps>(
+  ({ className, size, ...props }, ref) => (
+    <AvatarPrimitive.Root ref={ref} className={cn(avatarVariants({ size }), className)} {...props} />
+  )
+)
 Avatar.displayName = AvatarPrimitive.Root.displayName
 
 const AvatarImage = React.forwardRef<
@@ -43,14 +56,15 @@ type UserAvatarProps = {
   fallback?: string
   alt: string
   plus?: boolean
+  size?: AvatarProps['size']
 } & React.ComponentProps<typeof Avatar>
 
-const UserAvatar = ({ src, fallback, alt, plus = false, className, ...props }: UserAvatarProps) => {
+const UserAvatar = ({ src, fallback, alt, plus = false, size, className, ...props }: UserAvatarProps) => {
   return (
     <div className="relative">
-      <Avatar className={cn(plus && 'plus-avatar-mask', className)} {...props}>
+      <Avatar size={size} className={cn(plus && 'plus-avatar-mask', className)} {...props}>
         <AvatarImage src={src} alt={alt} />
-        <AvatarFallback>{fallback ?? 'U'}</AvatarFallback>
+        <AvatarFallback>{fallback ?? alt.slice(0, 1)}</AvatarFallback>
       </Avatar>
       {plus && (
         <Image

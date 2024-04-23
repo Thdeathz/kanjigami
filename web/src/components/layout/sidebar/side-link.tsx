@@ -5,9 +5,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { type ReactElement } from 'react'
 import { type IconType } from 'react-icons'
-import { BsStack, BsTrophyFill } from 'react-icons/bs'
-import { FaChartArea, FaHome, FaUser } from 'react-icons/fa'
-import { RiSettings3Fill, RiSwordFill } from 'react-icons/ri'
 
 import { cn } from '@/lib/utils'
 
@@ -25,16 +22,6 @@ const sideLinkVariants = cva(
     }
   }
 )
-
-const icons = {
-  Home: <FaHome />,
-  'Online battles': <RiSwordFill />,
-  'Kanji stacks': <BsStack />,
-  Leaderboards: <BsTrophyFill />,
-  Profile: <FaUser />,
-  Stats: <FaChartArea />,
-  Settings: <RiSettings3Fill />
-}
 
 export interface Props {
   link: string

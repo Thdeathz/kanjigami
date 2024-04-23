@@ -7,12 +7,13 @@ import FilterBox from '@/components/home/stacks/filter-box'
 import SearchBox from '@/components/home/stacks/search-box'
 import StacksList from '@/components/home/stacks/stacks-list'
 import Loading from '@/components/loading'
+import { auth } from '@/server/auth'
 
 export const metadata = () => ({
   title: 'Kanji stacks | 漢字ガミ'
 })
 
-export default function KanjiStackPage({
+export default async function KanjiStackPage({
   searchParams
 }: {
   searchParams?: {
@@ -22,6 +23,8 @@ export default function KanjiStackPage({
 }) {
   const filterOption = searchParams?.filter || 'all'
   const searchValue = searchParams?.search || ''
+
+  const session = await auth()
 
   return (
     <div className="flex flex-col gap-12">
@@ -33,7 +36,7 @@ export default function KanjiStackPage({
         <div className="flex items-center justify-between">
           <SearchBox searchValue={searchValue} />
 
-          <FilterBox filterOption={filterOption} />
+          {session && <FilterBox filterOption={filterOption} />}
         </div>
 
         <StacksList filterOption={filterOption} searchValue={searchValue} />
