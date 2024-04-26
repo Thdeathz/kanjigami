@@ -3,6 +3,7 @@
 import { ApiResponse } from '@/@types'
 import { ITopUser, LeaderboardType } from '@/@types/leaderboard'
 import axiosBase from '@/lib/axios-base'
+import { makeEndpoint } from '@/lib/utils'
 
 export const getBattleLeaderboard = async (battleId?: string) => {
   const endpoint = battleId ? `/leaderboards/event/${battleId}` : '/leaderboards/event'
@@ -12,8 +13,10 @@ export const getBattleLeaderboard = async (battleId?: string) => {
   return response.data
 }
 
-export const getAllTimeLeaderboard = async (type: LeaderboardType) => {
-  const endpoint = type === 'all-time' ? '/leaderboards' : `/leaderboards/${type}`
+export const getAllTimeLeaderboard = async (type: LeaderboardType, slug?: string, offset?: number) => {
+  let endpoint = type === 'all-time' ? '/leaderboards' : `/leaderboards/${type}`
+
+  endpoint = makeEndpoint(endpoint, { slug, offset })
 
   const { data: response } = await axiosBase.get<ApiResponse<ITopUser[]>>(endpoint)
 

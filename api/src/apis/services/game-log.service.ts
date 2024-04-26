@@ -79,10 +79,10 @@ const getAllTimeLeaderboard = async () => {
   }))
 }
 
-const getStacksLeaderboard = async (stackId?: string) => {
+const getStacksLeaderboard = async (offset: number, slug?: number) => {
   let top: TopUser[] = []
-  console.log(stackId)
-  if (stackId)
+
+  if (slug)
     top = await prisma.$queryRaw<TopUser[]>`
       SELECT 
         "User"."id", 
@@ -93,13 +93,14 @@ const getStacksLeaderboard = async (stackId?: string) => {
       FROM "GameLog"
       JOIN "User" ON "GameLog"."userId" = "User"."id"
       WHERE "GameLog"."gameStackId" IN (
-        SELECT id
+        SELECT "GameStack"."id"
         FROM "GameStack"
-        WHERE "stackId" = ${stackId}
+        JOIN "Stack" ON "GameStack"."stackId" = "Stack"."id"
+        WHERE "Stack"."slug" = ${slug}
       )
       GROUP BY "User"."id"
       ORDER BY "point" DESC
-      LIMIT 50
+      LIMIT ${offset}
     `
   else
     top = await prisma.$queryRaw<TopUser[]>`
@@ -114,7 +115,7 @@ const getStacksLeaderboard = async (stackId?: string) => {
       WHERE "GameLog"."gameStackId" IS NOT NULL
       GROUP BY "User"."id"
       ORDER BY "point" DESC
-      LIMIT 50
+      LIMIT ${offset}
     `
 
   // Convert totalPoints from bigInt to number

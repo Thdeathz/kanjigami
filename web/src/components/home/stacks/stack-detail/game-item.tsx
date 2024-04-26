@@ -4,14 +4,15 @@ import { FaPlay } from 'react-icons/fa'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 
-import UserHiScore from '../user-hi-score'
+import UserHiScore from '../../user-hi-score'
 
 type Props = {
   name: string
   thumbnail: string
+  userScore?: number
 }
 
-export default function GameItem({ name, thumbnail }: Props) {
+export default function GameItem({ name, thumbnail, userScore }: Props) {
   return (
     <div className="flex-center flex-col gap-4">
       <Badge>{name}</Badge>
@@ -26,7 +27,7 @@ export default function GameItem({ name, thumbnail }: Props) {
         />
 
         <div className="flex items-center justify-between p-2">
-          <UserHiScore />
+          <UserHiScore score={userScore} />
 
           <Button variant="primary" shape="circle">
             <FaPlay className="text-white" />

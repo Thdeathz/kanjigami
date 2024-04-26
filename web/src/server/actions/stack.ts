@@ -1,8 +1,9 @@
 'use server'
 
 import { ApiResponse } from '@/@types'
-import { IStack } from '@/@types/stack'
+import { IKanjiDetail, IStack, IStackDetail, IWordDetail } from '@/@types/stack'
 import axiosAuth from '@/lib/axios-auth'
+import { makeEndpoint } from '@/lib/utils'
 
 type GetAllStacksProps = {
   pageParam?: number
@@ -11,11 +12,32 @@ type GetAllStacksProps = {
 }
 
 export const getAllStacks = async ({ pageParam = 1, filterOption = 'all', searchValue }: GetAllStacksProps) => {
-  const endpoint = searchValue
-    ? `/stacks?filter=${filterOption}&page=${pageParam}&offset=20&search=${searchValue}`
-    : `/stacks?filter=${filterOption}&page=${pageParam}&offset=20`
+  const endpoint = makeEndpoint('/stacks', {
+    filter: filterOption,
+    page: pageParam,
+    offset: 20,
+    search: searchValue
+  })
 
   const { data: response } = await axiosAuth.get<ApiResponse<IStack[]>>(endpoint)
+
+  return response.data
+}
+
+export const getStackDetail = async (slug: string) => {
+  const { data: response } = await axiosAuth.get<ApiResponse<IStackDetail>>(`/stacks/${slug}`)
+
+  return response.data
+}
+
+export const getWordDetail = async (id: string) => {
+  const { data: response } = await axiosAuth.get<ApiResponse<IWordDetail>>(`/stacks/word/${id}`)
+
+  return response.data
+}
+
+export const getKanjiDetail = async (kanji: string) => {
+  const { data: response } = await axiosAuth.get<ApiResponse<IKanjiDetail>>(`/stacks/kanji?kanji=${kanji}`)
 
   return response.data
 }

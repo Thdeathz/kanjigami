@@ -62,3 +62,27 @@ export function getTimeDifferenceFromNow(inputDate: Date): string {
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
   return `${diffDays} days ago`
 }
+
+/**
+ * Returns the endpoint with query parameters
+ * @param {string} endpoint - The endpoint
+ * @param {Record<string, string | number>} query - The query parameters
+ * @returns {string} The endpoint with query parameters
+ */
+export function makeEndpoint(endpoint: string, query?: Record<string, string | number | undefined>) {
+  const params = new URLSearchParams()
+
+  let returnEndpoint = endpoint
+
+  if (query) {
+    Object.entries(query).forEach(([key, value]) => {
+      if (value) params.append(key, String(value))
+    })
+  }
+
+  if (params.toString()) {
+    returnEndpoint += `?${params.toString()}`
+  }
+
+  return returnEndpoint
+}

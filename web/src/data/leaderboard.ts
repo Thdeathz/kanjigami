@@ -10,9 +10,9 @@ export const useGetBattleLeaderboardQuery = (battleId?: string) => {
   })
 }
 
-export const useGetAllTimeLeaderboardQuery = (type: LeaderboardType) => {
+export const useGetAllTimeLeaderboardQuery = (type: LeaderboardType, slug?: string, offset?: number) => {
   return useQuery({
-    queryKey: ['allTimeLeaderboard', type],
-    queryFn: async () => getAllTimeLeaderboard(type)
+    queryKey: ['allTimeLeaderboard', type, slug, offset],
+    queryFn: async () => getAllTimeLeaderboard(type, slug, offset)
   })
 }

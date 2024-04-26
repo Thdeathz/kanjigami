@@ -1,8 +1,5 @@
-import SectionWrapper from '@/components/home/battles/section-wrapper'
-import PageHeader from '@/components/home/page-header'
-import RootNotification from '@/components/home/root-notification'
-import GamesList from '@/components/home/stacks/games-list'
-import KanjisList from '@/components/home/stacks/kanjis-list'
+import StackDetail from '@/components/home/stacks/stack-detail'
+import { getStackDetail } from '@/server/actions/stack'
 
 type Props = {
   params: {
@@ -10,37 +7,22 @@ type Props = {
   }
 }
 
-export const generateMetadata = ({ params }: Props) => {
+export const generateMetadata = async ({ params }: Props) => {
+  const { slug } = params
+
+  const stack = await getStackDetail(slug)
+
   return {
-    title: '井上 菜摘 | 漢字ガミ'
+    title: `${stack.name} | 漢字ガミ`
   }
 }
 
-export default function StackDetail({ params }: Props) {
+export default function index({ params }: Props) {
   const { slug } = params
 
   return (
     <div className="flex flex-col gap-12">
-      <PageHeader title="井上 菜摘" description="Depraedor aureus thermae amplexus virga trans trepide cras." />
-
-      <RootNotification />
-
-      <GamesList />
-
-      <div className="flex gap-12">
-        <div className="w-0 shrink grow">
-          <SectionWrapper title="Kanji stack">
-            <KanjisList />
-          </SectionWrapper>
-        </div>
-
-        <div className="w-[18rem]">
-          <SectionWrapper title="Stack leaders">
-            {/* TODO: <SideLeaderboard /> */}
-            <p>Leaderboard</p>
-          </SectionWrapper>
-        </div>
-      </div>
+      <StackDetail slug={slug} />
     </div>
   )
 }

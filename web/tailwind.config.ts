@@ -141,6 +141,9 @@ const config = {
           icon: 'var(--clr-sidebar-icon)',
           'icon-hover': 'var(--clr-sidebar-icon-hover)'
         },
+        table: {
+          header: 'var(--table-header-bg)'
+        },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))'
