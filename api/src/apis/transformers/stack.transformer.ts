@@ -46,7 +46,7 @@ const getStackBySlug = (stack: StackDetailResponse) => ({
     id: game.id,
     name: game.game.name,
     image: game.game.image,
-    userPoint: game.logs.reduce((acc, log) => acc + log.point, 0),
+    userPoint: game.logs?.reduce((acc, log) => acc + log.point, 0),
   })),
   words: stack.words,
 })

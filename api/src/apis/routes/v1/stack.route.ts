@@ -18,7 +18,7 @@ router.route('/word/:id').get(getWordDetail)
 
 router.route('/kanji').get(getKanjiDetail)
 
-router.route('/:slug').get(verifyAccessToken, getStackBySlug)
+router.route('/:slug').get(getCurrentUser, getStackBySlug)
 
 router.route('/:id/follow').post(limitRequest(20), verifyAccessToken, followStack)
 

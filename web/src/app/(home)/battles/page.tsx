@@ -32,7 +32,7 @@ export default function BattlesPage({
         title="Online battles"
         description="Compete with players around the world and learn kanji"
       >
-        <Filter />
+        <Filter currentStatus={status.toUpperCase() as BattleStatus} />
       </PageHeader>
 
       <RootNotification />

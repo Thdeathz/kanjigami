@@ -1,8 +1,7 @@
 'use client'
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-
 import { Panel } from '@/components/ui/card'
+import useQueryParams from '@/hooks/use-query-params'
 import { cn } from '@/lib/utils'
 
 type FilterItemProps = {
@@ -32,36 +31,22 @@ type Props = {
 }
 
 export default function FilterBox({ filterOption }: Props) {
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const { replace } = useRouter()
+  const { onSearch } = useQueryParams()
 
   const isActiveAll = !filterOption || filterOption === 'all'
   const isActiveNotPlayed = filterOption === 'not-played'
   const isActivePlayed = filterOption === 'played'
   const isActiveFollowed = filterOption === 'followed'
 
-  const onFilter = (filter: string) => {
-    const params = new URLSearchParams(searchParams)
-
-    if (filter) {
-      params.set('filter', filter)
-    } else {
-      params.delete('filter')
-    }
-
-    replace(`${pathname}?${params.toString()}`)
-  }
-
   return (
     <Panel className="p-2">
-      <FilterItem title="All stacks" isActive={isActiveAll} onClick={() => onFilter('all')} />
+      <FilterItem title="All stacks" isActive={isActiveAll} onClick={() => onSearch('filter', 'all')} />
 
-      <FilterItem title="Not played" isActive={isActiveNotPlayed} onClick={() => onFilter('not-played')} />
+      <FilterItem title="Not played" isActive={isActiveNotPlayed} onClick={() => onSearch('filter', 'not-played')} />
 
-      <FilterItem title="Played" isActive={isActivePlayed} onClick={() => onFilter('played')} />
+      <FilterItem title="Played" isActive={isActivePlayed} onClick={() => onSearch('filter', 'played')} />
 
-      <FilterItem title="Followed" isActive={isActiveFollowed} onClick={() => onFilter('followed')} />
+      <FilterItem title="Followed" isActive={isActiveFollowed} onClick={() => onSearch('filter', 'followed')} />
     </Panel>
   )
 }

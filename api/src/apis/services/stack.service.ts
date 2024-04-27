@@ -107,7 +107,7 @@ const getAllStacks = async (
   return { total, stacks: stackTransformer.getAllStacks(stacks as StacksResponse[]) }
 }
 
-const getStackBySlug = async (slug: string, currentUserId: string) => {
+const getStackBySlug = async (slug: string, currentUserId?: string) => {
   const stack = await prisma.stack.findUnique({
     where: {
       slug: Number(slug),
@@ -142,7 +142,7 @@ const getStackBySlug = async (slug: string, currentUserId: string) => {
           },
           logs: {
             where: {
-              userId: currentUserId,
+              userId: currentUserId ?? '',
             },
             select: {
               point: true,

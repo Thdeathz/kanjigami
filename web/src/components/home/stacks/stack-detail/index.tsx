@@ -12,9 +12,10 @@ import StackSideLeaderboard from './stack-side-leaderboard'
 
 type Props = {
   slug: string
+  openWord?: string
 }
 
-export default function StackDetail({ slug }: Props) {
+export default function StackDetail({ slug, openWord }: Props) {
   const { data: stack, isLoading } = useGetStackDetailQuery(slug)
 
   if (isLoading) return <Loading className="text-4xl" />
@@ -34,7 +35,7 @@ export default function StackDetail({ slug }: Props) {
       <div className="flex gap-12">
         <div className="w-0 shrink grow">
           <SectionWrapper title="Kanji stack">
-            <WordsList words={stack.words} />
+            <WordsList words={stack.words} openWord={openWord} />
           </SectionWrapper>
         </div>
 

@@ -1,30 +1,19 @@
 'use client'
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { BsSearchHeartFill } from 'react-icons/bs'
 import { useDebounceCallback } from 'usehooks-ts'
 
 import { Panel } from '@/components/ui/card'
+import useQueryParams from '@/hooks/use-query-params'
 
 type Props = {
   searchValue?: string
 }
 
 export default function SearchBox({ searchValue }: Props) {
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const { replace } = useRouter()
+  const { onSearch } = useQueryParams()
 
-  const handleSearch = (term: string) => {
-    const params = new URLSearchParams(searchParams)
-    if (term) {
-      params.set('search', term)
-    } else {
-      params.delete('search')
-    }
-
-    replace(`${pathname}?${params.toString()}`)
-  }
+  const handleSearch = (term: string) => onSearch('search', term)
 
   const debounced = useDebounceCallback(handleSearch, 500)
 

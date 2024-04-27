@@ -7,11 +7,12 @@ import WordDetail from './word-detail'
 
 type Props = {
   word: IWordItem
+  isOpen?: boolean
 }
 
-export default function WordItem({ word }: Props) {
+export default function WordItem({ word, isOpen = false }: Props) {
   return (
-    <Dialog>
+    <Dialog defaultOpen={isOpen}>
       <DialogTrigger asChild>
         <Button>{word.content}</Button>
       </DialogTrigger>

@@ -44,7 +44,7 @@ export const getStackBySlug: RequestHandler = async (req, res) => {
   const slug = req.params.slug
   const user = req.user as JwtPayload
 
-  const stack = await stackService.getStackBySlug(slug, user.id)
+  const stack = await stackService.getStackBySlug(slug, user?.id)
 
   res.json(makeResponse.defaultResponse('Get stack by slug success', StatusCodes.OK, stack))
 }
