@@ -9,9 +9,20 @@ export interface IRemainingTime {
   seconds: number
 }
 
+export interface IRoundTopUser {
+  user: {
+    id: string
+    image: string
+    name: string
+  }
+  point: number
+  time: string
+}
+
 export interface IRound {
   order: number
   status: BattleStatus
+  startAt?: Date
   stack: {
     slug: number
     name: string
@@ -19,6 +30,7 @@ export interface IRound {
   game: {
     image: string
   }
+  hightPoint?: IRoundTopUser
 }
 
 export interface ITopUser {
@@ -41,4 +53,8 @@ export interface IBattle {
   startAt: Date
   rounds: IRound[]
   topUsers: ITopUser[]
+}
+
+export interface IBattleDetail extends Omit<IBattle, 'topUsers'> {
+  playedUsers?: number
 }

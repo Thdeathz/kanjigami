@@ -3,25 +3,49 @@
 import Link from 'next/link'
 import { FaCrown } from 'react-icons/fa'
 
-import { BattleStatus } from '@/@types/battle'
+import { IRound, IRoundTopUser } from '@/@types/battle'
 import { UserAvatar } from '@/components/ui/avatar'
-import battle from '@/constants/battle'
 
 import CardWrapper from '../card-wrapper'
 
 import CountDown from './count-down'
 
-function TopUserInfo() {
+type CountDownToStartProps = {
+  startAt?: Date
+}
+
+function CountDownToStart({ startAt }: CountDownToStartProps) {
+  if (!startAt) return <p className="py-8 text-center font-medium">Coming soon.</p>
+
+  return (
+    <div className="p-2">
+      <p className="mb-4 text-center font-medium text-default-text-lightest">Unlock in</p>
+
+      <CountDown type="animate" maxLength={2} endTime={startAt} />
+    </div>
+  )
+}
+
+type TopUserInfoProps = {
+  topUser?: IRoundTopUser
+  startAt?: Date
+}
+
+function TopUserInfo({ topUser, startAt }: TopUserInfoProps) {
+  if (!topUser) return <CountDownToStart startAt={startAt} />
+
   return (
     <div className="flex-center flex-col gap-4 p-2">
-      <UserAvatar src="/images/default-avatar.jpg" alt="online-round" plus />
+      <UserAvatar src={topUser.user.image} alt={topUser.user.name} plus />
 
       <div className="text-center">
-        <Link href="/player" className="flex items-center gap-2 font-semibold text-default-link">
+        <Link href={`/player/${topUser.user.name}`} className="flex items-center gap-2 font-semibold text-default-link">
           <FaCrown className="text-default-brand" />
-          Kantan kanji
+          {topUser.user.name}
         </Link>
-        <p className="font-secondary">865</p>
+        <p className="font-secondary">
+          {topUser.point} - {topUser.time}s
+        </p>
       </div>
 
       <div className="font-secondary w-full rounded-lg bg-online-round-bottom px-4 py-2 text-center text-sm">
@@ -31,27 +55,18 @@ function TopUserInfo() {
   )
 }
 
-function CountDownToStart() {
-  return (
-    <div className="p-2">
-      <p className="mb-4 text-center font-medium text-default-text-lightest">Unlock in</p>
-
-      <CountDown type="animate" maxLength={2} endTime={new Date()} />
-    </div>
-  )
-}
-
 type Props = {
-  status: BattleStatus
+  round: IRound
 }
 
-export default function BattleRoundCard({ status }: Props) {
+export default function BattleRoundCard({ round }: Props) {
   return (
     <CardWrapper
       link="/battles/10"
+      imageUrl={round.game?.image}
       className="card-item pointer-events-auto z-10 cursor-pointer hover:scale-105 hover:opacity-100 group-hover:opacity-40"
     >
-      {status === battle.STATUS.UPCOMING ? <CountDownToStart /> : <TopUserInfo />}
+      <TopUserInfo topUser={round.hightPoint} startAt={round.startAt} />
     </CardWrapper>
   )
 }

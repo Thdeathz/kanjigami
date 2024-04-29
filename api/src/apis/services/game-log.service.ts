@@ -3,9 +3,9 @@ import { Prisma } from '@prisma/client'
 import { EventsTopUser, IUserStats, TopUser } from '../@types/game-log'
 import prisma from '../databases/init.prisma'
 
-const getEventRoundLeaderboard = async (limit: number, eventId?: string) => {
+const getEventRoundLeaderboard = async (limit: number, slug?: number) => {
   let top: TopUser[] = []
-  if (eventId)
+  if (slug)
     top = await prisma.$queryRaw<TopUser[]>`
       SELECT 
         "User"."id", 
@@ -16,9 +16,10 @@ const getEventRoundLeaderboard = async (limit: number, eventId?: string) => {
       FROM "GameLog"
       JOIN "User" ON "GameLog"."userId" = "User"."id"
       WHERE "roundId" IN (
-        SELECT id
+        SELECT "Round"."id"
         FROM "Round"
-        WHERE "eventId" = ${eventId}
+        JOIN "Event" ON "Round"."eventId" = "Event"."id"
+        WHERE "Event"."slug" = ${slug}
       )
       GROUP BY "User"."id"
       ORDER BY "point" DESC
@@ -150,6 +151,8 @@ const getUserStats = async (userId: string) => {
     WHERE "GameLog"."userId" = ${userId}
     AND "GameLog"."gameStackId" IS NOT NULL
   `
+
+  console.log(eventStats, stackStats)
 
   return {
     event: {

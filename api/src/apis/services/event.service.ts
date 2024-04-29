@@ -1,4 +1,4 @@
-import { BattleStatus, GameLog } from '@prisma/client'
+import { GameLog } from '@prisma/client'
 
 import { PaginationRequest } from '../@types'
 import prisma from '../databases/init.prisma'
@@ -154,16 +154,23 @@ const getEventBySlug = async (slug: string, userId: string) => {
 
   const returnEvent = eventTransformer.getEventBySlug(event as EventDetailResponse, currentUserLog as GameLog[])
 
-  if (event.status === BattleStatus.UPCOMING)
+  if (event.status === 'FINISHED') {
+    const playedUsers = await prisma.gameLog.groupBy({
+      by: 'userId',
+      where: {
+        roundId: {
+          in: event.rounds.map((round) => round.id),
+        },
+      },
+    })
+
     return {
       ...returnEvent,
-      leaderboards: [],
+      playedUsers: playedUsers.length,
     }
-
-  return {
-    ...returnEvent,
-    leaderboards: await gameLogService.getEventRoundLeaderboard(10, event.id),
   }
+
+  return returnEvent
 }
 
 export default {

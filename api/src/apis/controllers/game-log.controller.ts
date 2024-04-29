@@ -23,9 +23,9 @@ export const getAllTimeLeaderboard: RequestHandler = async (req, res) => {
  * @access Public
  */
 export const getEventsLeaderboard: RequestHandler = async (req, res) => {
-  const id = req.query.id as string
+  const slug = req.query.slug as string
   const offset = parseInt(<string>req.query.offset) || 10
-  const leaderboard = await gameLogService.getEventRoundLeaderboard(offset, id)
+  const leaderboard = await gameLogService.getEventRoundLeaderboard(offset, Number(slug))
 
   return res
     .status(StatusCodes.OK)

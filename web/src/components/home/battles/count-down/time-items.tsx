@@ -11,7 +11,7 @@ type PropsType = {
 function TimeItem({ value, label, size = 'normal', type, isHiddenSeparator = false }: PropsType) {
   if (type === 'animate')
     return (
-      <div className="flex items-start justify-center gap-1 text-default-text-lightest">
+      <div className="flex items-start justify-center text-default-text-lightest">
         <div className="flex-center flex-col gap-1">
           <AnimateCountDown number={value} size={size} />
 

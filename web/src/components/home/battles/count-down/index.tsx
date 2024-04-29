@@ -68,7 +68,7 @@ function CountDown({ size = 'normal', maxLength = 4, type = 'normal', endTime, o
   if (!isShowDays && !isShowHours && !isShowMinutes && !isShowSecondes) return <Loading />
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-center">
       {isShowDays && (
         <TimeItem
           value={remaining.days}

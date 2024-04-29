@@ -22,22 +22,20 @@ function StackItem({ name, status }: StackItemProps) {
   )
 }
 
-export default function BattleStacksList() {
+type Props = {
+  stacks: {
+    slug: number
+    name: string
+    status: BattleStatus
+  }[]
+}
+
+export default function BattleStacksList({ stacks }: Props) {
   return (
     <Panel className="mb-12 flex flex-wrap gap-4 p-4">
-      <StackItem name="世代交代" status={battle.STATUS.FINISHED} />
-
-      <StackItem name="世代交代" status={battle.STATUS.FINISHED} />
-
-      <StackItem name="世代交代" status={battle.STATUS.FINISHED} />
-
-      <StackItem name="世代交代" status={battle.STATUS.FINISHED} />
-
-      <StackItem name="世代交代" status={battle.STATUS.FINISHED} />
-
-      <StackItem name="世代交代" status={battle.STATUS.FINISHED} />
-
-      <StackItem name="世代交代" status={battle.STATUS.FINISHED} />
+      {stacks.map((stack) => (
+        <StackItem key={stack.slug} name={stack.name} status={stack.status} />
+      ))}
     </Panel>
   )
 }

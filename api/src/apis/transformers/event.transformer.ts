@@ -90,9 +90,12 @@ const getEventBySlug = (event: EventDetailResponse, currentUserLogs: GameLog[]) 
   status: event.status,
   startAt: event.startAt,
   rounds: event.rounds.map((round) => {
+    const startAt = new Date(new Date(event.startAt).getTime() + round.order * 15 * 60 * 1000)
+
     if (round.status === BattleStatus.UPCOMING) {
       return {
         order: round.order,
+        startAt,
         status: round.status,
         stack: round.gameStack.stack.name,
       }
@@ -103,6 +106,7 @@ const getEventBySlug = (event: EventDetailResponse, currentUserLogs: GameLog[]) 
     return {
       order: round.order,
       status: round.status,
+      startAt,
       stack: {
         slug: round.gameStack.stack.slug,
         name: round.gameStack.stack.name,
