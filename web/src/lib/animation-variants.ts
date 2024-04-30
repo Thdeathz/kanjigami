@@ -66,3 +66,27 @@ export const topLeader: TopLeaderVariants = {
     }
   }
 }
+
+export const breadCrumb: AnimationVariants = {
+  container: (delay = 0.1, stagger = 0.1) => ({
+    hidden: { opacity: 1 },
+    enter: {
+      opacity: 1,
+      transition: {
+        delayChildren: delay,
+        staggerChildren: stagger
+      }
+    }
+  }),
+  item: () => ({
+    hidden: { x: -20, opacity: 0 },
+    enter: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.15,
+        ease: 'easeInOut'
+      }
+    }
+  })
+}

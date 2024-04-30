@@ -18,7 +18,7 @@ export default function ThemeButton() {
 
   return (
     <Button className="text-xl" shape="circle" onClick={onToggleTheme}>
-      {theme === 'light' ? <BsSunFill /> : <BsMoonFill />}
+      {theme === 'light' ? <BsMoonFill /> : <BsSunFill />}
     </Button>
   )
 }

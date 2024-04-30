@@ -1,3 +1,4 @@
+import Breadcrumb from '@/components/layout/navbar/breadcrumb'
 import NotificationButton from '@/components/layout/navbar/notification-button'
 import RankWidget from '@/components/layout/navbar/rank-widget'
 import ThemeButton from '@/components/layout/navbar/theme-button'
@@ -9,7 +10,9 @@ export default async function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 flex h-[60px] w-full items-center justify-end bg-navbar px-4 py-3 backdrop-blur-[20px]">
-      <div className="w-full">{/* TODO: breadcrumb menu */}</div>
+      <div className="w-full">
+        <Breadcrumb />
+      </div>
 
       <RankWidget />
 
