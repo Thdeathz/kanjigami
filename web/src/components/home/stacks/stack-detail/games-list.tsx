@@ -10,7 +10,7 @@ export default function GamesList({ games }: Props) {
   return (
     <Panel theme="secondary" className="grid grid-cols-4 gap-8">
       {games.map((game) => (
-        <GameItem key={game.id} name={game.name} thumbnail={game.image} userScore={game.userPoint} />
+        <GameItem key={game.id} game={game} />
       ))}
     </Panel>
   )

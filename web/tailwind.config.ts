@@ -144,6 +144,7 @@ const config = {
         table: {
           header: 'var(--table-header-bg)'
         },
+        underlay: 'rgba(0, 0, 0, .7)',
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))'

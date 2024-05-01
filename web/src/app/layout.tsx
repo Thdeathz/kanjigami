@@ -27,7 +27,7 @@ export default function RootLayout({
           <div className="flex h-screen w-screen overflow-y-auto bg-default-bg text-default-text">
             <Sidebar />
 
-            <div className="h-max w-0 shrink grow">
+            <div className="relative h-max w-0 shrink grow">
               <Navbar />
 
               {children}
