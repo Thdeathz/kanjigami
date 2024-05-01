@@ -8,15 +8,16 @@ import morgan from 'morgan'
 
 import errorHandler from '@/apis/middlewares/error-handler'
 import APIs_V1 from '@/apis/routes/v1'
+import socketEvent from '@/apis/socket/socket'
 import corsOptions from '@/configs/cors-options'
 import passport from '@/configs/init.passport'
 import app from '@/servers/init.express'
 import transporter from '@/servers/init.mailer'
+import io from '@/servers/init.socket'
 
 dotenv.config()
 
 console.log(process.env.NODE_ENV)
-const PORT = process.env.PORT || 3500
 
 /* MIDDLEWARE */
 app.set('trust proxy', 'loopback')
@@ -33,12 +34,10 @@ app.use('/api/v1', APIs_V1)
 /* ERROR HANDLING */
 app.use(errorHandler)
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server up & running on port ${PORT}`)
-})
+io.on('connection', socketEvent)
 
-app.on('error', (error) => {
-  console.log(`❌ Server error: ${error}`)
+io.on('error', (error) => {
+  console.log(`❌ Socket error: ${error}`)
 })
 
 // nodemailer transporter

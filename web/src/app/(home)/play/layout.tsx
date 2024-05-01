@@ -1,5 +1,6 @@
 import React from 'react'
 
+import ConnectSocket from '@/components/connect-socket'
 import Underlay from '@/components/home/play/underlay'
 
 export default function GameLayout({
@@ -8,9 +9,9 @@ export default function GameLayout({
   children: React.ReactNode
 }>) {
   return (
-    <>
+    <ConnectSocket>
       {children}
       <Underlay />
-    </>
+    </ConnectSocket>
   )
 }
