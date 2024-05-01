@@ -4,7 +4,7 @@ const prisma = new PrismaClient()
 
 prisma.$use(async (params, next) => {
   if (params.model === 'GameLog') {
-    if (params.action === 'create') {
+    if (params.action === 'create' || params.action === 'update') {
       const { data } = params.args
 
       if (data?.point && data?.userId) {

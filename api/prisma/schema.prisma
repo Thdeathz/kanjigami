@@ -211,5 +211,6 @@ model GameLog {
   round     Round?     @relation(fields: [roundId], references: [id])
   user      User       @relation(fields: [userId], references: [id])
 
-  @@unique([gameStackId, roundId, userId])
+  @@unique([gameStackId, userId])
+  @@unique([roundId, userId])
 }

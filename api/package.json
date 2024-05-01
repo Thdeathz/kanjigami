@@ -37,7 +37,7 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "prisma": "^5.4.2",
-    "uuid": "^9.0.1"
+    "unique-slug": "^4.0.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
@@ -55,7 +55,7 @@
     "@types/otp-generator": "^4.0.0",
     "@types/passport": "^1.0.16",
     "@types/passport-jwt": "^4.0.1",
-    "@types/uuid": "^9.0.7",
+    "@types/unique-slug": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "eslint": "^8.57.0",

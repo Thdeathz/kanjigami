@@ -13,3 +13,11 @@ export const pick = <T extends object>(obj: T, keys: string[]): object => {
     return acc
   }, {})
 }
+
+/**
+ * Returns a random element from the given array.
+ * @param {T[]} arr The array to pick from.
+ * @returns {T}
+ * @example
+ */
+export const randomPick = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]

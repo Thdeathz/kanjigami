@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import dotenv from 'dotenv'
 import type { ErrorRequestHandler } from 'express'
+import { StatusCodes } from 'http-status-codes'
 
 import makeResponse from '@/apis/utils/make-response'
 
 dotenv.config()
 
 const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
-  const status: number = err.statusCode || res.statusCode || 500
+  const status: number = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR
 
   if (process.env.NODE_ENV === 'development') console.error(err)
 

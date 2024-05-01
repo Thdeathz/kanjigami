@@ -11,8 +11,21 @@ const gameLogSeeder = async (users: User[], gameStacks: GameStack[]) => {
   const gameLogs = await Promise.all(
     gameLogsData.map(
       async (gameLog) =>
-        await prisma.gameLog.create({
-          data: {
+        await prisma.gameLog.upsert({
+          where: {
+            gameStackId_userId: {
+              gameStackId: gameLog.gameStackId,
+              userId: gameLog.userId,
+            },
+          },
+          update: {
+            point: gameLog.point,
+            time: gameLog.time,
+            type: gameLog.type,
+            gameStackId: gameLog.gameStackId,
+            userId: gameLog.userId,
+          },
+          create: {
             point: gameLog.point,
             time: gameLog.time,
             type: gameLog.type,
