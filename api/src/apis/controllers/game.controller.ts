@@ -59,3 +59,18 @@ export const saveScore: RequestHandler = async (req, res) => {
 
   return res.status(StatusCodes.OK).json(makeResponse.defaultResponse('Save score success', StatusCodes.OK, data))
 }
+
+/**
+ * @desc Get game log detail
+ * @route GET /games/:id/log
+ * @access Private
+ */
+export const getGameResult: RequestHandler = async (req, res) => {
+  const { id } = req.params
+
+  const result = await gameService.getResult(id)
+
+  return res
+    .status(StatusCodes.OK)
+    .json(makeResponse.defaultResponse('Get game result success', StatusCodes.OK, result))
+}

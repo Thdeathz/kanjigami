@@ -21,7 +21,7 @@ export default function NavbarContent({ session }: Props) {
 
   return (
     <nav className="sticky top-0 z-50 flex h-[60px] w-full items-center justify-end bg-navbar px-4 py-3 backdrop-blur-[20px]">
-      <div className="w-full">
+      <div className="flex w-full items-center gap-6">
         {isPlayPage && <CollapseSidebar />}
         <Breadcrumb />
       </div>

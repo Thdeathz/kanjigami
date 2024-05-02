@@ -24,7 +24,7 @@ export const GlobalContextProvider = ({ children }: { children: React.ReactNode 
       toggle,
       setValue
     }),
-    [value, toggle]
+    [value, toggle, setValue]
   )
 
   return <GlobalContext.Provider value={contextValue}>{children}</GlobalContext.Provider>

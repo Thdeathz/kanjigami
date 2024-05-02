@@ -152,8 +152,6 @@ const getUserStats = async (userId: string) => {
     AND "GameLog"."gameStackId" IS NOT NULL
   `
 
-  console.log(eventStats, stackStats)
-
   return {
     event: {
       point: Number(eventStats[0]?.point),

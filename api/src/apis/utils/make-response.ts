@@ -3,7 +3,6 @@ const defaultResponse = <T>(message: string, status: number, data?: T) => {
     message,
     status,
     data,
-    isError: true,
   })
 }
 

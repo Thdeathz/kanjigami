@@ -28,6 +28,7 @@ const config = {
         'auth-blur-r': 'linear-gradient(to left,var(--clr-bg),transparent)',
         'auth-blur-l': 'linear-gradient(to right,var(--clr-bg),transparent)',
         'auth-bottom': 'url(/images/auth-bottom.png)',
+        game: 'var(--clr-game-bg)',
         navbar: 'linear-gradient(to right,rgb(var(--rgb-gray-0)) 50%,transparent)',
         sidebar: 'linear-gradient(175deg,rgb(var(--rgb-gray-1)) 0,rgba(var(--rgb-gray-0),.7) 85%)',
         'side-link':
@@ -144,7 +145,7 @@ const config = {
         table: {
           header: 'var(--table-header-bg)'
         },
-        underlay: 'rgba(0, 0, 0, .7)',
+        underlay: 'var(--clr-underlay)',
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))'

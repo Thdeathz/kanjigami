@@ -2,7 +2,7 @@
 
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { IRemainingTime } from '@/@types/battle'
 import TimeItem from '@/components/home/battles/count-down/time-items'
@@ -21,7 +21,7 @@ function CountDown({ size = 'normal', maxLength = 4, type = 'normal', endTime, o
   const [remaining, setRemaining] = useState<IRemainingTime | null>(null)
   const intervalRef = useRef<NodeJS.Timeout>()
 
-  const update = () => {
+  const update = useCallback(() => {
     const now = new Date()
     const endTimeTest = endTime ?? new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
     const countTo = new Date(endTimeTest)
@@ -47,7 +47,7 @@ function CountDown({ size = 'normal', maxLength = 4, type = 'normal', endTime, o
     }
 
     setRemaining(diff)
-  }
+  }, [endTime, maxLength, onFinish])
 
   useEffect(() => {
     update()
@@ -58,7 +58,7 @@ function CountDown({ size = 'normal', maxLength = 4, type = 'normal', endTime, o
     return () => {
       clearInterval(interval)
     }
-  }, [])
+  }, [update])
 
   const isShowDays = remaining?.days && remaining.days !== undefined
   const isShowHours = (isShowDays || remaining?.hours) && remaining.hours !== undefined

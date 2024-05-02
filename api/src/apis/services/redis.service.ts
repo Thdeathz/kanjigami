@@ -13,6 +13,10 @@ const get = async <T>(category: string, key: string): Promise<T | null> => {
   return JSON.parse(result)
 }
 
+const ttl = async (category: string, key: string) => {
+  return await redisClient.ttl(`${category}:${key}`)
+}
+
 const del = async (category: string, key: string) => {
   return await redisClient.del(`${category}:${key}`)
 }
@@ -43,4 +47,5 @@ export default {
   hSet,
   hGet,
   deleteByKey,
+  ttl,
 }

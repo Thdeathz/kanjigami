@@ -1,6 +1,9 @@
 # Uncheck sharkaUI library
 src/components/ui/*
 
+# Uncheck game logic
+src/components/game/kanji-shooter/entities/*
+
 # Uncheck config file
 .eslintrc.js
 *.config.js

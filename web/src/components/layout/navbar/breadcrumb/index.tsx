@@ -10,6 +10,7 @@ import { RiSwordFill } from 'react-icons/ri'
 import { breadCrumb } from '@/lib/animation-variants'
 
 import CrumbItem from './CrumbItem'
+import PlayPageBreadcrumb from './play-page-breadcrumb'
 
 function Crumb({ pathnames }: { pathnames: string[] }) {
   if (pathnames.length < 2) return null
@@ -47,6 +48,8 @@ function Crumb({ pathnames }: { pathnames: string[] }) {
         )}
       </>
     )
+
+  if (pathnames[0] === 'play') return <PlayPageBreadcrumb id={pathnames[1]} />
   return null
 }
 

@@ -19,7 +19,20 @@ export default function useQueryParams() {
     replace(`${pathname}?${params.toString()}`)
   }
 
+  const onHardSearch = (key: string, value: string) => {
+    const params = new URLSearchParams()
+
+    if (value) {
+      params.set(key, value)
+    } else {
+      params.delete(key)
+    }
+
+    replace(`${pathname}?${params.toString()}`)
+  }
+
   return {
-    onSearch
+    onSearch,
+    onHardSearch
   }
 }

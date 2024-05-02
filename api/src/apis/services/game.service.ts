@@ -15,6 +15,7 @@ const getGameStackDetail = async (id: string) => {
       stack: {
         select: {
           id: true,
+          slug: true,
           name: true,
         },
       },
@@ -68,6 +69,7 @@ const getGameData = async (id: string) => {
       id: true,
       content: true,
       hiragana: true,
+      romaji: true,
       image: true,
     },
   })
@@ -108,8 +110,41 @@ const saveScore = async (gameStackId: string, userId: string, { score, time, typ
   })
 }
 
+const getResult = async (gameLogId: string) => {
+  return await prisma.gameLog.findUnique({
+    where: {
+      id: gameLogId,
+    },
+    select: {
+      id: true,
+      point: true,
+      time: true,
+      type: true,
+      gameStack: {
+        select: {
+          id: true,
+          stack: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          game: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+            },
+          },
+        },
+      },
+    },
+  })
+}
+
 export default {
   getGameStackDetail,
   getGameData,
   saveScore,
+  getResult,
 }

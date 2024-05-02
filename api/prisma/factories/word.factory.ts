@@ -21,7 +21,7 @@ const wordFactory = async (kanjis: Kanji[]) => {
 
   await Promise.all(
     Array.from({ length: 750 }, async () => {
-      const kanji = faker.helpers.uniqueArray(kanjis, faker.number.int({ min: 2, max: 4 }))
+      const kanji = faker.helpers.uniqueArray(kanjis, faker.number.int({ min: 1, max: 2 }))
       const content = kanji.map((k) => k.content).join('')
       const hiragana = await kuroshiro.convert(content, { to: 'hiragana' })
       const romaji = wanakana.toRomaji(hiragana)

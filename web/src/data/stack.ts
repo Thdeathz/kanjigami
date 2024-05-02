@@ -12,7 +12,7 @@ export const useGetAllStacksQuery = (filterOption?: string, searchValue?: string
 
 export const useGetStackDetailQuery = (slug: string) =>
   useQuery({
-    queryKey: ['stack', slug],
+    queryKey: ['stacks', slug],
     queryFn: async () => getStackDetail(slug)
   })
 
