@@ -6,7 +6,7 @@ export interface IGetGameContentRequest {
 export interface IUpdateGameStatusRequest {
   userId: string
   sessionId: string
-  kanjiId: string
+  wordId: string
 }
 
 export interface ISaveGameScoreRequest {

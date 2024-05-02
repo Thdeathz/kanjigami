@@ -8,12 +8,12 @@ import morgan from 'morgan'
 
 import errorHandler from '@/apis/middlewares/error-handler'
 import APIs_V1 from '@/apis/routes/v1'
-import socketEvent from '@/apis/sockets/socket'
 import corsOptions from '@/configs/cors-options'
 import passport from '@/configs/init.passport'
 import app from '@/servers/init.express'
 import transporter from '@/servers/init.mailer'
 import io from '@/servers/init.socket'
+import socketEvent from '@/sockets/socket'
 
 dotenv.config()
 

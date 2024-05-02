@@ -309,3 +309,30 @@
   mask-image: radial-gradient(circle at center -1rem, transparent 0, transparent 1.75rem, #fff 0, #fff 100%);
   pointer-events: none;
 }
+
+/* FLIP CARD GAME ANIMATION */
+.card {
+  perspective: 500px;
+  transform-style: preserve-3d !important;
+  transition:
+    transform 0.35s,
+    visibility 0.3s ease-out;
+}
+
+.card.flip {
+  transform: rotateY(180deg) !important;
+}
+
+.card-front {
+  transform: rotateY(180deg) !important;
+}
+
+.card-front,
+.card-back {
+  backface-visibility: hidden;
+}
+
+.card-front.pre-hidden > div,
+.card-back.pre-hidden > div {
+  transform: translateX(-3px) !important;
+}

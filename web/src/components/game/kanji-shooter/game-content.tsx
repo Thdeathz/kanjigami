@@ -3,8 +3,7 @@ import React, { useCallback, useEffect, useRef } from 'react'
 import { useEventListener } from 'usehooks-ts'
 
 import { IKanjiShooterContent } from '@/@types/game'
-
-import Game from './entities/game'
+import Game from '@/components/game/kanji-shooter/entities/game'
 
 type PropsType = {
   gameContent: IKanjiShooterContent[]

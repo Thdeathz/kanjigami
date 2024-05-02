@@ -77,3 +77,32 @@ export interface IEnemy {
   scale?: number
   maxLives?: number
 }
+
+export interface IFlipCardGameContent {
+  id: string
+  content: string
+  hiragana: string
+  image: string
+}
+
+export interface IImageContent {
+  type: 'image'
+  id: string
+  image: string
+  hiragana: string
+  isVisible: boolean
+}
+
+export interface IWordContent {
+  type: 'word'
+  id: string
+  content: string
+  isVisible: boolean
+}
+
+export interface ActiveCard {
+  card: EventTarget & HTMLDivElement
+  word: IImageContent | IWordContent
+}
+
+export type FlipCardGameContent = IImageContent | IWordContent

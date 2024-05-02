@@ -1,7 +1,8 @@
 import { StatusCodes } from 'http-status-codes'
 
-import { ISaveScoreRequest } from '@/apis/@types/game'
+import { IImageContent, IWordContent, ISaveScoreRequest, IWord } from '@/apis/@types/game'
 import prisma from '@/apis/databases/init.prisma'
+import { shuffleArray } from '@/apis/utils/array'
 import HttpError from '@/apis/utils/http-error'
 import { randomPick } from '@/apis/utils/pick'
 
@@ -74,11 +75,52 @@ const getGameData = async (id: string) => {
     },
   })
 
+  if (gameStack.game.name === 'Kanji Shooter') {
+    return {
+      gameStack,
+      words: getKanjiShooterGameContent(words),
+    }
+  }
+
+  if (gameStack.game.name === 'Blind Flip Card') {
+    return {
+      gameStack,
+      words: shuffleArray(getFlipCardGameContent(words)),
+    }
+  }
+
   return {
     gameStack,
     words,
   }
 }
+
+const getKanjiShooterGameContent = (words: IWord[]) =>
+  words.map((word) => ({
+    id: word.id,
+    content: word.content,
+    romaji: word.romaji,
+  }))
+
+const getFlipCardGameContent = (words: IWord[]) =>
+  words.reduce((data: (IImageContent | IWordContent)[], item: IWord) => {
+    return [
+      ...data,
+      {
+        type: 'image',
+        id: item.id,
+        image: item.image,
+        hiragana: item.hiragana,
+        isVisible: true,
+      } as IImageContent,
+      {
+        type: 'word',
+        id: item.id,
+        content: item.content,
+        isVisible: true,
+      } as IWordContent,
+    ]
+  }, [])
 
 const saveScore = async (gameStackId: string, userId: string, { score, time, type }: ISaveScoreRequest) => {
   return await prisma.gameLog.upsert({

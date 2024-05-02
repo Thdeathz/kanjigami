@@ -28,11 +28,28 @@ export interface IWord {
   content: string
   hiragana: string
   romaji: string
-  image: string
+  image: string | null
 }
 
-export interface IGameData {
+export interface IGameData<T> {
   user: JwtPayload
   gameStack: IGameStack
-  words: IWord[]
+  words: T[]
 }
+
+export interface IImageContent {
+  type: 'image'
+  id: string
+  image: string
+  hiragana: string
+  isVisible: boolean
+}
+
+export interface IWordContent {
+  type: 'word'
+  id: string
+  content: string
+  isVisible: boolean
+}
+
+export type FlipCardGameContent = IImageContent | IWordContent

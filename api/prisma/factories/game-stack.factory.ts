@@ -15,11 +15,11 @@ const gameStackFactory = async (games: Game[], stacks: Stack[]) => {
       games.map((game) => {
         let numberOfWords = 100
         if (game.name === 'Blind Flip Card') {
-          numberOfWords = 24
+          numberOfWords = 12
         }
 
         if (game.name === 'Multiple Choice') {
-          numberOfWords = 12
+          numberOfWords = 10
         }
 
         const timeLimit = 300

@@ -5,6 +5,10 @@ const setex = async <T>(category: string, key: string, ex: string, value: T) => 
   return await redisClient.setex(`${category}:${key}`, convertExToSeconds(ex), JSON.stringify(value))
 }
 
+const reSet = async <T>(category: string, key: string, value: T) => {
+  return await redisClient.set(`${category}:${key}`, JSON.stringify(value), 'KEEPTTL')
+}
+
 const get = async <T>(category: string, key: string): Promise<T | null> => {
   const result = await redisClient.get(`${category}:${key}`)
 
@@ -48,4 +52,5 @@ export default {
   hGet,
   deleteByKey,
   ttl,
+  reSet,
 }

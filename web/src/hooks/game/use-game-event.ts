@@ -1,24 +1,23 @@
 import React, { useCallback, useEffect } from 'react'
 
-import { IKanjiShooterContent } from '@/@types/game'
 import { socket } from '@/components/connect-socket'
 import useInvalidateTag from '@/hooks/use-invalidate-tag'
 import useQueryParams from '@/hooks/use-query-params'
 
-type PropsType = {
+type PropsType<T> = {
   sessionId: string
   userId: string
-  setGameContent: React.Dispatch<React.SetStateAction<IKanjiShooterContent[]>>
+  setGameContent: React.Dispatch<React.SetStateAction<T[]>>
 }
 
-export default function useGameEvent({ sessionId, userId, setGameContent }: PropsType) {
+export default function useGameEvent<T>({ sessionId, userId, setGameContent }: PropsType<T>) {
   const { onSearch } = useQueryParams()
   const { invalidateTag } = useInvalidateTag()
 
   // const onContentNotFound = useOnContentNotFound(stackId, gameId)
 
   const onGameContent = useCallback(
-    ({ words }: { words: IKanjiShooterContent[] }) => {
+    ({ words }: { words: T[] }) => {
       setGameContent(words)
     },
     [setGameContent]
@@ -46,5 +45,5 @@ export default function useGameEvent({ sessionId, userId, setGameContent }: Prop
       // socket.off('game:content-not-found', onContentNotFound)
       socket.off('game:calculate-score:success', onCalculateScoreSuccess)
     }
-  }, [onCalculateScoreSuccess, onGameContent, sessionId, userId])
+  }, [sessionId, userId])
 }

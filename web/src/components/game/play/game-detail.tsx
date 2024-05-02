@@ -8,6 +8,8 @@ import Loading from '@/components/loading'
 import { useGetGameStackQuery } from '@/data/game'
 import useGlobalContext from '@/hooks/use-global-context'
 
+import FlipCard from '../flip-card'
+
 import GameResult from './game-result'
 
 type Props = {
@@ -31,7 +33,11 @@ export default function GameDetail({ id, sessionId, userId, logId }: Props) {
 
   if (logId) return <GameResult gameStack={gameStack} logId={logId} />
 
-  if (sessionId) return <KanjiShooter sessionId={sessionId} userId={userId} />
+  if (sessionId) {
+    if (gameStack.game.name === 'Kanji Shooter') return <KanjiShooter sessionId={sessionId} userId={userId} />
+
+    if (gameStack.game.name === 'Blind Flip Card') return <FlipCard sessionId={sessionId} userId={userId} />
+  }
 
   return <IdleMenu gameStack={gameStack} />
 }
