@@ -45,7 +45,7 @@ const handleSaveScore = async (
 }
 
 const calculateScore = (gameType: string, time: number, score: number) => {
-  if (gameType === 'Blind Flip Card') {
+  if (gameType === 'Blind Flip Card' || gameType === 'Multiple Choice') {
     return score * 16
   }
 

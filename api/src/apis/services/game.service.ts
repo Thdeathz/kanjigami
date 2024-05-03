@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 
-import { IImageContent, IWordContent, ISaveScoreRequest, IWord } from '@/apis/@types/game'
+import { IImageContent, IWordContent, ISaveScoreRequest, IWord, IMultipleChoiceContent } from '@/apis/@types/game'
 import prisma from '@/apis/databases/init.prisma'
 import { shuffleArray } from '@/apis/utils/array'
 import HttpError from '@/apis/utils/http-error'
@@ -89,6 +89,13 @@ const getGameData = async (id: string) => {
     }
   }
 
+  if (gameStack.game.name === 'Multiple Choice') {
+    return {
+      gameStack,
+      words: getMultipleChoiceGameContent(words),
+    }
+  }
+
   return {
     gameStack,
     words,
@@ -121,6 +128,53 @@ const getFlipCardGameContent = (words: IWord[]) =>
       } as IWordContent,
     ]
   }, [])
+
+const getMultipleChoiceGameContent = (words: IWord[]) => {
+  const questions: IMultipleChoiceContent[] = []
+
+  for (let i = 0; i < words.length; i++) {
+    const answer = words[i % words.length]
+    const wrongAnswers = shuffleArray(words.filter((kanji) => kanji.id !== answer.id)).slice(0, 3)
+    const options = shuffleArray([answer, ...wrongAnswers])
+
+    if (Math.random() < 0.3 && answer.image) {
+      questions.push({
+        answer: {
+          id: answer.id,
+          hiragana: answer.hiragana,
+        },
+        options: options.map((option) => ({
+          id: option.id,
+          hiragana: option.hiragana,
+        })),
+        question: {
+          type: 'image',
+          id: answer.id,
+          image: answer.image,
+        },
+      })
+      continue
+    }
+
+    questions.push({
+      answer: {
+        id: answer.id,
+        hiragana: answer.hiragana,
+      },
+      options: options.map((option) => ({
+        id: option.id,
+        hiragana: option.hiragana,
+      })),
+      question: {
+        type: 'word',
+        id: answer.id,
+        content: answer.content,
+      },
+    })
+  }
+
+  return questions
+}
 
 const saveScore = async (gameStackId: string, userId: string, { score, time, type }: ISaveScoreRequest) => {
   return await prisma.gameLog.upsert({

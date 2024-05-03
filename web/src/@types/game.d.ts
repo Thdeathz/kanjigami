@@ -29,6 +29,7 @@ export interface IGameResult {
   }
 }
 
+// KANJI SHOOTER
 export interface IKanjiShooterContent {
   id: string
   content: string
@@ -78,6 +79,7 @@ export interface IEnemy {
   maxLives?: number
 }
 
+// FLIP CARD GAME
 export interface IFlipCardGameContent {
   id: string
   content: string
@@ -106,3 +108,28 @@ export interface ActiveCard {
 }
 
 export type FlipCardGameContent = IImageContent | IWordContent
+
+// MULTIPLE CHOICE GAME
+export interface IWordQuestion {
+  id: string
+  content: string
+  type: 'word'
+}
+
+export interface IImageQuestion {
+  id: string
+  type: 'image'
+  image: string
+}
+
+export interface Option {
+  id: string
+  hiragana: string
+}
+
+export interface IMultipleChoiceGameContent {
+  question: IWordQuestion | IImageQuestion
+  options: Option[]
+  answer: Option
+  selectedAnswer?: number
+}

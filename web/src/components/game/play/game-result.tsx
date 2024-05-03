@@ -18,17 +18,15 @@ export default function GameResult({ gameStack, logId }: Props) {
   if (!gameLog) return <p>Game log not found.</p>
 
   return (
-    <div className="mx-auto w-[30rem]">
-      <Panel>
-        <h3>
-          <span>Point:</span> {gameLog.point}
-        </h3>
-        <h3>
-          <span>Time:</span> {gameLog.time}
-        </h3>
+    <Panel wrapperClassName="place-center mx-auto w-[30rem]">
+      <h3>
+        <span>Point:</span> {gameLog.point}
+      </h3>
+      <h3>
+        <span>Time:</span> {gameLog.time}
+      </h3>
 
-        <ButtonStart gameStackId={gameStack.id} />
-      </Panel>
-    </div>
+      <ButtonStart gameStackId={gameStack.id} />
+    </Panel>
   )
 }

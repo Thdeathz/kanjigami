@@ -9,7 +9,7 @@ export default function GameLayout({
 }>) {
   return (
     <div className="min-h-content bg-game bg-cover bg-center p-12">
-      <div className="mx-auto max-w-[1600px]">
+      <div className="mx-auto h-full max-w-[1600px]">
         {children}
 
         <Underlay />

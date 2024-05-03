@@ -1,4 +1,4 @@
-import { GameLogType } from '@prisma/client'
+import { GameLogType, Word } from '@prisma/client'
 
 import { JwtPayload } from './auth'
 
@@ -53,3 +53,9 @@ export interface IWordContent {
 }
 
 export type FlipCardGameContent = IImageContent | IWordContent
+
+export interface IMultipleChoiceContent {
+  answer: Pick<Word, 'id' | 'hiragana'>
+  options: Pick<Word, 'id' | 'hiragana'>[]
+  question: (Pick<Word, 'id' | 'content'> & { type: 'word' }) | (Pick<Word, 'id'> & { type: 'image'; image: string })
+}

@@ -19,6 +19,9 @@ const config = {
       minHeight: {
         content: 'calc(100vh - 3.75rem - 2.5rem)'
       },
+      height: {
+        content: 'calc(100vh - 3.75rem - 2.5rem - 6rem)'
+      },
       backgroundColor: {
         logo: 'rgb(var(--rgb-gray-0))',
         timer: 'var(--clr-timer)',

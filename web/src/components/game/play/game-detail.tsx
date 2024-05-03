@@ -2,15 +2,14 @@
 
 import { useUnmount } from 'usehooks-ts'
 
+import FlipCard from '@/components/game/flip-card'
 import IdleMenu from '@/components/game/idle-menu'
 import KanjiShooter from '@/components/game/kanji-shooter'
+import MultipleChoice from '@/components/game/multiple-choice'
+import GameResult from '@/components/game/play/game-result'
 import Loading from '@/components/loading'
 import { useGetGameStackQuery } from '@/data/game'
 import useGlobalContext from '@/hooks/use-global-context'
-
-import FlipCard from '../flip-card'
-
-import GameResult from './game-result'
 
 type Props = {
   id: string
@@ -37,6 +36,8 @@ export default function GameDetail({ id, sessionId, userId, logId }: Props) {
     if (gameStack.game.name === 'Kanji Shooter') return <KanjiShooter sessionId={sessionId} userId={userId} />
 
     if (gameStack.game.name === 'Blind Flip Card') return <FlipCard sessionId={sessionId} userId={userId} />
+
+    if (gameStack.game.name === 'Multiple Choice') return <MultipleChoice sessionId={sessionId} userId={userId} />
   }
 
   return <IdleMenu gameStack={gameStack} />
