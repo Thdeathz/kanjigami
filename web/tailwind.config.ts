@@ -126,6 +126,7 @@ const config = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         footer: 'rgba(var(--rgb-gray-0),.75)',
+        box: 'var(--clr-box-bg-darker)',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',

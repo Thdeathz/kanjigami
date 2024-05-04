@@ -152,12 +152,13 @@ interface FormInputProps extends InputProps {
   label: string
   helperText?: React.ReactNode
   prefix?: string
+  inputClass?: string
 }
 
 const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
-  ({ label, helperText, className, prefix, ...props }, ref) => {
+  ({ label, helperText, className, prefix, inputClass, ...props }, ref) => {
     return (
-      <FormItem className="form-item-container">
+      <FormItem className={cn('form-item-container', className)}>
         <FormLabel>{label}</FormLabel>
         {prefix ? (
           <div className="mt-1.5 flex items-center">
@@ -165,12 +166,12 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
               {prefix}
             </p>
             <FormControl>
-              <Input ref={ref} {...props} className={cn('rounded-s-[0]', className)} />
+              <Input ref={ref} {...props} className={cn('rounded-s-[0]', inputClass)} />
             </FormControl>
           </div>
         ) : (
           <FormControl className="mt-1.5">
-            <Input ref={ref} {...props} className={cn(className, '')} />
+            <Input ref={ref} {...props} className={cn(inputClass, '')} />
           </FormControl>
         )}
 

@@ -80,4 +80,42 @@ const TableCaption = React.forwardRef<HTMLTableCaptionElement, React.HTMLAttribu
 )
 TableCaption.displayName = 'TableCaption'
 
-export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption }
+type DefaultTableProps = {
+  columns: {
+    title: string
+    dataIndex: string | number
+    render?: (value: any, record: any) => React.ReactNode
+  }[]
+  dataSources: {
+    [key: string]: React.ReactNode
+  }[]
+}
+
+const DefaultTable = ({ columns, dataSources }: DefaultTableProps) => {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          {columns.map((column) => (
+            <TableHead key={column.dataIndex}>{column.title}</TableHead>
+          ))}
+        </TableRow>
+      </TableHeader>
+
+      <TableBody>
+        {dataSources.map((row, index) => (
+          <TableRow key={index} isEven={index % 2 !== 0}>
+            {columns.map((column) => (
+              <TableCell key={column.dataIndex}>
+                {column.render ? column.render(row[column.dataIndex], row) : row[column.dataIndex]}
+              </TableCell>
+            ))}
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  )
+}
+DefaultTable.displayName = 'DefaultTable'
+
+export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption, DefaultTable }

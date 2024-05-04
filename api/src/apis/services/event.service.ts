@@ -78,7 +78,7 @@ const getAllEvents = async ({ page, offset }: PaginationRequest, status?: string
   return { total, events: eventTransformer.getAllEvents(events as EventsResponse[], topUsers) }
 }
 
-const getEventBySlug = async (slug: string, userId: string) => {
+const getEventBySlug = async (slug: string, currentUserId?: string) => {
   const event = await prisma.event.findUnique({
     where: {
       slug: Number(slug),
@@ -143,7 +143,7 @@ const getEventBySlug = async (slug: string, userId: string) => {
       roundId: {
         in: event.rounds.map((round) => round.id),
       },
-      userId,
+      userId: currentUserId ?? '',
     },
     select: {
       point: true,

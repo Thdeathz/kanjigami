@@ -10,34 +10,16 @@ import { RiSettings3Fill, RiSwordFill } from 'react-icons/ri'
 
 import AppLogo from '@/components/layout/sidebar/app-logo'
 import SideLink from '@/components/layout/sidebar/side-link'
+import SideSection from '@/components/layout/sidebar/side-section'
 import UpgradePlusButton from '@/components/layout/sidebar/upgrade-plus'
 import useGlobalContext from '@/hooks/use-global-context'
 import { cn } from '@/lib/utils'
-
-type SideSectionProps = {
-  title?: string
-  children: React.ReactNode
-}
-
-function SideSection({ title, children }: SideSectionProps) {
-  return (
-    <div className="mt-4 pl-8">
-      {title && (
-        <div className="mb-2 ml-[-2rem] bg-section-heading py-1 pl-8 text-base font-semibold uppercase leading-[1.125rem] text-sidebar-link opacity-50">
-          {title}
-        </div>
-      )}
-
-      {children}
-    </div>
-  )
-}
 
 type SideMenuProps = {
   currentUsername?: string
 }
 
-export function SidebarMenu({ currentUsername }: SideMenuProps) {
+export function UserSidebarMenu({ currentUsername }: SideMenuProps) {
   return (
     <>
       <div className="grow border-r border-solid border-border-1">
@@ -67,6 +49,22 @@ export function SidebarMenu({ currentUsername }: SideMenuProps) {
 
       <UpgradePlusButton />
     </>
+  )
+}
+
+export function AdminSidebarMenu() {
+  return (
+    <div className="border-r border-solid border-border-1">
+      <SideSection>
+        <SideLink link="/admin" icon={<FaHome />} title="Dashboard" />
+      </SideSection>
+
+      <SideSection title="Setting">
+        <SideLink link="/admin/home" icon={<FaHome />} title="Home" />
+        <SideLink link="/admin/battles" icon={<RiSwordFill />} title="Battle" />
+        <SideLink link="/admin/stacks" icon={<BsStack />} title="Stack" />
+      </SideSection>
+    </div>
   )
 }
 
@@ -102,7 +100,7 @@ export default function SidebarContent({ session }: Props) {
         <AppLogo />
       </div>
 
-      <SidebarMenu currentUsername={session?.user.name} />
+      {session?.user.role === 'ADMIN' ? <AdminSidebarMenu /> : <UserSidebarMenu currentUsername={session?.user.name} />}
     </aside>
   )
 }

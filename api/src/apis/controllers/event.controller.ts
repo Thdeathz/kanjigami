@@ -38,7 +38,7 @@ export const getEventBySlug: RequestHandler = async (req, res) => {
 
   const user = req.user as JwtPayload
 
-  const data = await eventService.getEventBySlug(slug, user.id)
+  const data = await eventService.getEventBySlug(slug, user?.id)
 
   res.json(makeResponse.defaultResponse('Get event by slug success', StatusCodes.OK, data))
 }

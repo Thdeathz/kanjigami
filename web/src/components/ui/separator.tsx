@@ -19,4 +19,19 @@ const Separator = React.forwardRef<
 ))
 Separator.displayName = SeparatorPrimitive.Root.displayName
 
-export { Separator }
+type SectionDividerProps = {
+  title: string
+  className?: string
+}
+
+const SectionDivider = ({ title, className }: SectionDividerProps) => {
+  return (
+    <div className={cn('flex-center', className)}>
+      <span className="whitespace-nowrap bg-box pe-4 font-semibold">{title}</span>
+      <Separator className="w-0 shrink grow" />
+    </div>
+  )
+}
+SectionDivider.displayName = 'SectionDivider'
+
+export { Separator, SectionDivider }

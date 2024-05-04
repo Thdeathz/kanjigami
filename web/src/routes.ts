@@ -2,17 +2,9 @@
  * An array of public routes that are accessible to all users.
  * @type {RegExp[]}
  */
-export const publicRoutes: RegExp[] = [
-  /\//,
-  /\/battles/,
-  /\/stacks/,
-  /\/leaderboard/,
-  /\/player/,
-  /\/me/,
-  /\/settings/,
-  /\/battles\/S+/,
-  /\/stacks\/S+/
-]
+export const publicRoutes: RegExp[] = [/\/battles/, /\/stacks/, /\/leaderboard/, /\/player/, /\/battles/, /\/stacks/]
+
+export const adminRoutesPrefix: string = '/admin'
 
 /**
  * An array of authentication routes that are only accessible to unauthenticated users.
@@ -23,7 +15,7 @@ export const authRoutes: RegExp[] = [/\/login/, /\/register/, /\/forgot-password
  * An array of protected routes that are only accessible to authenticated users.s
  * @type {RegExp[]}
  */
-export const protectedRoutes: RegExp[] = []
+export const protectedRoutes: RegExp[] = [/\/me/, /\/settings/, /\/play\/S+/]
 
 /**
  * The prefix for the API routes.
@@ -36,3 +28,5 @@ export const apiAuthPrefix: string = '/api/auth'
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT: string = '/'
+
+export const DEFAULT_LOGIN_REDIRECT_ADMIN: string = '/admin'

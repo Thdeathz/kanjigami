@@ -7,10 +7,18 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useToggle } from 'usehooks-ts'
 
+import { IUserInfo } from '@/@types/auth'
+
 import styles from './RankWidget.module.css'
 
-export default function RankWidget() {
+type Props = {
+  currentUser?: IUserInfo
+}
+
+export default function RankWidget({ currentUser }: Props) {
   const [showRankName, toggle, setShowRankName] = useToggle(false)
+
+  if (currentUser?.role !== 'USER') return null
 
   return (
     <motion.div

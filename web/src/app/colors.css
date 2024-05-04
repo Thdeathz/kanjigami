@@ -47,7 +47,7 @@
     --clr-tile-header: #e2e8f0;
 
     --clr-dialog-bg: #e2e8f0;
-    --clr-dialog-bg-darker: #ebeff3;
+    --clr-box-bg-darker: #ebeff3;
     --clr-editor-bg: #f6f9fb;
 
     --clr-colorlist: #fff;
@@ -219,7 +219,7 @@
     --clr-tile-header: #212a32;
 
     --clr-dialog-bg: #13181c;
-    --clr-dialog-bg-darker: #121518;
+    --clr-box-bg-darker: #121518;
     --clr-editor-bg: #07080b;
 
     --clr-colorlist: #000;
