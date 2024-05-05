@@ -17,7 +17,7 @@ export default function AdminBattlesPage({ searchParams }: Props) {
   const page = searchParams.page || '1'
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="space-y-12">
       <PageHeader
         icon={<RiSwordFill />}
         title="Online battles"

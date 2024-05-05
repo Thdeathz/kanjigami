@@ -28,7 +28,7 @@ export default function index({ params, searchParams }: Props) {
   const word = searchParams?.word || ''
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="space-y-12">
       <Suspense key={word} fallback={<Loading className="text-2xl" />}>
         <StackDetail slug={slug} openWord={word} />
       </Suspense>

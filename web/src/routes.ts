@@ -2,7 +2,15 @@
  * An array of public routes that are accessible to all users.
  * @type {RegExp[]}
  */
-export const publicRoutes: RegExp[] = [/\/battles/, /\/stacks/, /\/leaderboard/, /\/player/, /\/battles/, /\/stacks/]
+export const publicRoutes: RegExp[] = [
+  /\/battles/,
+  /\/stacks/,
+  /\/leaderboard/,
+  /\/player/,
+  /\/battles/,
+  /\/stacks/,
+  /\/plus/
+]
 
 export const adminRoutesPrefix: string = '/admin'
 

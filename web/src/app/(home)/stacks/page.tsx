@@ -27,7 +27,7 @@ export default async function KanjiStackPage({
   const session = await auth()
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="space-y-12">
       <PageHeader icon={<BsStack />} title="Kanji stack" description="Play game and learn more kanji" />
 
       <RootNotification />

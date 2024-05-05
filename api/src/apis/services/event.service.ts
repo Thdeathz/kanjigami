@@ -1,10 +1,13 @@
 import { GameLog } from '@prisma/client'
 
-import { PaginationRequest } from '../@types'
-import prisma from '../databases/init.prisma'
-import eventTransformer, { EventDetailResponse, EventsResponse } from '../transformers/event.transformer'
-
-import gameLogService from './game-log.service'
+import { PaginationRequest } from '@/apis/@types'
+import prisma from '@/apis/databases/init.prisma'
+import gameLogService from '@/apis/services/game-log.service'
+import eventTransformer, {
+  EventDetailResponse,
+  EventsResponse,
+  UserStatsResponse,
+} from '@/apis/transformers/event.transformer'
 
 const getFilter = (status?: string, search?: string) => {
   let returnFilter = {}
@@ -173,7 +176,132 @@ const getEventBySlug = async (slug: string, currentUserId?: string) => {
   return returnEvent
 }
 
+const getUserPlayedEventsList = async (userId: string) => {
+  const playedEvents = await prisma.gameLog.groupBy({
+    by: ['roundId'],
+    where: {
+      userId,
+      roundId: { not: null },
+    },
+  })
+
+  if (playedEvents.length === 0) return []
+
+  const playedEventsList = await prisma.event.findMany({
+    where: {
+      rounds: {
+        some: {
+          id: {
+            in: playedEvents.map((event) => event.roundId!),
+          },
+        },
+      },
+    },
+    select: {
+      id: true,
+      slug: true,
+      name: true,
+    },
+    orderBy: {
+      slug: 'desc',
+    },
+  })
+
+  return playedEventsList
+}
+
+const getCondition = (userId: string, slug?: string) => {
+  if (!slug)
+    return {
+      rounds: {
+        some: {
+          logs: {
+            some: {
+              userId,
+            },
+          },
+        },
+      },
+    }
+
+  return {
+    AND: [
+      {
+        slug: Number(slug),
+      },
+      {
+        rounds: {
+          some: {
+            logs: {
+              some: {
+                userId,
+              },
+            },
+          },
+        },
+      },
+    ],
+  }
+}
+
+const getUserEventStats = async (userId: string, slug?: string) => {
+  const event = await prisma.event.findMany({
+    where: getCondition(userId, slug),
+    select: {
+      id: true,
+      slug: true,
+      name: true,
+      rounds: {
+        select: {
+          id: true,
+          order: true,
+          status: true,
+          gameStack: {
+            select: {
+              stack: {
+                select: {
+                  slug: true,
+                  name: true,
+                  image: true,
+                },
+              },
+              game: {
+                select: {
+                  image: true,
+                  name: true,
+                },
+              },
+            },
+          },
+          logs: {
+            where: {
+              userId,
+            },
+            select: {
+              point: true,
+              time: true,
+            },
+          },
+        },
+        orderBy: {
+          order: 'asc',
+        },
+      },
+    },
+    orderBy: {
+      slug: 'desc',
+    },
+    take: 1,
+  })
+
+  if (!event || event.length === 0) return null
+
+  return eventTransformer.getUserStats(event[0] as UserStatsResponse)
+}
+
 export default {
   getAllEvents,
   getEventBySlug,
+  getUserPlayedEventsList,
+  getUserEventStats,
 }

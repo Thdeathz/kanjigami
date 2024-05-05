@@ -21,7 +21,7 @@ export default function index({ params }: Props) {
   const { slug } = params
 
   return (
-    <div className="flex flex-col gap-12 px-[0.5rem]">
+    <div className="space-y-12 px-[0.5rem]">
       <BattleDetail slug={slug} />
     </div>
   )

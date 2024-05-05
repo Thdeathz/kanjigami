@@ -19,7 +19,7 @@ export default function QuestionPanel({ data, questionIndex, onSelect }: Props) 
   }
 
   return (
-    <Panel wrapperClassName="grow" className="flex h-full flex-col items-start justify-between gap-6">
+    <Panel wrapperClass="grow" className="flex h-full flex-col items-start justify-between gap-6">
       <div className="flex-center h-48 w-full">
         {data.question.type === 'word' && <h1 className="text-center text-4xl font-medium">{data.question.content}</h1>}
 

@@ -43,10 +43,13 @@ export interface ITopUser {
   time: string
 }
 
-export interface IBattle {
+export interface IBattleInfo {
   id: string
-  name: string
   slug: number
+  name: string
+}
+
+export interface IBattle extends IBattleInfo {
   description: string
   type: BattleType
   status: BattleStatus
@@ -57,4 +60,24 @@ export interface IBattle {
 
 export interface IBattleDetail extends Omit<IBattle, 'topUsers'> {
   playedUsers?: number
+}
+
+export interface IBattleUserStats extends IBattleInfo {
+  rounds: {
+    order: string
+    status: BattleStatus
+    stack: {
+      slug: number
+      name: string
+      image: string
+    }
+    game: {
+      image: string
+      name: string
+    }
+    log: {
+      point: number
+      time: number
+    }
+  }[]
 }

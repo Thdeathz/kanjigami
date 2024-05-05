@@ -42,3 +42,31 @@ export const getEventBySlug: RequestHandler = async (req, res) => {
 
   res.json(makeResponse.defaultResponse('Get event by slug success', StatusCodes.OK, data))
 }
+
+/**
+ * @desc Get all events played by user
+ * @route GET /events/played
+ * @access Private
+ */
+export const getUserPlayedEventsList: RequestHandler = async (req, res) => {
+  const user = req.user as JwtPayload
+
+  const data = await eventService.getUserPlayedEventsList(user.id)
+
+  res.json(makeResponse.defaultResponse('Get user played events list success', StatusCodes.OK, data))
+}
+
+/**
+ * @desc Get user played event stats
+ * @route GET /events/:slug/stats
+ * @access Private
+ */
+export const getUserEventStats: RequestHandler = async (req, res) => {
+  const user = req.user as JwtPayload
+
+  const slug = req.query.slug as string
+
+  const data = await eventService.getUserEventStats(user.id, slug)
+
+  res.json(makeResponse.defaultResponse('Get user event stats success', StatusCodes.OK, data))
+}

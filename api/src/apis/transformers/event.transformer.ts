@@ -123,7 +123,58 @@ const getEventBySlug = (event: EventDetailResponse, currentUserLogs: GameLog[]) 
   }),
 })
 
+export interface UserStatsResponse extends Event {
+  rounds: {
+    id: string
+    order: number
+    status: BattleStatus
+    gameStack: {
+      stack: {
+        slug: number
+        name: string
+        image: string
+      }
+      game: {
+        image: string
+        name: string
+      }
+    }
+    logs: {
+      point: number
+      time: number
+    }[]
+  }[]
+}
+
+const getUserStats = (event: UserStatsResponse) => ({
+  id: event.id,
+  slug: event.slug,
+  name: event.name,
+  description: event.description,
+  type: event.type,
+  status: event.status,
+  startAt: event.startAt,
+  rounds: event.rounds.map((round) => ({
+    order: round.order,
+    status: round.status,
+    stack: {
+      slug: round.gameStack.stack.slug,
+      name: round.gameStack.stack.name,
+      image: round.gameStack.stack.image,
+    },
+    game: {
+      image: round.gameStack.game.image,
+      name: round.gameStack.game.name,
+    },
+    log: {
+      point: round.logs.reduce((acc, log) => acc + log.point, 0),
+      time: round.logs.reduce((acc, log) => acc + log.time, 0),
+    },
+  })),
+})
+
 export default {
   getAllEvents,
   getEventBySlug,
+  getUserStats,
 }

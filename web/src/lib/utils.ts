@@ -9,7 +9,7 @@ import { IRemainingTime } from '@/@types/battle'
  * @param {string[]} inputs - The class names to merge
  * @returns {string} The merged class names
  */
-export function cn(...inputs: ClassValue[]) {
+export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs))
 }
 
@@ -69,7 +69,7 @@ export function getTimeDifferenceFromNow(inputDate: Date): string {
  * @param {Record<string, string | number>} query - The query parameters
  * @returns {string} The endpoint with query parameters
  */
-export function makeEndpoint(endpoint: string, query?: Record<string, string | number | undefined>) {
+export function makeEndpoint(endpoint: string, query?: Record<string, string | number | undefined>): string {
   const params = new URLSearchParams()
 
   let returnEndpoint = endpoint

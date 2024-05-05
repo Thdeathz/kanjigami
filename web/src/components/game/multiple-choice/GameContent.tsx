@@ -29,7 +29,7 @@ export default function MultipleChoiceGameContent({ gameContent, onCalculateScor
     <div className="flex h-content w-full flex-col gap-6">
       <QuestionPanel questionIndex={currentStep - 1} data={gameContent[currentStep - 1]} onSelect={onSelectAnswer} />
 
-      <Panel wrapperClassName="w-min mx-auto" className="flex-center gap-4 p-4">
+      <Panel wrapperClass="w-min mx-auto" className="flex-center gap-4 p-4">
         <Button disabled={!canGoToPrevStep} className="flex-center gap-2 rounded-md" onClick={goToPrevStep}>
           <FaArrowLeftLong />
         </Button>

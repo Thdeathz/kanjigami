@@ -91,7 +91,7 @@ type DefaultTableProps = {
   }[]
 }
 
-const DefaultTable = ({ columns, dataSources }: DefaultTableProps) => {
+function DefaultTable({ columns, dataSources }: DefaultTableProps) {
   return (
     <Table>
       <TableHeader>
@@ -106,7 +106,7 @@ const DefaultTable = ({ columns, dataSources }: DefaultTableProps) => {
         {dataSources.map((row, index) => (
           <TableRow key={index} isEven={index % 2 !== 0}>
             {columns.map((column) => (
-              <TableCell key={column.dataIndex} className="w-min">
+              <TableCell key={column.dataIndex} className="w-min truncate whitespace-nowrap">
                 {column.render ? column.render(row[column.dataIndex], row) : row[column.dataIndex]}
               </TableCell>
             ))}
@@ -116,6 +116,5 @@ const DefaultTable = ({ columns, dataSources }: DefaultTableProps) => {
     </Table>
   )
 }
-DefaultTable.displayName = 'DefaultTable'
 
 export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption, DefaultTable }

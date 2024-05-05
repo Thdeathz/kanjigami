@@ -1,7 +1,7 @@
 'use server'
 
 import { ApiResponse, PaginationApiResponse } from '@/@types'
-import { BattleStatus, IBattle, IBattleDetail } from '@/@types/battle'
+import { BattleStatus, IBattle, IBattleDetail, IBattleInfo, IBattleUserStats } from '@/@types/battle'
 import axiosAuth from '@/lib/axios-auth'
 import { makeEndpoint } from '@/lib/utils'
 
@@ -20,6 +20,22 @@ export const getAllBattles = async ({ status, page = '1' }: GetAllBattlesProps) 
 
 export const getBattleDetail = async (slug: string) => {
   const { data: response } = await axiosAuth.get<ApiResponse<IBattleDetail>>(`/events/${slug}`)
+
+  return response.data
+}
+
+export const getUserPlayedBattles = async () => {
+  const { data: response } = await axiosAuth.get<ApiResponse<IBattleInfo[]>>(`/events/played`)
+
+  return response.data
+}
+
+export const getUserStats = async (slug?: string) => {
+  const { data: response } = await axiosAuth.get<ApiResponse<IBattleUserStats>>(
+    makeEndpoint('/events/stats', {
+      slug
+    })
+  )
 
   return response.data
 }

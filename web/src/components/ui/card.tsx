@@ -55,11 +55,11 @@ CardFooter.displayName = 'CardFooter'
 
 interface PanelProps extends React.HTMLAttributes<HTMLDivElement> {
   theme?: CardProps['theme']
-  wrapperClassName?: string
+  wrapperClass?: string
 }
 
-const Panel = React.forwardRef<HTMLDivElement, PanelProps>(({ wrapperClassName, className, theme, ...props }, ref) => (
-  <Card className={wrapperClassName} theme={theme} ref={ref}>
+const Panel = React.forwardRef<HTMLDivElement, PanelProps>(({ wrapperClass, className, theme, ...props }, ref) => (
+  <Card className={wrapperClass} theme={theme} ref={ref}>
     <CardContent className={cn('p-8', className)} {...props} />
   </Card>
 ))

@@ -17,7 +17,7 @@ export default function UserProfile({ username }: Props) {
   if (!userProfile) return <div>User not found.</div>
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="space-y-12">
       <MainProfile user={userProfile.user} />
 
       <UserStats event={userProfile.stats.event} stack={userProfile.stats.stack} />

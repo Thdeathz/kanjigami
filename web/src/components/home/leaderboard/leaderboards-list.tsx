@@ -26,7 +26,7 @@ export default function LeaderboardsList({ type }: Props) {
   }
 
   return (
-    <div className="mx-auto flex flex-col gap-4">
+    <div className="mx-auto flex flex-col items-center gap-4">
       <div className="flex w-[55rem] items-end gap-2">
         {topUsers.slice(0, 3).map((topUser, index) => (
           <TopUser key={topUser.user.id} top={String(index + 1) as TopUserProps['top']} topUser={topUser} />

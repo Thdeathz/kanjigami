@@ -9,7 +9,7 @@ export const metadata = () => ({
 
 export default function ProfileSettingPage() {
   return (
-    <div className="flex flex-col gap-12">
+    <div className="space-y-12">
       <PageHeader icon={<RiSettings3Fill />} title="Settings" />
 
       <div className="mx-auto w-[55rem]">

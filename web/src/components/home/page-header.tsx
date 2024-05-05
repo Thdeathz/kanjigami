@@ -1,6 +1,5 @@
 import { VariantProps, cva } from 'class-variance-authority'
 import React from 'react'
-import { type IconType } from 'react-icons'
 
 import { BattleStatus } from '@/@types/battle'
 import { cn } from '@/lib/utils'
@@ -37,7 +36,7 @@ function LightStick({ status, children }: LightStickProps) {
 }
 
 type Props = {
-  icon?: React.ReactElement<IconType>
+  icon?: React.ReactNode
   badge?: React.ReactNode
   showLightStick?: BattleStatus
   title: string
@@ -61,7 +60,9 @@ export default function PageHeader({ icon, badge, showLightStick, title, descrip
       {badge && <div className="flex-center gap-4">{badge}</div>}
 
       {description && (
-        <p className="font-medium leading-[1.5] tracking-[0.3px] text-default-text-light">{description}</p>
+        <p className="max-w-[48rem] text-center font-medium leading-[1.5] tracking-[0.3px] text-default-text-light">
+          {description}
+        </p>
       )}
 
       {children}

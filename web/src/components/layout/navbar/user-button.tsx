@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { IconType } from 'react-icons'
-import { FaChartArea, FaUser } from 'react-icons/fa'
+import { FaCaretDown, FaChartArea, FaUser } from 'react-icons/fa'
 import { HiLogout, HiSparkles } from 'react-icons/hi'
 import { RiSettings3Fill } from 'react-icons/ri'
 import { toast } from 'sonner'
@@ -66,8 +66,10 @@ export default function UserButton({ user }: Props) {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button>
-          <UserAvatar className="mr-2" size="small" src={user.image} alt={user.name} /> {user.name}
+        <Button className="space-x-0.5">
+          <UserAvatar className="mr-2" size="small" src={user.image} alt={user.name} />
+          <span>{user.name}</span>
+          <FaCaretDown />
         </Button>
       </PopoverTrigger>
 

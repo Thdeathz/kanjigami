@@ -1,7 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { BattleStatus } from '@/@types/battle'
-import { adminGetAllBattles, getAllBattles, getBattleDetail } from '@/server/actions/battle'
+import {
+  adminGetAllBattles,
+  getAllBattles,
+  getBattleDetail,
+  getUserPlayedBattles,
+  getUserStats
+} from '@/server/actions/battle'
 
 export const useGetAllBattlesQuery = (status: BattleStatus, page?: string) =>
   useQuery({
@@ -14,6 +20,18 @@ export const useGetBattleDetailQuery = (slug: string) =>
   useQuery({
     queryKey: ['battle', slug],
     queryFn: async () => getBattleDetail(slug)
+  })
+
+export const useGetUserPlayedBattlesQuery = () =>
+  useQuery({
+    queryKey: ['battles'],
+    queryFn: async () => getUserPlayedBattles()
+  })
+
+export const useGetUserStatsQuery = (slug?: string) =>
+  useQuery({
+    queryKey: ['battles', slug],
+    queryFn: async () => getUserStats(slug)
   })
 
 export const useAdminGetAllBattlesQuery = (page?: string) =>

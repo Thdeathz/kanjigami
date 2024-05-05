@@ -10,7 +10,7 @@ type Props = {
 
 export default function IdleMenu({ gameStack }: Props) {
   return (
-    <Panel wrapperClassName="place-center mx-auto w-[30rem]">
+    <Panel wrapperClass="place-center mx-auto w-[30rem]">
       <h1 className="text-xl font-semibold">{gameStack.game.name}</h1>
 
       <p>{gameStack.stack.name}</p>

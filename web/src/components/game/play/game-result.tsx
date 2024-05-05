@@ -18,7 +18,7 @@ export default function GameResult({ gameStack, logId }: Props) {
   if (!gameLog) return <p>Game log not found.</p>
 
   return (
-    <Panel wrapperClassName="place-center mx-auto w-[30rem]">
+    <Panel wrapperClass="place-center mx-auto w-[30rem]">
       <h3>
         <span>Point:</span> {gameLog.point}
       </h3>

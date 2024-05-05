@@ -19,7 +19,7 @@ const buttonVariants = cva(
         primary: 'shadow-btn bg-primary-btn text-white hover:bg-primary-btn-hover',
         danger: 'shadow-btn bg-danger-btn hover:bg-danger-btn-hover',
         link: 'text-primary underline-offset-4 hover:underline',
-        outline: 'border border-border-2 bg-transparent hover:bg-border-2'
+        outline: 'border border-border-bright bg-input hover:border-border-2'
       },
       size: {
         default: 'h-[2.5rem]',

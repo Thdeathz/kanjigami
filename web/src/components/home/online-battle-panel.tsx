@@ -44,7 +44,7 @@ export default function OnlineBattlePanel({ battleData }: Props) {
           </div>
 
           <Link
-            href="/battles"
+            href={`/battles/${battleData.slug}`}
             className="text-lg font-semibold leading-[1.4] text-default-heading transition-all hover:underline"
           >
             Battle #{battleData.slug} - {battleData.name}
