@@ -106,7 +106,7 @@ const DefaultTable = ({ columns, dataSources }: DefaultTableProps) => {
         {dataSources.map((row, index) => (
           <TableRow key={index} isEven={index % 2 !== 0}>
             {columns.map((column) => (
-              <TableCell key={column.dataIndex}>
+              <TableCell key={column.dataIndex} className="w-min">
                 {column.render ? column.render(row[column.dataIndex], row) : row[column.dataIndex]}
               </TableCell>
             ))}

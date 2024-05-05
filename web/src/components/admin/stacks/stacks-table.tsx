@@ -1,48 +1,88 @@
 'use client'
 
 import Image from 'next/image'
+import { AiTwotoneDelete, AiTwotoneEdit } from 'react-icons/ai'
 
-import { Panel } from '@/components/ui/card'
+import Loading from '@/components/loading'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { PagePagination } from '@/components/ui/pagination'
 import { DefaultTable } from '@/components/ui/table'
+import { useAdminGetAllStacksQuery } from '@/data/stack'
 
-export default function StacksTable() {
+type Props = {
+  page: string
+}
+
+export default function StacksTable({ page }: Props) {
+  const { data: stacks, isLoading } = useAdminGetAllStacksQuery(page)
+
+  if (isLoading) return <Loading className="text-4xl" />
+
+  if (!stacks) return <p>Stacks empty.</p>
+
   return (
-    <Panel>
+    <>
       <DefaultTable
         columns={[
           {
-            title: 'Round',
-            dataIndex: 'round',
+            title: 'Index',
+            dataIndex: 'slug',
+            render: (value) => <p className="text-center font-medium">#{value}</p>
+          },
+          {
+            title: 'Thumbnail',
+            dataIndex: 'thumbnail',
             render: (value) => (
               <div className="font-secondary flex items-center justify-center gap-2">
                 <Image
                   src={value}
-                  alt="battle-thumbnail"
+                  alt="stack-thumbnail"
                   width="400"
                   height="300"
-                  className="aspect-4/3 w-[50px] rounded-[6px]"
+                  className="aspect-4/3 w-[150px] rounded-[6px]"
                 />
-                #194
               </div>
             )
           },
           {
-            title: 'My score',
-            dataIndex: 'myScore'
+            title: 'Name',
+            dataIndex: 'name'
           },
           {
-            title: 'My rank',
-            dataIndex: 'myRank'
-          }
-        ]}
-        dataSources={[
+            title: 'Topic',
+            dataIndex: 'topic',
+            render: (value) => <Badge>{value}</Badge>
+          },
           {
-            round: '/images/lock.png',
-            myScore: '-',
-            myRank: '-'
+            title: 'Created At',
+            dataIndex: 'createdAt'
+          },
+          {
+            title: 'Action',
+            dataIndex: 'action',
+            render: () => (
+              <div className="flex-center gap-4">
+                <Button variant="primary" shape="circle">
+                  <AiTwotoneEdit />
+                </Button>
+                <Button variant="danger" shape="circle">
+                  <AiTwotoneDelete />
+                </Button>
+              </div>
+            )
           }
         ]}
+        dataSources={stacks.data.map((stack) => ({
+          slug: stack.slug,
+          thumbnail: stack.image,
+          name: stack.name,
+          topic: stack.topic,
+          createdAt: new Date(stack.createdAt).toLocaleDateString()
+        }))}
       />
-    </Panel>
+
+      <PagePagination className="mt-4" currentPage={Number(page)} availablePages={stacks.pagination.totalPages} />
+    </>
   )
 }

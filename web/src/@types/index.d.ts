@@ -4,6 +4,14 @@ export interface ApiResponse<T> {
   data: T
 }
 
+export interface PaginationApiResponse<T> extends ApiResponse<T> {
+  pagination: {
+    totalPages: number
+    currentPage: number
+    total: number
+  }
+}
+
 export interface ApiError {
   status: number
   message: string

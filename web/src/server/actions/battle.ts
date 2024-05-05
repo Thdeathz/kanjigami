@@ -1,8 +1,9 @@
 'use server'
 
-import { ApiResponse } from '@/@types'
+import { ApiResponse, PaginationApiResponse } from '@/@types'
 import { BattleStatus, IBattle, IBattleDetail } from '@/@types/battle'
 import axiosAuth from '@/lib/axios-auth'
+import { makeEndpoint } from '@/lib/utils'
 
 type GetAllBattlesProps = {
   status: BattleStatus
@@ -21,4 +22,15 @@ export const getBattleDetail = async (slug: string) => {
   const { data: response } = await axiosAuth.get<ApiResponse<IBattleDetail>>(`/events/${slug}`)
 
   return response.data
+}
+
+export const adminGetAllBattles = async (page?: string) => {
+  const { data: response } = await axiosAuth.get<PaginationApiResponse<IBattle[]>>(
+    makeEndpoint('/events', { page, offset: 10 })
+  )
+
+  return {
+    data: response.data,
+    pagination: response.pagination
+  }
 }

@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
-import { getAllStacks, getKanjiDetail, getStackDetail, getWordDetail } from '@/server/actions/stack'
+import { adminGetAllStacks, getAllStacks, getKanjiDetail, getStackDetail, getWordDetail } from '@/server/actions/stack'
 
 export const useGetAllStacksQuery = (filterOption?: string, searchValue?: string) =>
   useInfiniteQuery({
@@ -27,3 +27,6 @@ export const useGetKanjiDetailQuery = (kanji: string) =>
     queryKey: ['kanji', kanji],
     queryFn: async () => getKanjiDetail(kanji)
   })
+
+export const useAdminGetAllStacksQuery = (page?: string) =>
+  useQuery({ queryKey: ['admin-stacks', page], queryFn: async () => adminGetAllStacks(page) })
