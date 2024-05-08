@@ -86,7 +86,6 @@ const PagePagination = ({ currentPage, availablePages, className }: PagePaginati
 
   return (
     <Pagination className={className}>
-      <>{console.log('==> startSlice', startSlice, endSlice)}</>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious href="?page=1" disabled={currentPage === 1} />

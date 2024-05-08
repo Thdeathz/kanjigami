@@ -1,18 +1,24 @@
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import React from 'react'
 
-export default function EditRoundModal() {
+import { ISearchStackResult } from '@/@types/stack'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+
+import NewRoundDetail from './new-round-detail'
+
+type Props = {
+  defaultStack?: ISearchStackResult
+  onSelectGame: (gameStack: ISearchStackResult) => void
+}
+
+export default function EditRoundModal({ defaultStack, onSelectGame }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button type="button">Edit</Button>
       </DialogTrigger>
       <DialogContent className="w-[70rem]">
-        <DialogHeader>
-          <DialogTitle>Something new</DialogTitle>
-        </DialogHeader>
-
-        <div className="p-8">xxx</div>
+        <NewRoundDetail defaultStack={defaultStack} onSelectGame={onSelectGame} />
       </DialogContent>
     </Dialog>
   )

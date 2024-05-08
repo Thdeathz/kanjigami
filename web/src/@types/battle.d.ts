@@ -1,3 +1,9 @@
+import * as z from 'zod'
+
+import { BattleDetailsSchema } from '@/schema/admin/battle-schema'
+
+import { ISearchStackResult } from './stack'
+
 export type BattleStatus = 'ONGOING' | 'UPCOMING' | 'FINISHED'
 
 export type BattleType = 'GOFT' | 'TIMEATTACK'
@@ -80,4 +86,14 @@ export interface IBattleUserStats extends IBattleInfo {
       time: number
     }
   }[]
+}
+
+export interface INewRound {
+  index: number
+  gameStack?: ISearchStackResult
+}
+
+export interface ICreateBattle {
+  details: z.infer<typeof BattleDetailsSchema>
+  rounds: INewRound[]
 }

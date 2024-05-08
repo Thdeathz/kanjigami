@@ -1,8 +1,11 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import * as z from 'zod'
 
 import { BattleStatus } from '@/@types/battle'
+import { BattleDetailsSchema } from '@/schema/admin/battle-schema'
 import {
   adminGetAllBattles,
+  createNewBattle,
   getAllBattles,
   getBattleDetail,
   getUserPlayedBattles,
@@ -38,4 +41,11 @@ export const useAdminGetAllBattlesQuery = (page?: string) =>
   useQuery({
     queryKey: ['admin-battles', page],
     queryFn: async () => adminGetAllBattles(page)
+  })
+
+export const useCreateNewBattleMutation = () =>
+  useMutation({
+    mutationKey: ['create-battle'],
+    mutationFn: async (data: { details: z.infer<typeof BattleDetailsSchema>; rounds: string[] }) =>
+      createNewBattle(data)
   })

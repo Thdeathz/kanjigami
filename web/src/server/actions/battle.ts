@@ -1,9 +1,12 @@
 'use server'
 
+import * as z from 'zod'
+
 import { ApiResponse, PaginationApiResponse } from '@/@types'
 import { BattleStatus, IBattle, IBattleDetail, IBattleInfo, IBattleUserStats } from '@/@types/battle'
 import axiosAuth from '@/lib/axios-auth'
 import { makeEndpoint } from '@/lib/utils'
+import { BattleDetailsSchema } from '@/schema/admin/battle-schema'
 
 type GetAllBattlesProps = {
   status: BattleStatus
@@ -49,4 +52,10 @@ export const adminGetAllBattles = async (page?: string) => {
     data: response.data,
     pagination: response.pagination
   }
+}
+
+export const createNewBattle = async (data: { details: z.infer<typeof BattleDetailsSchema>; rounds: string[] }) => {
+  const { data: response } = await axiosAuth.post<ApiResponse<IBattle>>(`/events`, data)
+
+  return response.data
 }

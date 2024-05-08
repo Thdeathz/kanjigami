@@ -9,7 +9,7 @@ export default function CreateBattlesPage() {
       <PageHeader
         icon={<RiSwordFill />}
         title="Create Online battles"
-        description="Create new battle for learn kanji"
+        description="Create new battle for learning kanji"
       />
 
       <CreateBattleForm />

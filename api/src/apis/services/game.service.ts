@@ -177,6 +177,21 @@ const getMultipleChoiceGameContent = (words: IWord[]) => {
 }
 
 const saveScore = async (gameStackId: string, userId: string, { score, time, type }: ISaveScoreRequest) => {
+  const currentLog = await prisma.gameLog.findUnique({
+    where: {
+      gameStackId_userId: {
+        gameStackId,
+        userId,
+      },
+    },
+    select: {
+      id: true,
+      point: true,
+    },
+  })
+
+  if (currentLog && currentLog.point >= score) return currentLog
+
   return await prisma.gameLog.upsert({
     where: {
       gameStackId_userId: {

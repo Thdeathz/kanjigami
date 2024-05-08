@@ -90,3 +90,16 @@ export const getKanjiDetail: RequestHandler = async (req, res) => {
 
   res.json(makeResponse.defaultResponse('Get kanji detail success', StatusCodes.OK, kanjiDetail))
 }
+
+/**
+ * @desc Search stacks by name
+ * @route GET /stacks/search
+ * @access Private
+ */
+export const searchStacks: RequestHandler = async (req, res) => {
+  const search = req.query.search as string
+
+  const stacks = await stackService.searchStack(search)
+
+  res.json(makeResponse.defaultResponse('Search stacks success', StatusCodes.OK, stacks))
+}

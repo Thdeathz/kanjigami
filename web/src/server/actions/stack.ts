@@ -1,7 +1,7 @@
 'use server'
 
 import { ApiResponse, PaginationApiResponse } from '@/@types'
-import { IKanjiDetail, IStack, IStackDetail, IWordDetail } from '@/@types/stack'
+import { IKanjiDetail, ISearchStackResult, IStack, IStackDetail, IWordDetail } from '@/@types/stack'
 import axiosAuth from '@/lib/axios-auth'
 import { makeEndpoint } from '@/lib/utils'
 
@@ -51,4 +51,12 @@ export const adminGetAllStacks = async (pageParam?: string) => {
     data: response.data,
     pagination: response.pagination
   }
+}
+
+export const searchStack = async (searchValue: string) => {
+  const { data: response } = await axiosAuth.get<ApiResponse<ISearchStackResult>>(
+    `/stacks/search?search=${searchValue}`
+  )
+
+  return response.data
 }

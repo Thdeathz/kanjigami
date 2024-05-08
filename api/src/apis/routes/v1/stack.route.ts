@@ -6,6 +6,7 @@ import {
   getWordDetail,
   getStackBySlug,
   getKanjiDetail,
+  searchStacks,
 } from '@/apis/controllers/stack.controller'
 import limitRequest from '@/apis/middlewares/request-limiter'
 import { getCurrentUser, verifyAccessToken } from '@/apis/middlewares/verify-jwt'
@@ -17,6 +18,8 @@ router.route('/').get(getCurrentUser, getAllStacks)
 router.route('/word/:id').get(getWordDetail)
 
 router.route('/kanji').get(getKanjiDetail)
+
+router.route('/search').get(verifyAccessToken, searchStacks)
 
 router.route('/:slug').get(getCurrentUser, getStackBySlug)
 

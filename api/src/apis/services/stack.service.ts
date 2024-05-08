@@ -196,8 +196,66 @@ const followStack = async (id: string, currentUserId: string) => {
   return foundedStack ? 'UnFollow' : 'Follow'
 }
 
+const searchStack = async (search: string) => {
+  const stack = await prisma.stack.findFirst({
+    where: {
+      name: {
+        search: search + ':*',
+      },
+    },
+    select: {
+      id: true,
+      slug: true,
+      name: true,
+      image: true,
+      createdAt: true,
+      topics: {
+        select: {
+          name: true,
+        },
+      },
+      games: {
+        select: {
+          id: true,
+          game: {
+            select: {
+              name: true,
+              image: true,
+            },
+          },
+        },
+      },
+    },
+  })
+
+  if (!stack) return null
+
+  const numberWords = await prisma.word.count({
+    where: {
+      stacks: {
+        some: {
+          id: stack.id,
+        },
+      },
+    },
+  })
+
+  const numberFollowed = await prisma.user.count({
+    where: {
+      followedStacks: {
+        some: {
+          id: stack.id,
+        },
+      },
+    },
+  })
+
+  return { ...stack, numberWords, numberFollowed }
+}
+
 export default {
   getAllStacks,
   getStackBySlug,
   followStack,
+  searchStack,
 }

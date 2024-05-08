@@ -62,3 +62,24 @@ export interface IKanjiDetail extends IKanji {
   kunyomi: string
   onyomi: string
 }
+
+export interface ISearchStackResult {
+  id: string
+  name: string
+  slug: number
+  image: string
+  createdAt: Date
+  topics: {
+    name: string
+  }[]
+  games: {
+    id: string
+    game: {
+      name: string
+      image: string
+    }
+    active?: boolean
+  }[]
+  numberWords: number
+  numberFollowed: number
+}

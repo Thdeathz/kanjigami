@@ -103,7 +103,8 @@ const config = {
           stack: 'var(--stack-border-color)',
           'table-header': 'var(--table-header-bg)',
           dialog: 'var(--clr-dialog-bg)',
-          'inner-header': 'var(--clr-inner-header)'
+          'inner-header': 'var(--clr-inner-header)',
+          green: 'var(--clr-green)'
         },
         danger: {
           text: 'var(--clr-red)',
@@ -131,7 +132,9 @@ const config = {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
           btn: 'var(--clr-btn-primary)',
-          'btn-hover': 'var(--clr-btn-primary-hover)'
+          'btn-hover': 'var(--clr-btn-primary-hover)',
+          title: 'var(--clr-target-tile-bg)',
+          'title-light': 'var(--clr-target-tile-bg-lighter)'
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
