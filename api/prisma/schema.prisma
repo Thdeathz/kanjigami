@@ -172,7 +172,7 @@ model Event {
   name        String
   description String?
   type        BattleType
-  status      BattleStatus
+  status      BattleStatus @default(UPCOMING)
   startAt     DateTime
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
@@ -184,7 +184,7 @@ model Event {
 model Round {
   id          String       @id @default(cuid())
   order       Int
-  status      BattleStatus
+  status      BattleStatus @default(UPCOMING)
   eventId     String
   gameStackId String
   createdAt   DateTime     @default(now())

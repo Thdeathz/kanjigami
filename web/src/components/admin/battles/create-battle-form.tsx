@@ -5,10 +5,9 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiFillPlusCircle } from 'react-icons/ai'
 import { toast } from 'sonner'
-import { useLocalStorage, useUnmount } from 'usehooks-ts'
 import * as z from 'zod'
 
-import { ICreateBattle, INewRound } from '@/@types/battle'
+import { INewRound } from '@/@types/battle'
 import BattleDetailsForm from '@/components/admin/battles/battles-detail-form'
 import NewRoundItem from '@/components/admin/battles/new-round-item'
 import SectionTitle from '@/components/admin/section-title'
@@ -21,22 +20,27 @@ import { useCreateNewBattleMutation } from '@/data/battle'
 import { BattleDetailsSchema } from '@/schema/admin/battle-schema'
 
 export default function CreateBattleForm() {
-  const [value, setValue, removeValue] = useLocalStorage<ICreateBattle>('create-new-event-form', {
-    details: {
+  // const [value, setValue, removeValue] = useLocalStorage<ICreateBattle>('create-new-event-form', {
+  //   details: {
+  //     title: '',
+  //     description: '',
+  //     maxPlayer: '',
+  //     startAt: ''
+  //   },
+  //   rounds: []
+  // })
+  const { mutateAsync, isPending } = useCreateNewBattleMutation()
+
+  const [rounds, setRounds] = useState<INewRound[]>([])
+
+  const form = useForm<z.infer<typeof BattleDetailsSchema>>({
+    resolver: zodResolver(BattleDetailsSchema),
+    defaultValues: {
       title: '',
       description: '',
       maxPlayer: '',
       startAt: ''
-    },
-    rounds: []
-  })
-  const { mutateAsync, isPending } = useCreateNewBattleMutation()
-
-  const [rounds, setRounds] = useState<INewRound[]>(value?.rounds || [])
-
-  const form = useForm<z.infer<typeof BattleDetailsSchema>>({
-    resolver: zodResolver(BattleDetailsSchema),
-    defaultValues: value?.details || {}
+    }
   })
 
   const onSubmit = async (data: z.infer<typeof BattleDetailsSchema>) => {
@@ -47,10 +51,17 @@ export default function CreateBattleForm() {
 
     try {
       await mutateAsync({
-        details: data,
-        rounds: rounds.map((round) => round.gameStack!.id)
+        ...data,
+        startAt: new Date(data.startAt).toUTCString(),
+        rounds: rounds.map((round) => ({
+          index: round.index,
+          gameStackId: round.gameStack?.games.find((game) => game.active)?.id ?? ''
+        }))
       })
-      removeValue()
+      // removeValue()
+      // form.reset()
+      // setRounds([])
+      toast.success('Battle created successfully.')
     } catch (error) {
       toast.error('Something went wrong. Please try again later.')
     }
@@ -70,12 +81,12 @@ export default function CreateBattleForm() {
     ])
   }
 
-  useUnmount(() => {
-    setValue({
-      details: form.getValues(),
-      rounds
-    })
-  })
+  // useUnmount(() => {
+  //   setValue({
+  //     details: form.getValues(),
+  //     rounds
+  //   })
+  // })
 
   return (
     <Form {...form}>

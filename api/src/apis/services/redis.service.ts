@@ -1,6 +1,10 @@
 import redisClient from '@/apis/databases/init.redis'
 import { convertExToSeconds } from '@/apis/utils/datetime'
 
+const set = async <T>(category: string, key: string, value: T) => {
+  return await redisClient.set(`${category}:${key}`, JSON.stringify(value))
+}
+
 const setex = async <T>(category: string, key: string, ex: string, value: T) => {
   return await redisClient.setex(`${category}:${key}`, convertExToSeconds(ex), JSON.stringify(value))
 }
@@ -45,6 +49,7 @@ const deleteByKey = async (key: string, field: object) => {
 }
 
 export default {
+  set,
   setex,
   get,
   del,

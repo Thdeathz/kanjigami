@@ -97,3 +97,10 @@ export interface ICreateBattle {
   details: z.infer<typeof BattleDetailsSchema>
   rounds: INewRound[]
 }
+
+export interface ICreateBattleRequest extends z.infer<typeof BattleDetailsSchema> {
+  rounds: {
+    index: number
+    gameStackId: string
+  }[]
+}

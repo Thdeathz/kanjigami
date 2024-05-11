@@ -1,13 +1,17 @@
-import { GameLog } from '@prisma/client'
+import { BattleStatus, GameLog } from '@prisma/client'
+import { StatusCodes } from 'http-status-codes'
 
 import { PaginationRequest } from '@/apis/@types'
+import { ICreateEventRequest } from '@/apis/@types/event'
 import prisma from '@/apis/databases/init.prisma'
 import gameLogService from '@/apis/services/game-log.service'
+import jobService from '@/apis/services/job.service'
 import eventTransformer, {
   EventDetailResponse,
   EventsResponse,
   UserStatsResponse,
 } from '@/apis/transformers/event.transformer'
+import HttpError from '@/apis/utils/http-error'
 
 const getFilter = (status?: string, search?: string) => {
   let returnFilter = {}
@@ -299,9 +303,134 @@ const getUserEventStats = async (userId: string, slug?: string) => {
   return eventTransformer.getUserStats(event[0] as UserStatsResponse)
 }
 
+const createNewEvent = async (data: ICreateEventRequest) => {
+  console.log('==> event start time', new Date(data.startAt))
+
+  const event = await prisma.event.create({
+    data: {
+      name: data.title,
+      description: data.description,
+      startAt: new Date(data.startAt),
+      type: 'GOFT',
+      rounds: {
+        createMany: {
+          data: data.rounds.map((round, index) => ({
+            order: index,
+            gameStackId: round.gameStackId,
+          })),
+        },
+      },
+    },
+    select: {
+      id: true,
+      startAt: true,
+      rounds: {
+        select: {
+          id: true,
+          order: true,
+          status: true,
+        },
+        orderBy: {
+          order: 'asc',
+        },
+      },
+    },
+  })
+
+  if (!event) throw new HttpError(StatusCodes.INTERNAL_SERVER_ERROR, 'Failed to create event')
+
+  jobService.battleJob(event)
+
+  return event
+}
+
+const getStartEventData = async (id: string) => {
+  const event = await prisma.event.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      startAt: true,
+      rounds: {
+        select: {
+          id: true,
+          order: true,
+          status: true,
+        },
+        orderBy: {
+          order: 'asc',
+        },
+      },
+    },
+  })
+
+  if (!event) throw new HttpError(StatusCodes.NOT_FOUND, 'Event not found')
+
+  return event
+}
+
+const updateEventStatus = async (id: string, status: BattleStatus) => {
+  return await prisma.event.update({
+    where: {
+      id,
+    },
+    data: {
+      status,
+    },
+  })
+}
+
+const getStartRoundData = async (roundId: string) => {
+  const round = await prisma.round.findUnique({
+    where: {
+      id: roundId,
+    },
+    select: {
+      id: true,
+      order: true,
+      status: true,
+      gameStack: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  })
+
+  if (!round) throw new HttpError(StatusCodes.NOT_FOUND, 'Round not found')
+
+  return round
+}
+
+const updateRoundStatus = async (roundId: string, status: BattleStatus) => {
+  return await prisma.round.update({
+    where: {
+      id: roundId,
+    },
+    data: {
+      status,
+    },
+  })
+}
+
+const deleteEvent = async (slug: string) => {
+  return await prisma.event.delete({
+    where: {
+      slug: Number(slug),
+    },
+  })
+}
+
 export default {
   getAllEvents,
   getEventBySlug,
   getUserPlayedEventsList,
   getUserEventStats,
+  createNewEvent,
+  getStartEventData,
+  updateEventStatus,
+  getStartRoundData,
+  updateRoundStatus,
+  deleteEvent,
 }

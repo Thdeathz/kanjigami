@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+
 import { BattleStatus } from '@/@types/battle'
 import { Button } from '@/components/ui/button'
 import { Panel } from '@/components/ui/card'
@@ -33,8 +35,8 @@ type Props = {
 export default function BattleStacksList({ stacks }: Props) {
   return (
     <Panel className="mb-12 flex flex-wrap gap-4 p-4">
-      {stacks.map((stack) => (
-        <StackItem key={stack.slug} name={stack.name} status={stack.status} />
+      {stacks.map((stack, index) => (
+        <StackItem key={`${stack.slug}-${index}`} name={stack.name} status={stack.status} />
       ))}
     </Panel>
   )

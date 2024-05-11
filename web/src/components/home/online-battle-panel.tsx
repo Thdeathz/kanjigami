@@ -57,7 +57,7 @@ export default function OnlineBattlePanel({ battleData }: Props) {
           <Separator />
 
           <div className="font-base flex items-end gap-1.5 font-medium leading-[1.4] tracking-[0.3px]">
-            <span className="text-default-text-lightest">{timeLabel}</span>
+            <span className="whitespace-nowrap text-default-text-lightest">{timeLabel}</span>
             {battleData.status === 'UPCOMING' ? (
               <CountDown endTime={battleData.startAt} />
             ) : (
@@ -66,7 +66,7 @@ export default function OnlineBattlePanel({ battleData }: Props) {
           </div>
         </div>
 
-        <div className="flex w-full gap-2">
+        <div className="mt-4 flex w-full gap-2">
           {battleData.topUsers.length > 0 && (
             <Button>
               Leaders

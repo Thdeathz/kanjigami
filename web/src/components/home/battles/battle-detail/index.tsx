@@ -1,9 +1,13 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
+
 import Loading from '@/components/loading'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { useGetBattleDetailQuery } from '@/data/battle'
+import useInvalidateTag from '@/hooks/use-invalidate-tag'
 import { cn } from '@/lib/utils'
 
 import { getTimeLabel } from '../../online-battle-panel'
@@ -21,9 +25,18 @@ type Props = {
 }
 
 export default function BattleDetail({ slug }: Props) {
+  const router = useRouter()
+  const { invalidateTag } = useInvalidateTag()
   const { data: battle, isLoading } = useGetBattleDetailQuery(slug)
 
   const timeLabel = getTimeLabel(battle?.status)
+
+  const onBattleStart = () => {
+    invalidateTag(['battles'])
+
+    router.refresh()
+    toast.success('Battle started!')
+  }
 
   if (isLoading) return <Loading className="text-4xl" />
 
@@ -51,7 +64,9 @@ export default function BattleDetail({ slug }: Props) {
           <Separator />
         </div>
 
-        {battle.status !== 'FINISHED' && <CountDown size="large" type="animate" endTime={battle.startAt} />}
+        {battle.status === 'UPCOMING' && (
+          <CountDown size="large" type="animate" endTime={battle.startAt} onFinish={onBattleStart} />
+        )}
       </PageHeader>
       <RootNotification />
 
