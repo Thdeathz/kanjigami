@@ -35,6 +35,12 @@ enum UserState {
   BANNED
 }
 
+enum NotificationType {
+  EVENT
+  STACK
+  ADMIN
+}
+
 model Account {
   id                String   @id @default(cuid())
   type              String
@@ -67,6 +73,7 @@ model User {
   events         Event[]
   gameLogs       GameLog[]
   followedStacks Stack[] @relation("FollowedStacks")
+  notifications  Notification[]
 }
 
 model Kanji {
@@ -87,7 +94,7 @@ model Word {
   id        String   @id @default(cuid())
   content   String
   hiragana  String
-  romaji   String
+  romaji    String
   meaning   String
   image     String?
   createdAt DateTime @default(now())
@@ -101,7 +108,7 @@ model Word {
 model Example {
   id        String   @id @default(cuid())
   content   String
-  romaji   String
+  romaji    String
   meaning   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -213,4 +220,17 @@ model GameLog {
 
   @@unique([gameStackId, userId])
   @@unique([roundId, userId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      NotificationType
+  action    String
+  link      String
+  point     Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
 }

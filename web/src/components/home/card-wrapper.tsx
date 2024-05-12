@@ -5,7 +5,7 @@ import React from 'react'
 import { cn } from '@/lib/utils'
 
 type Props = {
-  link: string
+  link?: string
   className?: string
   children: React.ReactNode
   imageUrl?: string
@@ -19,7 +19,7 @@ export default function CardWrapper({ imageUrl = '/images/lock.png', link, class
         className
       )}
     >
-      <Link href={link} className="absolute right-0 top-0 h-full w-full rounded-2xl" />
+      {link && <Link href={link} className="absolute right-0 top-0 h-full w-full rounded-2xl" />}
       <Image
         src={imageUrl}
         alt="kanji-stack"

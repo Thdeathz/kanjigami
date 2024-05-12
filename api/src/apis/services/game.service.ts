@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import { IImageContent, IWordContent, ISaveScoreRequest, IWord, IMultipleChoiceContent } from '@/apis/@types/game'
 import prisma from '@/apis/databases/init.prisma'
+import notificationService from '@/apis/services/notification.service'
 import { shuffleArray } from '@/apis/utils/array'
 import HttpError from '@/apis/utils/http-error'
 import { randomPick } from '@/apis/utils/pick'
@@ -192,7 +193,23 @@ const saveScore = async (gameStackId: string, userId: string, { score, time, typ
 
   if (currentLog && currentLog.point >= score) return currentLog
 
-  return await prisma.gameLog.upsert({
+  const currentStack = await prisma.gameStack.findUnique({
+    where: {
+      id: gameStackId,
+    },
+    select: {
+      id: true,
+      stack: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  })
+
+  if (!currentStack) throw new HttpError(StatusCodes.NOT_FOUND, 'Game stack not found')
+
+  const gameLog = await prisma.gameLog.upsert({
     where: {
       gameStackId_userId: {
         gameStackId,
@@ -219,6 +236,10 @@ const saveScore = async (gameStackId: string, userId: string, { score, time, typ
       },
     },
   })
+
+  await notificationService.recordNewHighScore(gameStackId, userId)
+
+  return gameLog
 }
 
 const getResult = async (gameLogId: string) => {

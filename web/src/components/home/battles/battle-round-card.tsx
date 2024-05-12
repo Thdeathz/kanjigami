@@ -91,7 +91,6 @@ type Props = {
 export default function BattleRoundCard({ round }: Props) {
   return (
     <CardWrapper
-      link={`/play/10/${round.order}`}
       imageUrl={round.game?.image}
       className="card-item pointer-events-auto z-10 cursor-pointer hover:scale-105 hover:opacity-100 group-hover:opacity-40"
     >
