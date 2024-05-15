@@ -1,12 +1,34 @@
+import React from 'react'
+
+import { IFile } from '@/@types'
 import { FormField, FormInput } from '@/components/ui/form'
 
-export default function StackDetailsForm() {
+type Props = {
+  setImage: React.Dispatch<React.SetStateAction<IFile | null>>
+}
+
+export default function StackDetailsForm({ setImage }: Props) {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target
+
+    if (files && files.length > 0) {
+      const newFile = files[0]
+      const reader = new FileReader()
+
+      reader.onload = () => {
+        setImage({ ...newFile, preview: reader.result as string })
+      }
+
+      reader.readAsDataURL(newFile)
+    }
+  }
+
   return (
     <form>
       <FormField
         // control={form.control}
-        name="title"
-        render={({ field }) => <FormInput label="Title" {...field} placeholder="An awesome stack" />}
+        name="name"
+        render={({ field }) => <FormInput label="Name" {...field} placeholder="An awesome stack" />}
       />
 
       <FormField name="description" render={({ field }) => <FormInput label="Description" {...field} />} />
@@ -15,14 +37,14 @@ export default function StackDetailsForm() {
 
       <FormField
         name="thumbnail"
-        render={({ field }) => (
+        render={() => (
           <FormInput
             label="Thumbnail"
             type="file"
             className="flex flex-col"
             inputClass="w-min"
             accept=".png,.jpg,.jpeg"
-            {...field}
+            onChange={handleFileChange}
           />
         )}
       />

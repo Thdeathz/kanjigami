@@ -38,3 +38,5 @@ export const apiAuthPrefix: string = '/api/auth'
 export const DEFAULT_LOGIN_REDIRECT: string = '/'
 
 export const DEFAULT_LOGIN_REDIRECT_ADMIN: string = '/admin'
+
+export const OFFLINE_PAGE: string = '/~offline'

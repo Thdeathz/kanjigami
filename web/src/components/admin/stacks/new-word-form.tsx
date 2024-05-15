@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { FaPlus } from 'react-icons/fa'
 
 import NewExampleForm from '@/components/admin/stacks/new-example-form'
 import { Button } from '@/components/ui/button'
@@ -31,6 +32,10 @@ export default function NewWordForm() {
         <SectionDivider title="Examples" className="mb-4" />
 
         <div className="mb-2 flex items-center gap-2">
+          <Button shape="circle" variant="outline" type="button" className="border-2 border-dashed">
+            <FaPlus />
+          </Button>
+
           <Button shape="circle" type="button">
             1
           </Button>

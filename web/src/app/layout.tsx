@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import React from 'react'
 
 import './globals.css'
@@ -10,9 +10,41 @@ import Navbar from '@/components/layout/navbar'
 import Sidebar from '@/components/layout/sidebar'
 import Providers from '@/components/providers'
 
+const APP_NAME = 'kanjigami'
+const APP_DEFAULT_TITLE = '漢字ガミ'
+const APP_TITLE_TEMPLATE = '%s | 漢字ガミ'
+const APP_DESCRIPTION = '⚔️ 漢字ガミー Learn kanji through games'
+
 export const metadata: Metadata = {
-  title: '漢字ガミ',
-  description: '⚔️ 漢字ガミー Learn kanji through games'
+  applicationName: APP_NAME,
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE
+  },
+  description: APP_DESCRIPTION,
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: APP_DEFAULT_TITLE
+    // startUpImage: [],
+  },
+  formatDetection: {
+    telephone: false
+  },
+  openGraph: {
+    type: 'website',
+    siteName: APP_NAME,
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE
+    },
+    description: APP_DESCRIPTION
+  }
+}
+
+export const viewport: Viewport = {
+  themeColor: '#FFFFFF'
 }
 
 export default function RootLayout({

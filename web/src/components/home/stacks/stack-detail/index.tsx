@@ -8,6 +8,7 @@ import WordsList from '@/components/home/stacks/stack-detail/words-list'
 import Loading from '@/components/loading'
 import { useGetStackDetailQuery } from '@/data/stack'
 
+import ButtonDownLoad from './button-download'
 import StackSideLeaderboard from './stack-side-leaderboard'
 
 type Props = {
@@ -26,7 +27,9 @@ export default function StackDetail({ slug, openWord }: Props) {
 
   return (
     <>
-      <PageHeader title={stack.name} description={stack.description} />
+      <PageHeader title={stack.name} description={stack.description}>
+        <ButtonDownLoad stack={stack} />
+      </PageHeader>
 
       <RootNotification />
 

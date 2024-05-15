@@ -8,7 +8,7 @@ import Loading from '@/components/loading'
 import { Panel } from '@/components/ui/card'
 
 export const metadata = () => ({
-  title: 'My Analytics | 漢字ガミ'
+  title: 'My Analytics'
 })
 
 type Props = {

@@ -1,17 +1,23 @@
 'use client'
 
 import Image from 'next/image'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { IFile } from '@/@types'
 import SectionTitle from '@/components/admin/section-title'
 import NewWordForm from '@/components/admin/stacks/new-word-form'
+import NewWordInput from '@/components/admin/stacks/new-word-input'
 import StackDetailsForm from '@/components/admin/stacks/stack-details-form'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { SectionDivider } from '@/components/ui/separator'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export default function CreateStackForm() {
   const form = useForm()
+
+  const [image, setImage] = useState<IFile | null>(null)
 
   return (
     <Form {...form}>
@@ -23,7 +29,7 @@ export default function CreateStackForm() {
             <SectionTitle title="Stack thumbnail" />
 
             <Image
-              src="/images/lock.png"
+              src={image?.preview ?? '/images/lock.png'}
               alt="new-stack-thumbnail"
               width={400}
               height={300}
@@ -31,7 +37,7 @@ export default function CreateStackForm() {
             />
           </div>
 
-          <StackDetailsForm />
+          <StackDetailsForm setImage={setImage} />
         </div>
 
         <SectionDivider title="Words" />
@@ -55,7 +61,18 @@ export default function CreateStackForm() {
           <div>
             <SectionTitle title="Add new word" />
 
-            <NewWordForm />
+            <Tabs defaultValue="all">
+              <TabsList>
+                <TabsTrigger value="all">All in one</TabsTrigger>
+                <TabsTrigger value="step">Step by step</TabsTrigger>
+              </TabsList>
+              <TabsContent value="all">
+                <NewWordInput />
+              </TabsContent>
+              <TabsContent value="step">
+                <NewWordForm />
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
 

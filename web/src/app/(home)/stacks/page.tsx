@@ -10,7 +10,7 @@ import Loading from '@/components/loading'
 import { auth } from '@/server/auth'
 
 export const metadata = () => ({
-  title: 'Kanji stacks | 漢字ガミ'
+  title: 'Kanji stacks'
 })
 
 export default async function KanjiStackPage({

@@ -6,6 +6,7 @@ import { auth } from '@/server/auth'
 import {
   DEFAULT_LOGIN_REDIRECT,
   DEFAULT_LOGIN_REDIRECT_ADMIN,
+  OFFLINE_PAGE,
   adminRoutesPrefix,
   apiAuthPrefix,
   authRoutes,
@@ -27,9 +28,10 @@ export default auth(async (req) => {
   const isPublicRoute = publicRoutes.find((each) => each.test(nextUrl.pathname))
   const isAdminRoute = nextUrl.pathname.startsWith(adminRoutesPrefix)
   const isAuthRoute = authRoutes.find((each) => each.test(nextUrl.pathname))
+  const isOfflinePage = nextUrl.pathname === OFFLINE_PAGE
 
-  // no effect if is next-auth api route
-  if (isAuthApiRoute) return
+  // no effect if is next-auth api route or offline page
+  if (isAuthApiRoute || isOfflinePage) return
 
   // handle auth routes
   if (isAuthRoute) {

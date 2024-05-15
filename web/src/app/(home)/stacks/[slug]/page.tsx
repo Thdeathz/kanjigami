@@ -19,7 +19,7 @@ export const generateMetadata = async ({ params }: Props) => {
   const stack = await getStackDetail(slug)
 
   return {
-    title: `${stack.name} | 漢字ガミ`
+    title: `${stack.name}`
   }
 }
 

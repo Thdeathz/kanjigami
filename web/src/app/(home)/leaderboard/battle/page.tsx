@@ -5,7 +5,7 @@ import LeaderboardsList from '@/components/home/leaderboard/leaderboards-list'
 import PageHeader from '@/components/home/page-header'
 
 export const metadata = () => ({
-  title: 'Leaderboard | 漢字ガミ'
+  title: 'Leaderboard'
 })
 
 export default function LeaderBoardPage() {

@@ -11,7 +11,7 @@ import RootNotification from '@/components/home/root-notification'
 import Loading from '@/components/loading'
 
 export const metadata = () => ({
-  title: 'Battles | 漢字ガミ'
+  title: 'Battles'
 })
 
 export default function BattlesPage({

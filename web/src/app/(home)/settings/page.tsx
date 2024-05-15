@@ -4,7 +4,7 @@ import PageHeader from '@/components/home/page-header'
 import ProfileSettingForm from '@/components/home/settings/profile-setting-form'
 
 export const metadata = () => ({
-  title: 'Settings | 漢字ガミ'
+  title: 'Settings'
 })
 
 export default function ProfileSettingPage() {

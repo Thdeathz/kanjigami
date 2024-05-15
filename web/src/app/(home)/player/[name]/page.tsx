@@ -8,7 +8,7 @@ type Props = {
 
 export const generateMetadata = ({ params }: Props) => {
   return {
-    title: `${params.name} | 漢字ガミ`
+    title: `${params.name}`
   }
 }
 
