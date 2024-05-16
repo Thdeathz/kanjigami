@@ -6,7 +6,7 @@ import { Session } from 'next-auth'
 import React from 'react'
 import { BsStack, BsTrophyFill } from 'react-icons/bs'
 import { FaChartArea, FaHome, FaUser } from 'react-icons/fa'
-import { RiSettings3Fill, RiSwordFill } from 'react-icons/ri'
+import { RiFolderDownloadFill, RiSettings3Fill, RiSwordFill } from 'react-icons/ri'
 
 import AppLogo from '@/components/layout/sidebar/app-logo'
 import SideLink from '@/components/layout/sidebar/side-link'
@@ -45,6 +45,10 @@ export function UserSidebarMenu({ currentUsername }: SideMenuProps) {
             <SideLink link="/settings" icon={<RiSettings3Fill />} title="Settings" />
           </SideSection>
         )}
+
+        <SideSection title="offline">
+          <SideLink link="/downloads" icon={<RiFolderDownloadFill />} title="Download stacks" />
+        </SideSection>
       </div>
 
       <UpgradePlusButton />

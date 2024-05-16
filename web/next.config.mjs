@@ -1,6 +1,5 @@
 import withPWAInit from '@ducanh2912/next-pwa'
 
-/** @type {import('next').NextConfig} */
 const withPWA = withPWAInit({
   dest: 'public',
   register: true,
@@ -18,12 +17,29 @@ const withPWA = withPWAInit({
     // This is for fonts.
     // font: '/fallback-font.woff2'
   },
-  buildExcludes: [/chunks\/images\/.*$/],
+  extendDefaultRuntimeCaching: true,
+  workboxOptions: {
+    runtimeCaching: [
+      {
+        urlPattern: /\/downloads/,
+        handler: 'StaleWhileRevalidate',
+        options: {
+          cacheName: 'download-page',
+          expiration: {
+            maxEntries: 200,
+            maxAgeSeconds: 30 * 24 * 60 * 60 // 30 days
+          }
+        }
+      }
+    ]
+  },
   cacheStartUrl: false,
-  dynamicStartUrl: false
+  dynamicStartUrl: false,
+  cacheOnFrontendNav: false
 })
 
-export default withPWA({
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -54,4 +70,6 @@ export default withPWA({
       }
     ]
   }
-})
+}
+
+export default withPWA(nextConfig)
