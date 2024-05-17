@@ -1,3 +1,4 @@
+// @ts-check
 import withPWAInit from '@ducanh2912/next-pwa'
 
 const withPWA = withPWAInit({
@@ -21,21 +22,22 @@ const withPWA = withPWAInit({
   workboxOptions: {
     runtimeCaching: [
       {
-        urlPattern: /\/downloads/,
-        handler: 'StaleWhileRevalidate',
+        // disable cross-origin cache
+        urlPattern: ({ sameOrigin }) => false,
+        handler: 'NetworkFirst',
         options: {
-          cacheName: 'download-page',
+          cacheName: 'cross-origin',
           expiration: {
-            maxEntries: 200,
-            maxAgeSeconds: 30 * 24 * 60 * 60 // 30 days
-          }
+            maxEntries: 32,
+            maxAgeSeconds: 60 * 60 // 1 hour
+          },
+          networkTimeoutSeconds: 10
         }
       }
     ]
   },
-  cacheStartUrl: false,
-  dynamicStartUrl: false,
-  cacheOnFrontendNav: false
+  cacheStartUrl: true,
+  dynamicStartUrl: true
 })
 
 /** @type {import('next').NextConfig} */

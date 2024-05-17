@@ -44,7 +44,18 @@ export default function StacksList({ filterOption, searchValue }: Props) {
   return (
     <>
       <div className="grid grid-cols-5 gap-8">
-        {data.pages.map((eachPage) => eachPage.map((stack) => <StackCard key={stack.id} stack={stack} />))}
+        {data.pages.map((eachPage) =>
+          eachPage.map((stack) => (
+            <StackCard
+              key={stack.id}
+              name={stack.name}
+              image={stack.image}
+              slug={stack.slug}
+              userPoint={stack.userPoint}
+              isFollowed={stack.isFollowed}
+            />
+          ))
+        )}
 
         <div ref={lastPostRef} />
       </div>
