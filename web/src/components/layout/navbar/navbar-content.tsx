@@ -1,5 +1,6 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
 import { Session } from 'next-auth'
 
@@ -7,8 +8,11 @@ import Breadcrumb from '@/components/layout/navbar/breadcrumb'
 import CollapseSidebar from '@/components/layout/navbar/collapse-sidebar'
 import NotificationButton from '@/components/layout/navbar/notification-button'
 import RankWidget from '@/components/layout/navbar/rank-widget'
-import ThemeButton from '@/components/layout/navbar/theme-button'
 import UserButton from '@/components/layout/navbar/user-button'
+
+const ThemeButtonClient = dynamic(() => import('@/components/layout/navbar/theme-button'), {
+  ssr: false
+})
 
 type Props = {
   session: Session | null
@@ -29,7 +33,7 @@ export default function NavbarContent({ session }: Props) {
       <RankWidget currentUser={session?.user} />
 
       <div className="flex w-full items-center justify-end gap-4">
-        <ThemeButton />
+        <ThemeButtonClient />
 
         {session && <NotificationButton />}
 

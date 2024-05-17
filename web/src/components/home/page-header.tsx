@@ -49,13 +49,15 @@ export default function PageHeader({ icon, badge, showLightStick, title, descrip
     <div className="page-header flex-center flex-col gap-4">
       {icon && <div className="text-[2rem] text-default-brand">{icon}</div>}
 
-      {showLightStick ? (
-        <LightStick status={showLightStick}>
+      <div>
+        {showLightStick ? (
+          <LightStick status={showLightStick}>
+            <h1 className="text-[2rem] font-semibold leading-[1.4] text-default-heading">{title}</h1>
+          </LightStick>
+        ) : (
           <h1 className="text-[2rem] font-semibold leading-[1.4] text-default-heading">{title}</h1>
-        </LightStick>
-      ) : (
-        <h1 className="text-[2rem] font-semibold leading-[1.4] text-default-heading">{title}</h1>
-      )}
+        )}
+      </div>
 
       {badge && <div className="flex-center gap-4">{badge}</div>}
 
