@@ -1,53 +1,18 @@
 'use client'
 
-import SectionWrapper from '@/components/home/battles/section-wrapper'
-import PageHeader from '@/components/home/page-header'
-import RootNotification from '@/components/home/root-notification'
-import GamesList from '@/components/home/stacks/stack-detail/games-list'
-import WordsList from '@/components/home/stacks/stack-detail/words-list'
-import Loading from '@/components/loading'
-import { useGetStackDetailQuery } from '@/data/stack'
+import useIsOnline from '@/hooks/use-is-online'
 
-import ButtonDownLoad from './button-download'
-import StackSideLeaderboard from './stack-side-leaderboard'
+import StackDetailOfflineContent from './offline-content'
+import StackDetailOnlineContent from './online-content'
 
 type Props = {
   slug: string
-  openWord?: string
 }
 
-export default function StackDetail({ slug, openWord }: Props) {
-  const { data: stack, isLoading } = useGetStackDetailQuery(slug)
+export default function StackDetail({ slug }: Props) {
+  const { isOnline } = useIsOnline()
 
-  if (isLoading) return <Loading className="text-4xl" />
+  if (!isOnline) return <StackDetailOfflineContent slug={slug} />
 
-  if (!stack) {
-    return <p>Stack not found.</p>
-  }
-
-  return (
-    <>
-      <PageHeader title={stack.name} description={stack.description}>
-        <ButtonDownLoad stack={stack} />
-      </PageHeader>
-
-      <RootNotification />
-
-      <GamesList games={stack.games} />
-
-      <div className="flex gap-12">
-        <div className="w-0 shrink grow">
-          <SectionWrapper title="Kanji stack">
-            <WordsList words={stack.words} openWord={openWord} />
-          </SectionWrapper>
-        </div>
-
-        <div className="w-[18rem]">
-          <SectionWrapper title="Stack leaders">
-            <StackSideLeaderboard slug={slug} />
-          </SectionWrapper>
-        </div>
-      </div>
-    </>
-  )
+  return <StackDetailOnlineContent slug={slug} />
 }

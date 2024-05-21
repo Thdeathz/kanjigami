@@ -17,7 +17,7 @@ export default function ButtonDownLoad({ stack }: Props) {
 
   const onDownload = () => {
     startTransition(async () => {
-      const result = await put(stack.slug, stack)
+      const result = await put(stack.slug.toString(), stack)
 
       if (result) {
         toast.success('Saved stack successfully')
@@ -28,7 +28,7 @@ export default function ButtonDownLoad({ stack }: Props) {
 
   useEffect(() => {
     const loadLocalStack = async () => {
-      const localStack = await get(stack.slug)
+      const localStack = await get(stack.slug.toString())
       if (localStack) setSavedStack(true)
     }
 

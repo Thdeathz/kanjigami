@@ -8,7 +8,7 @@ import './custom.css'
 import Footer from '@/components/layout/footer'
 import Navbar from '@/components/layout/navbar'
 import Sidebar from '@/components/layout/sidebar'
-import Providers from '@/components/providers'
+import Providers, { OnlineContentProvider } from '@/components/providers'
 
 const APP_NAME = 'kanjigami'
 const APP_DEFAULT_TITLE = '漢字ガミ'
@@ -61,8 +61,7 @@ export default function RootLayout({
 
             <div className="relative h-max w-0 shrink grow">
               <Navbar />
-
-              {children}
+              <OnlineContentProvider>{children}</OnlineContentProvider>
 
               <Footer />
             </div>

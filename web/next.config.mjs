@@ -4,20 +4,7 @@ import withPWAInit from '@ducanh2912/next-pwa'
 const withPWA = withPWAInit({
   dest: 'public',
   register: true,
-  fallbacks: {
-    // Failed page requests fallback to this.
-    document: '/~offline'
-    // This is for /_next/.../.json files.
-    // data: '/fallback.json'
-    // This is for images.
-    // image: '/fallback.webp',
-    // This is for audio files.
-    // audio: '/fallback.mp3',
-    // This is for video files.
-    // video: '/fallback.mp4'
-    // This is for fonts.
-    // font: '/fallback-font.woff2'
-  },
+  disable: process.env.NODE_ENV === 'development',
   extendDefaultRuntimeCaching: true,
   workboxOptions: {
     runtimeCaching: [
@@ -32,6 +19,40 @@ const withPWA = withPWAInit({
             maxAgeSeconds: 60 * 60 // 1 hour
           },
           networkTimeoutSeconds: 10
+        }
+      },
+      {
+        urlPattern: () => false,
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'pages-rsc-prefetch',
+          expiration: {
+            maxEntries: 32,
+            maxAgeSeconds: 24 * 60 * 60 // 24 hours
+          }
+        }
+      },
+      {
+        urlPattern: () => false,
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'pages-rsc',
+          expiration: {
+            maxEntries: 32,
+            maxAgeSeconds: 24 * 60 * 60 // 24 hours
+          }
+        }
+      },
+      {
+        urlPattern: ({ request, url: { pathname }, sameOrigin }) =>
+          sameOrigin && !pathname.startsWith('/api/') && !pathname.startsWith('/_next/') && !request.headers.get('RSC'),
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'pages',
+          expiration: {
+            maxEntries: 32,
+            maxAgeSeconds: 24 * 60 * 60 // 24 hours
+          }
         }
       }
     ]
