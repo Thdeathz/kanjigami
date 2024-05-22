@@ -6,7 +6,11 @@ import { UserAvatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-export default function EditAvatarForm() {
+type Props = {
+  currentAvatar?: string
+}
+
+export default function EditAvatarForm({ currentAvatar }: Props) {
   const [file, setFile] = useState<IFile | null>(null)
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +35,7 @@ export default function EditAvatarForm() {
       </label>
       <div className="mt-1.5 flex items-center gap-4">
         <UserAvatar
-          src={file ? file.preview : '/images/default-avatar.jpg'}
+          src={file ? file.preview : currentAvatar ?? '/images/default-avatar.jpg'}
           alt="thdeathz"
           className="h-[45px] w-[45px]"
         />

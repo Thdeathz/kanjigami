@@ -9,9 +9,6 @@ const signNewAccessToken = async (payload: JwtPayload) => {
     jwt.sign(
       {
         id: payload.id,
-        email: payload.email,
-        name: payload.name,
-        image: payload.image,
         role: payload.role,
       },
       process.env.ACCESS_TOKEN_SECRET as string,

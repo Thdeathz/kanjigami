@@ -1,47 +1,76 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import * as z from 'zod'
 
+import Loading from '@/components/loading'
 import { Button } from '@/components/ui/button'
 import { Form, FormField, FormInput } from '@/components/ui/form'
+import { useUpdateUsernameMutation } from '@/data/user'
+import useInvalidateTag from '@/hooks/use-invalidate-tag'
 import { EditUsernameSchema } from '@/schema/user-profile-schema'
 
-export default function EditUsernameForm() {
+type Props = {
+  currentUsername: string
+}
+
+export default function EditUsernameForm({ currentUsername }: Props) {
+  const { invalidateTag } = useInvalidateTag()
+  const { mutateAsync, isPending } = useUpdateUsernameMutation()
+
   const form = useForm<z.infer<typeof EditUsernameSchema>>({
     resolver: zodResolver(EditUsernameSchema),
     defaultValues: {
-      name: ''
+      name: currentUsername
     }
   })
 
+  const onSubmit = async (data: z.infer<typeof EditUsernameSchema>) => {
+    try {
+      await mutateAsync(data.name)
+
+      invalidateTag(['current-user-info'])
+      toast.success('Username updated successfully')
+    } catch (error) {
+      console.error(error)
+      toast.error('Something went wrong. Please try again later.')
+    }
+  }
+
   return (
     <Form {...form}>
-      <FormField
-        control={form.control}
-        name="name"
-        render={({ field }) => (
-          <FormInput
-            label="Username (Your own sweet profile page)"
-            {...field}
-            placeholder="superman"
-            helperText={
-              <div>
-                Your profile page:{' '}
-                <Link href="/player" className="text-default-link underline">
-                  http://localhost:3000/player/thdeathz
-                </Link>
-              </div>
-            }
-            prefix="kanjigami.play/player/"
-            value="thdeathz"
-          />
-        )}
-      />
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormInput
+              label="Username (Your own sweet profile page)"
+              {...field}
+              placeholder="superman"
+              helperText={
+                <div>
+                  Your profile page:{' '}
+                  <Link href={`/player/${currentUsername}`} className="text-default-link underline">
+                    http://localhost:3000/player/{currentUsername}
+                  </Link>
+                </div>
+              }
+              maxLength={15}
+              prefix="kanjigami.play/player/"
+            />
+          )}
+        />
 
-      <Button type="submit" variant="primary" disabled>
-        Save Username (Edit username above to enable this button)
-      </Button>
+        <Button
+          type="submit"
+          variant="primary"
+          disabled={!form.getValues('name') || form.getValues('name') === currentUsername || isPending}
+        >
+          {isPending ? <Loading /> : 'Save Username (Edit username above to enable this button)'}
+        </Button>
+      </form>
     </Form>
   )
 }

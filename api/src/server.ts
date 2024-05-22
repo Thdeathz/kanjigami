@@ -21,7 +21,7 @@ console.log(process.env.NODE_ENV)
 
 /* MIDDLEWARE */
 app.set('trust proxy', 'loopback')
-app.use(morgan('dev'))
+app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'common'))
 app.use(helmet())
 app.use(cors(corsOptions))
 app.use(express.json())

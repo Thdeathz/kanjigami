@@ -7,7 +7,6 @@ import { IAccessToken, IUserInfo } from './auth'
 
 declare module 'next-auth' {
   interface Session {
-    user: IUserInfo
     accessToken: string
     accessTokenExpires: number
     refreshToken: string
@@ -20,7 +19,6 @@ declare module 'next-auth' {
   }
 
   interface Token {
-    user: IUserInfo
     accessToken: string
     accessTokenExpires: number
     refreshToken: string
@@ -29,7 +27,6 @@ declare module 'next-auth' {
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    user: IUserInfo
     accessToken: string
     accessTokenExpires: number
     refreshToken: string

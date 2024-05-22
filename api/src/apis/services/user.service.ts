@@ -126,6 +126,52 @@ const getUserProfile = async (name: string) => {
   return { user, stats }
 }
 
+const getCurrentUserInfo = async (id: string) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      name: true,
+      image: true,
+      email: true,
+      score: true,
+    },
+  })
+
+  if (!user) throw new HttpError(StatusCodes.NOT_FOUND, 'User not found')
+
+  return user
+}
+
+const updateUsername = async (id: string, username: string) => {
+  return await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      name: username,
+    },
+  })
+}
+
+const updateUserAvatar = async (id: string, imageUrl: string) => {
+  // TODO: Update user avatar
+  // return await prisma.user.update({
+  //   where: {
+  //     id,
+  //   },
+  //   data: {
+  //     image: imageUrl,
+  //   },
+  // })
+  return {
+    id,
+    imageUrl,
+  }
+}
+
 export default {
   getUserByEmail,
   getUserById,
@@ -134,4 +180,7 @@ export default {
   createNewUser,
   updateUserPassword,
   getUserProfile,
+  getCurrentUserInfo,
+  updateUsername,
+  updateUserAvatar,
 }

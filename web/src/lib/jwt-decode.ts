@@ -1,16 +1,13 @@
-import { JwtPayload, jwtDecode } from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 
-import { IUserInfo } from '@/@types/auth'
+import { IJwtPayload } from '@/@types/auth'
 
 const decode = (token: string) => {
-  const decodedData = jwtDecode(token) as JwtPayload & IUserInfo
+  const decodedData = jwtDecode(token) as IJwtPayload
 
   return {
     user: {
       id: decodedData.id,
-      name: decodedData.name,
-      email: decodedData.email,
-      image: decodedData.image,
       role: decodedData.role
     },
     exp: Number(decodedData.exp) * 1000

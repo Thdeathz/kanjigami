@@ -30,14 +30,14 @@ export default function NavbarContent({ session }: Props) {
         <Breadcrumb />
       </div>
 
-      <RankWidget currentUser={session?.user} />
+      <RankWidget />
 
       <div className="flex w-full items-center justify-end gap-4">
         <ThemeButtonClient />
 
         {session && <NotificationButton />}
 
-        <UserButton user={session?.user} />
+        <UserButton />
       </div>
     </nav>
   )

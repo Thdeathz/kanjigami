@@ -8,12 +8,12 @@ import { HiLogout, HiSparkles } from 'react-icons/hi'
 import { RiSettings3Fill } from 'react-icons/ri'
 import { toast } from 'sonner'
 
-import { IUserInfo } from '@/@types/auth'
 import PlusBadge from '@/components/plus-badge'
 import { UserAvatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useLogoutMutation } from '@/data/auth'
+import { useGetCurrentUserInfoQuery } from '@/data/user'
 import { cn } from '@/lib/utils'
 
 type ItemProps = {
@@ -43,11 +43,8 @@ function Item({ icon, text, to, primary = false, onClick }: ItemProps) {
   )
 }
 
-type Props = {
-  user?: IUserInfo
-}
-
-export default function UserButton({ user }: Props) {
+export default function UserButton() {
+  const { data: user, isLoading } = useGetCurrentUserInfoQuery()
   const { mutateAsync } = useLogoutMutation()
 
   const handleLogout = async () => {
@@ -55,6 +52,8 @@ export default function UserButton({ user }: Props) {
 
     toast.success('Logged out successfully')
   }
+
+  if (isLoading) return null
 
   if (!user)
     return (

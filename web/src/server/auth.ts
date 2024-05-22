@@ -45,8 +45,7 @@ export const {
           ...token,
           accessToken: user.accessToken,
           accessTokenExpires: decodedToken.exp,
-          refreshToken: user.refreshToken,
-          user: decodedToken.user
+          refreshToken: user.refreshToken
         }
       }
 
@@ -74,8 +73,7 @@ export const {
         ...session,
         accessToken: token.accessToken,
         accessTokenExpires: token.accessTokenExpires,
-        refreshToken: token.refreshToken,
-        user: token.user
+        refreshToken: token.refreshToken
       }
     }
   },

@@ -1,3 +1,5 @@
+import type { JwtPayload } from 'jwt-decode'
+
 export type UserRole = 'USER' | 'ADMIN'
 
 export interface IUserInfo {
@@ -5,6 +7,12 @@ export interface IUserInfo {
   name: string
   email: string
   image?: string
+  score: number
+  role: UserRole
+}
+
+export interface IJwtPayload extends JwtPayload {
+  id: string
   role: UserRole
 }
 
