@@ -31,7 +31,7 @@ export default function TopUserItem({ topUser, index }: Props) {
       variants={grid.item()}
     >
       <td className="flex basis-1/2 items-center gap-4">
-        <UserAvatar src={topUser.user.image} alt={topUser.user.name} plus />
+        <UserAvatar src={topUser.user.image} alt={topUser.user.name} plus={topUser.user.isPlus} />
 
         <Link href="/player" className="inline-block font-semibold text-default-link group-hover:text-default-brand">
           {topUser.user.name}

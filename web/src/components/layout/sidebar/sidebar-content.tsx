@@ -2,12 +2,12 @@
 
 import { cva } from 'class-variance-authority'
 import { usePathname } from 'next/navigation'
-import { Session } from 'next-auth'
 import React from 'react'
 import { BsStack, BsTrophyFill } from 'react-icons/bs'
 import { FaChartArea, FaHome, FaUser } from 'react-icons/fa'
 import { RiFolderDownloadFill, RiSettings3Fill, RiSwordFill } from 'react-icons/ri'
 
+import { IUserInfo } from '@/@types/auth'
 import AppLogo from '@/components/layout/sidebar/app-logo'
 import SideLink from '@/components/layout/sidebar/side-link'
 import SideSection from '@/components/layout/sidebar/side-section'
@@ -17,9 +17,10 @@ import { cn } from '@/lib/utils'
 
 type SideMenuProps = {
   currentUsername?: string
+  isPlus?: boolean
 }
 
-export function UserSidebarMenu({ currentUsername }: SideMenuProps) {
+export function UserSidebarMenu({ currentUsername, isPlus = false }: SideMenuProps) {
   return (
     <>
       <div className="grow border-r border-solid border-border-1">
@@ -34,24 +35,26 @@ export function UserSidebarMenu({ currentUsername }: SideMenuProps) {
         </SideSection>
 
         {currentUsername && (
-          <SideSection title="about you">
-            <SideLink
-              link={`/player/${currentUsername}`}
-              icon={<FaUser />}
-              title="Profile"
-              matchRegex="\/player\/\S+"
-            />
-            <SideLink link="/me" icon={<FaChartArea />} title="Stats" />
-            <SideLink link="/settings" icon={<RiSettings3Fill />} title="Settings" />
-          </SideSection>
-        )}
+          <>
+            <SideSection title="about you">
+              <SideLink
+                link={`/player/${currentUsername}`}
+                icon={<FaUser />}
+                title="Profile"
+                matchRegex="\/player\/\S+"
+              />
+              <SideLink link="/me" icon={<FaChartArea />} title="Stats" />
+              <SideLink link="/settings" icon={<RiSettings3Fill />} title="Settings" />
+            </SideSection>
 
-        <SideSection title="offline">
-          <SideLink link="/downloads" icon={<RiFolderDownloadFill />} title="Download stacks" />
-        </SideSection>
+            <SideSection title="offline">
+              <SideLink link="/downloads" icon={<RiFolderDownloadFill />} title="Download stacks" />
+            </SideSection>
+          </>
+        )}
       </div>
 
-      <UpgradePlusButton />
+      {currentUsername && <UpgradePlusButton isPlus={isPlus} />}
     </>
   )
 }
@@ -89,10 +92,10 @@ const sidebarVariants = cva('top-0 flex flex-col bg-sidebar backdrop-blur-sm', {
 })
 
 type Props = {
-  session: Session | null
+  currentUser: IUserInfo | null
 }
 
-export default function SidebarContent({ session }: Props) {
+export default function SidebarContent({ currentUser }: Props) {
   const pathname = usePathname()
   const { isOpenSidebar } = useGlobalContext()
 
@@ -104,7 +107,11 @@ export default function SidebarContent({ session }: Props) {
         <AppLogo />
       </div>
 
-      {session?.user.role === 'ADMIN' ? <AdminSidebarMenu /> : <UserSidebarMenu currentUsername={session?.user.name} />}
+      {currentUser?.role === 'ADMIN' ? (
+        <AdminSidebarMenu />
+      ) : (
+        <UserSidebarMenu currentUsername={currentUser?.name} isPlus={currentUser?.isPlus} />
+      )}
     </aside>
   )
 }

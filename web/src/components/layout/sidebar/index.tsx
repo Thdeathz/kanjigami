@@ -1,10 +1,10 @@
 import React from 'react'
 
 import SidebarContent from '@/components/layout/sidebar/sidebar-content'
-import { auth } from '@/server/auth'
+import { getCurrentUserInfo } from '@/server/actions/user'
 
 export default async function Sidebar() {
-  const session = await auth()
+  const currentUser = await getCurrentUserInfo()
 
-  return <SidebarContent session={session} />
+  return <SidebarContent currentUser={currentUser} />
 }

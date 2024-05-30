@@ -58,7 +58,8 @@ const getAllTimeLeaderboard = async () => {
     SELECT 
       "User"."id", 
       "User"."image", 
-      "User"."name", 
+      "User"."name",
+      "User"."state",
       SUM("GameLog"."point") as "point",
       COUNT("GameLog"."id") as "totalGame"
     FROM "GameLog"
@@ -74,6 +75,7 @@ const getAllTimeLeaderboard = async () => {
       id: user.id,
       image: user.image,
       name: user.name,
+      isPlus: user.state === 'PLUS',
     },
     point: Number(user.point),
     totalGame: Number(user.totalGame),
@@ -88,7 +90,8 @@ const getStacksLeaderboard = async (offset: number, slug?: number) => {
       SELECT 
         "User"."id", 
         "User"."image", 
-        "User"."name", 
+        "User"."name",
+        "User"."state",
         SUM("GameLog"."point") as "point",
         AVG("GameLog"."time") as "time"
       FROM "GameLog"
@@ -108,7 +111,8 @@ const getStacksLeaderboard = async (offset: number, slug?: number) => {
       SELECT 
         "User"."id", 
         "User"."image", 
-        "User"."name", 
+        "User"."name",
+        "User"."state",
         SUM("GameLog"."point") as "point",
         AVG("GameLog"."time") as "time"
       FROM "GameLog"
@@ -125,6 +129,7 @@ const getStacksLeaderboard = async (offset: number, slug?: number) => {
       id: user.id,
       image: user.image,
       name: user.name,
+      isPlus: user.state === 'PLUS',
     },
     point: Number(user.point),
     time: user.time.toFixed(2),
@@ -172,7 +177,8 @@ const getEventsTopUsers = async (eventIds: string[]) => {
       SELECT 
         "User"."id", 
         "User"."image", 
-        "User"."name", 
+        "User"."name",
+        "User"."state",
         "Round"."eventId",
         SUM("GameLog"."point") as "point",
         AVG("GameLog"."time") as "time",
@@ -192,6 +198,7 @@ const getEventsTopUsers = async (eventIds: string[]) => {
       id: user.id,
       image: user.image,
       name: user.name,
+      isPlus: user.state === 'PLUS',
     },
     point: Number(user.point),
     time: user.time.toFixed(2),

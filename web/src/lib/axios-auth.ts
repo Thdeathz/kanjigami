@@ -2,7 +2,7 @@
 /* eslint-disable import/no-cycle */
 import axios from 'axios'
 
-import { auth } from '@/server/auth'
+import { auth, signOut } from '@/server/auth'
 
 const axiosAuth = axios.create({
   baseURL: process.env.API_URL,
@@ -25,6 +25,19 @@ axiosAuth.interceptors.request.use(
     return config
   },
   (error) => {
+    return Promise.reject(error)
+  }
+)
+
+axiosAuth.interceptors.response.use(
+  (response) => {
+    return response
+  },
+  async (error) => {
+    if (error?.response?.status === 401) {
+      await signOut()
+    }
+
     return Promise.reject(error)
   }
 )

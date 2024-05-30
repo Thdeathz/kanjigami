@@ -49,7 +49,7 @@ export default function LoginForm() {
 
     form.reset()
     toast.success('Login successful')
-    router.push(DEFAULT_LOGIN_REDIRECT)
+    window.location.href = DEFAULT_LOGIN_REDIRECT
   }
 
   return (

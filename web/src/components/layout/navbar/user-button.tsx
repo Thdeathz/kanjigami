@@ -8,12 +8,12 @@ import { HiLogout, HiSparkles } from 'react-icons/hi'
 import { RiSettings3Fill } from 'react-icons/ri'
 import { toast } from 'sonner'
 
+import { IUserInfo } from '@/@types/auth'
 import PlusBadge from '@/components/plus-badge'
 import { UserAvatar } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useLogoutMutation } from '@/data/auth'
-import { useGetCurrentUserInfoQuery } from '@/data/user'
 import { cn } from '@/lib/utils'
 
 type ItemProps = {
@@ -43,8 +43,11 @@ function Item({ icon, text, to, primary = false, onClick }: ItemProps) {
   )
 }
 
-export default function UserButton() {
-  const { data: user, isLoading } = useGetCurrentUserInfoQuery()
+type Props = {
+  user: IUserInfo | null
+}
+
+export default function UserButton({ user }: Props) {
   const { mutateAsync } = useLogoutMutation()
 
   const handleLogout = async () => {
@@ -52,8 +55,6 @@ export default function UserButton() {
 
     toast.success('Logged out successfully')
   }
-
-  if (isLoading) return null
 
   if (!user)
     return (
@@ -65,8 +66,8 @@ export default function UserButton() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className="space-x-0.5">
-          <UserAvatar className="mr-2" size="small" src={user.image} alt={user.name} />
+        <Button className="space-x-0.5 px-2">
+          <UserAvatar className="mr-2" size="small" src={user.image} alt={user.name} plus={user.isPlus} />
           <span>{user.name}</span>
           <FaCaretDown />
         </Button>
@@ -75,7 +76,7 @@ export default function UserButton() {
       <PopoverContent align="end" className="">
         <div className="space-y-2 pr-4">
           <Item
-            to="/upgrade"
+            to="/plus"
             icon={<HiSparkles />}
             text={
               <div className="flex-center gap-2">

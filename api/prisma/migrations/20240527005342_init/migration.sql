@@ -1,10 +1,6 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "UserRole" AS ENUM ('USER', 'ADMIN');
 
-  - Added the required column `updatedAt` to the `Account` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `updatedAt` to the `User` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "BattleStatus" AS ENUM ('UPCOMING', 'ONGOING', 'FINISHED');
 
@@ -17,15 +13,38 @@ CREATE TYPE "GameLogType" AS ENUM ('ONLINE', 'OFFLINE');
 -- CreateEnum
 CREATE TYPE "UserState" AS ENUM ('NORMAL', 'PLUS', 'BANNED');
 
--- AlterTable
-ALTER TABLE "Account" ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN     "updatedAt" TIMESTAMP(3) NOT NULL;
+-- CreateEnum
+CREATE TYPE "NotificationType" AS ENUM ('EVENT', 'STACK', 'ADMIN');
 
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN     "score" INTEGER NOT NULL DEFAULT 0,
-ADD COLUMN     "state" "UserState" NOT NULL DEFAULT 'NORMAL',
-ADD COLUMN     "updatedAt" TIMESTAMP(3) NOT NULL;
+-- CreateTable
+CREATE TABLE "Account" (
+    "id" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "provider" TEXT NOT NULL,
+    "providerAccountId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT,
+    "password" TEXT,
+    "image" TEXT,
+    "score" INTEGER NOT NULL DEFAULT 0,
+    "role" "UserRole" NOT NULL DEFAULT 'USER',
+    "state" "UserState" NOT NULL DEFAULT 'NORMAL',
+    "emailVerified" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Kanji" (
@@ -71,6 +90,7 @@ CREATE TABLE "Example" (
 -- CreateTable
 CREATE TABLE "Stack" (
     "id" TEXT NOT NULL,
+    "slug" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
     "image" TEXT,
@@ -122,7 +142,7 @@ CREATE TABLE "Event" (
     "name" TEXT NOT NULL,
     "description" TEXT,
     "type" "BattleType" NOT NULL,
-    "status" "BattleStatus" NOT NULL,
+    "status" "BattleStatus" NOT NULL DEFAULT 'UPCOMING',
     "startAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -134,7 +154,7 @@ CREATE TABLE "Event" (
 CREATE TABLE "Round" (
     "id" TEXT NOT NULL,
     "order" INTEGER NOT NULL,
-    "status" "BattleStatus" NOT NULL,
+    "status" "BattleStatus" NOT NULL DEFAULT 'UPCOMING',
     "eventId" TEXT NOT NULL,
     "gameStackId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -156,6 +176,32 @@ CREATE TABLE "GameLog" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "GameLog_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Notification" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "type" "NotificationType" NOT NULL,
+    "action" TEXT NOT NULL,
+    "link" TEXT NOT NULL,
+    "point" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Notification_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Checkout" (
+    "id" TEXT NOT NULL,
+    "sessionId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "successAt" TIMESTAMP(3),
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Checkout_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -183,16 +229,46 @@ CREATE TABLE "_StackToTopic" (
 );
 
 -- CreateTable
+CREATE TABLE "_FollowedStacks" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
+-- CreateTable
 CREATE TABLE "_EventToUser" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Event_slug_id_key" ON "Event"("slug", "id");
+CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "GameLog_gameStackId_roundId_userId_key" ON "GameLog"("gameStackId", "roundId", "userId");
+CREATE UNIQUE INDEX "User_name_key" ON "User"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Kanji_content_key" ON "Kanji"("content");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Stack_slug_key" ON "Stack"("slug");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Event_slug_key" ON "Event"("slug");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "GameLog_gameStackId_userId_key" ON "GameLog"("gameStackId", "userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "GameLog_roundId_userId_key" ON "GameLog"("roundId", "userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Checkout_sessionId_key" ON "Checkout"("sessionId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Checkout_sessionId_userId_key" ON "Checkout"("sessionId", "userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_KanjiToWord_AB_unique" ON "_KanjiToWord"("A", "B");
@@ -219,10 +295,19 @@ CREATE UNIQUE INDEX "_StackToTopic_AB_unique" ON "_StackToTopic"("A", "B");
 CREATE INDEX "_StackToTopic_B_index" ON "_StackToTopic"("B");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "_FollowedStacks_AB_unique" ON "_FollowedStacks"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_FollowedStacks_B_index" ON "_FollowedStacks"("B");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "_EventToUser_AB_unique" ON "_EventToUser"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_EventToUser_B_index" ON "_EventToUser"("B");
+
+-- AddForeignKey
+ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Stack" ADD CONSTRAINT "Stack_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -249,6 +334,12 @@ ALTER TABLE "GameLog" ADD CONSTRAINT "GameLog_roundId_fkey" FOREIGN KEY ("roundI
 ALTER TABLE "GameLog" ADD CONSTRAINT "GameLog_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Notification" ADD CONSTRAINT "Notification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Checkout" ADD CONSTRAINT "Checkout_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "_KanjiToWord" ADD CONSTRAINT "_KanjiToWord_A_fkey" FOREIGN KEY ("A") REFERENCES "Kanji"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -271,6 +362,12 @@ ALTER TABLE "_StackToTopic" ADD CONSTRAINT "_StackToTopic_A_fkey" FOREIGN KEY ("
 
 -- AddForeignKey
 ALTER TABLE "_StackToTopic" ADD CONSTRAINT "_StackToTopic_B_fkey" FOREIGN KEY ("B") REFERENCES "Topic"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_FollowedStacks" ADD CONSTRAINT "_FollowedStacks_A_fkey" FOREIGN KEY ("A") REFERENCES "Stack"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_FollowedStacks" ADD CONSTRAINT "_FollowedStacks_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_EventToUser" ADD CONSTRAINT "_EventToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "Event"("id") ON DELETE CASCADE ON UPDATE CASCADE;

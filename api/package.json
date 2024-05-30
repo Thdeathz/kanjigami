@@ -40,6 +40,7 @@
     "passport-jwt": "^4.0.1",
     "prisma": "^5.4.2",
     "socket.io": "^4.7.5",
+    "stripe": "^15.8.0",
     "unique-slug": "^4.0.0"
   },
   "devDependencies": {

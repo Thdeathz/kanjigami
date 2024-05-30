@@ -30,7 +30,7 @@ export default function MainProfile({ user }: Props) {
         </div>
 
         <div className="w-full">
-          <Button variant="primary" className="float-right">
+          <Button link="/settings" variant="primary" className="float-right">
             Edit profile
           </Button>
         </div>

@@ -7,7 +7,6 @@ import { ILoginResponse } from '@/@types/auth'
 import axiosBase from '@/lib/axios-base'
 import decode from '@/lib/jwt-decode'
 
-import { refresh } from './actions/auth'
 import authConfig from './auth.config'
 
 export const {
@@ -45,7 +44,7 @@ export const {
           ...token,
           accessToken: user.accessToken,
           accessTokenExpires: decodedToken.exp,
-          refreshToken: user.refreshToken
+          user: decodedToken.user
         }
       }
 
@@ -59,13 +58,16 @@ export const {
         return token
       }
 
-      const { accessToken, accessTokenExpires } = await refresh(token)
+      // TODO: uncomment this when the refresh token rotation is working
+      // const { accessToken, accessTokenExpires } = await refresh(token)
 
-      return {
-        ...token,
-        accessToken,
-        accessTokenExpires
-      }
+      // return {
+      //   ...token,
+      //   accessToken,
+      //   accessTokenExpires
+      // }
+
+      return null
     },
 
     async session({ session, token }) {
@@ -73,12 +75,15 @@ export const {
         ...session,
         accessToken: token.accessToken,
         accessTokenExpires: token.accessTokenExpires,
-        refreshToken: token.refreshToken
+        refreshToken: token.refreshToken,
+        user: token.user
       }
     }
   },
   trustHost: true,
-  secret: process.env.NEXTAUTH_SECRET,
-  session: { strategy: 'jwt' },
+  session: {
+    strategy: 'jwt',
+    maxAge: 60 * 60 * 24 * 30
+  },
   ...authConfig
 })

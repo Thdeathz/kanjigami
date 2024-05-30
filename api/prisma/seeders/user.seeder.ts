@@ -16,6 +16,7 @@ const userSeeder = async () => {
             name: user.name,
             image: user.image,
             role: user.role,
+            state: user.state,
           },
         }),
     ),

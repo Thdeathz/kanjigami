@@ -28,6 +28,9 @@ devapi:
 devweb:
 	@docker exec -it $(COMPOSE_PROJECT_NAME)-web-1 yarn dev
 
+stripewebhook:
+	stripe listen --forward-to api.localhost:3000/api/v1/plus/webhook
+
 devdown:
 	docker compose down --remove-orphans
 

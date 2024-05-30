@@ -1,7 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
-'use client'
-
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -18,7 +15,7 @@ type Props = {
 export default function RankWidget({ currentUserRole }: Props) {
   const [showRankName, toggle, setShowRankName] = useToggle(false)
 
-  // if (currentUserRole !== 'USER') return null
+  if (currentUserRole !== 'USER') return null
 
   return (
     <motion.div

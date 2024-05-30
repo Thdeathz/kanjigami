@@ -4,19 +4,31 @@ import * as React from 'react'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 
 import { cn } from '@/lib/utils'
+import { VariantProps, cva } from 'class-variance-authority'
 
 const Tabs = TabsPrimitive.Root
 
-const TabsList = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.List
-    ref={ref}
-    className={cn('inline-flex items-center justify-center rounded-lg bg-panel p-1 shadow-panel', className)}
-    {...props}
-  />
-))
+const tabsListVariants = cva('inline-flex items-center justify-center', {
+  variants: {
+    variant: {
+      default: 'rounded-lg bg-panel p-1 shadow-panel',
+      primary: 'border-2 border-border font-medium p-[0.3rem] rounded-full'
+    }
+  },
+  defaultVariants: {
+    variant: 'default'
+  }
+})
+
+interface TabsListProps
+  extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
+    VariantProps<typeof tabsListVariants> {}
+
+const TabsList = React.forwardRef<React.ElementRef<typeof TabsPrimitive.List>, TabsListProps>(
+  ({ className, variant = 'default', ...props }, ref) => (
+    <TabsPrimitive.List ref={ref} className={cn(tabsListVariants({ variant, className }))} {...props} />
+  )
+)
 TabsList.displayName = TabsPrimitive.List.displayName
 
 const TabsTrigger = React.forwardRef<

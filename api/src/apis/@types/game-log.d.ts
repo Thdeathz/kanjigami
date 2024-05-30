@@ -1,9 +1,12 @@
+import { UserState } from '@prisma/client'
+
 export interface TopUser {
   id: string
   name: string
   image: string
   point: number
   time: number
+  state: UserState
   totalGame?: number
 }
 

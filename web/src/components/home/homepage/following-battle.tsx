@@ -32,16 +32,14 @@ export default function FollowingBattle() {
     return <Loading className="text-4xl" />
   }
 
-  if (!data) {
-    return <p>No stack found.</p>
-  }
+  if (!data || data.pages[0].length === 0) return null
 
   return (
     <HomeSection
       title="Following kanji stack"
       description="Play game and learn more kanji"
       icon={<BsStack />}
-      viewButton={<Button onClick={() => {}}>View all kanji stacks</Button>}
+      viewButton={<Button link="/stacks">View all kanji stacks</Button>}
     >
       <div className="grid grid-cols-5 gap-8">
         {data.pages.map((eachPage) =>

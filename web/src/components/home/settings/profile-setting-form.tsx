@@ -1,17 +1,16 @@
 'use client'
 
+import { IUserInfo } from '@/@types/auth'
 import EditUsernameForm from '@/components/home/settings/edit-username-form'
-import Loading from '@/components/loading'
 import { Separator } from '@/components/ui/separator'
-import { useGetCurrentUserInfoQuery } from '@/data/user'
 
 import EditAvatarForm from './edit-avatar-form'
 
-export default function ProfileSettingForm() {
-  const { data: user, isLoading } = useGetCurrentUserInfoQuery()
+type Props = {
+  user: IUserInfo | null
+}
 
-  if (isLoading) return <Loading className="text-2xl" />
-
+export default function ProfileSettingForm({ user }: Props) {
   if (!user) return <p className="font-secondary text-center font-medium">User not found</p>
 
   return (

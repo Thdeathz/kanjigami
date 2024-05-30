@@ -7,9 +7,6 @@ export interface ILoginRequest {
 
 export interface JwtPayload {
   id: string
-  // email: string | null
-  // name: string | null
-  // image: string | null
   role: UserRole | null
 }
 

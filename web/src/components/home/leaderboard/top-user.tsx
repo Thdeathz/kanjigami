@@ -80,11 +80,19 @@ export default function TopUser({ top, topUser }: TopUserProps) {
           <FaCrown className={cn(crownVariants({ top }))} />
 
           <div className={cn(auraVariants({ top }))}>
-            <UserAvatar src={topUser.user.image} alt={topUser.user.name} plus className="h-[52px] w-[52px]" />
+            <UserAvatar
+              src={topUser.user.image}
+              alt={topUser.user.name}
+              plus={topUser.user.isPlus}
+              className="h-[52px] w-[52px]"
+            />
           </div>
         </div>
 
-        <Link href="/" className="mt-4 text-lg font-semibold text-default-link group-hover:text-default-brand">
+        <Link
+          href={`/player/${topUser.user.name}`}
+          className="mt-4 text-lg font-semibold text-default-link group-hover:text-default-brand"
+        >
           {topUser.user.name}
         </Link>
 

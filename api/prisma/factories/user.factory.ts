@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { UserRole } from '@prisma/client'
+import { UserRole, UserState } from '@prisma/client'
 
 type UserFactory = {
   email: string
@@ -7,6 +7,7 @@ type UserFactory = {
   password: string
   image: string
   role: UserRole
+  state: UserState
 }
 const userFactory = async () => {
   const users: UserFactory[] = []
@@ -17,6 +18,7 @@ const userFactory = async () => {
     name: 'admin',
     image: faker.image.avatar(),
     role: UserRole.ADMIN,
+    state: UserState.NORMAL,
   })
 
   Array.from({ length: 50 }).forEach(() => {
@@ -25,8 +27,9 @@ const userFactory = async () => {
     const name = faker.internet.displayName()
     const image = faker.image.avatar()
     const role = UserRole.USER
+    const state = Math.random() > 0.7 ? 'PLUS' : 'NORMAL'
 
-    users.push({ email, password, name, image, role })
+    users.push({ email, password, name, image, role, state })
   })
 
   return users

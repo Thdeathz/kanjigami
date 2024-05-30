@@ -10,8 +10,8 @@ import Navbar from '@/components/layout/navbar'
 import Sidebar from '@/components/layout/sidebar'
 import Providers, { OnlineContentProvider } from '@/components/providers'
 
-const APP_NAME = 'kanjigami'
-const APP_DEFAULT_TITLE = '漢字ガミ'
+const APP_NAME = 'Kanjigami'
+const APP_DEFAULT_TITLE = 'Kanjigami'
 const APP_TITLE_TEMPLATE = '%s | 漢字ガミ'
 const APP_DESCRIPTION = '⚔️ 漢字ガミー Learn kanji through games'
 

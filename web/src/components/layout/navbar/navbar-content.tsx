@@ -2,8 +2,8 @@
 
 import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
-import { Session } from 'next-auth'
 
+import { IUserInfo } from '@/@types/auth'
 import Breadcrumb from '@/components/layout/navbar/breadcrumb'
 import CollapseSidebar from '@/components/layout/navbar/collapse-sidebar'
 import NotificationButton from '@/components/layout/navbar/notification-button'
@@ -15,10 +15,10 @@ const ThemeButtonClient = dynamic(() => import('@/components/layout/navbar/theme
 })
 
 type Props = {
-  session: Session | null
+  currentUser: IUserInfo | null
 }
 
-export default function NavbarContent({ session }: Props) {
+export default function NavbarContent({ currentUser }: Props) {
   const pathname = usePathname()
 
   const isPlayPage = pathname.includes('/play/')
@@ -30,14 +30,14 @@ export default function NavbarContent({ session }: Props) {
         <Breadcrumb />
       </div>
 
-      <RankWidget />
+      <RankWidget currentUserRole={currentUser?.role} />
 
       <div className="flex w-full items-center justify-end gap-4">
         <ThemeButtonClient />
 
-        {session && <NotificationButton />}
+        {currentUser && <NotificationButton />}
 
-        <UserButton />
+        <UserButton user={currentUser} />
       </div>
     </nav>
   )

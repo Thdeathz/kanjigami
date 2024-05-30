@@ -8,7 +8,6 @@ import Loading from '@/components/loading'
 import { Button } from '@/components/ui/button'
 import { Form, FormField, FormInput } from '@/components/ui/form'
 import { useUpdateUsernameMutation } from '@/data/user'
-import useInvalidateTag from '@/hooks/use-invalidate-tag'
 import { EditUsernameSchema } from '@/schema/user-profile-schema'
 
 type Props = {
@@ -16,7 +15,6 @@ type Props = {
 }
 
 export default function EditUsernameForm({ currentUsername }: Props) {
-  const { invalidateTag } = useInvalidateTag()
   const { mutateAsync, isPending } = useUpdateUsernameMutation()
 
   const form = useForm<z.infer<typeof EditUsernameSchema>>({
@@ -30,8 +28,8 @@ export default function EditUsernameForm({ currentUsername }: Props) {
     try {
       await mutateAsync(data.name)
 
-      invalidateTag(['current-user-info'])
       toast.success('Username updated successfully')
+      window.location.reload()
     } catch (error) {
       console.error(error)
       toast.error('Something went wrong. Please try again later.')

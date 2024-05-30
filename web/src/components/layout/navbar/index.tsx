@@ -1,8 +1,8 @@
 import NavbarContent from '@/components/layout/navbar/navbar-content'
-import { auth } from '@/server/auth'
+import { getCurrentUserInfo } from '@/server/actions/user'
 
 export default async function Navbar() {
-  const session = await auth()
+  const currentUser = await getCurrentUserInfo()
 
-  return <NavbarContent session={session} />
+  return <NavbarContent currentUser={currentUser} />
 }

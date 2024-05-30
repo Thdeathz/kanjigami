@@ -59,9 +59,21 @@ type UserAvatarProps = {
   size?: AvatarProps['size']
 } & React.ComponentProps<typeof Avatar>
 
+const plusBadgeVariants = cva('plus-badge absolute z-[2] translate-x-1/2', {
+  variants: {
+    size: {
+      normal: 'bottom-[-4px] right-1/2',
+      small: 'w-[25px] h-[12px] bottom-[-1px] right-[24px]'
+    }
+  },
+  defaultVariants: {
+    size: 'normal'
+  }
+})
+
 const UserAvatar = ({ src, fallback, alt, plus = false, size, className, ...props }: UserAvatarProps) => {
   return (
-    <div className="relative">
+    <div className="relative transition-transform duration-150 hover:scale-105">
       <Avatar size={size} className={cn(plus && 'plus-avatar-mask', className)} {...props}>
         <AvatarImage src={src} alt={alt} />
         <AvatarFallback>{fallback ?? alt.slice(0, 1)}</AvatarFallback>
@@ -72,7 +84,7 @@ const UserAvatar = ({ src, fallback, alt, plus = false, size, className, ...prop
           alt="plus-badge"
           width="30"
           height="15"
-          className="plus-badge absolute bottom-[-4px] right-1/2 z-[2] translate-x-1/2"
+          className={cn(plusBadgeVariants({ size: size === 'small' ? 'small' : 'normal' }))}
         />
       )}
     </div>

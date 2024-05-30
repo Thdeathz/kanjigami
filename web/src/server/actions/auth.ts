@@ -3,7 +3,7 @@
 
 'use server'
 
-import { AuthError } from 'next-auth'
+import { AuthError, Session } from 'next-auth'
 import { JWT } from 'next-auth/jwt'
 import * as z from 'zod'
 
@@ -71,11 +71,14 @@ export async function loginWithSocial(provider: 'google') {
   })
 }
 
-export async function refresh(token: JWT) {
+export async function refresh(token: JWT | Session) {
   try {
-    const { data: responseData } = await axiosBase.post<ApiResponse<{ accessToken: string }>>('/auth/refresh', {
-      token: token.refreshToken
-    })
+    const { data: responseData } = await axiosBase.post<ApiResponse<{ accessToken: string; refreshToken: string }>>(
+      '/auth/refresh',
+      {
+        token: token.refreshToken
+      }
+    )
 
     if (!responseData.data.accessToken) {
       return {
@@ -88,6 +91,7 @@ export async function refresh(token: JWT) {
 
     return {
       accessToken: responseData.data.accessToken,
+      refreshToken: responseData.data.refreshToken,
       accessTokenExpires: decodedToken.exp
     }
   } catch (error) {

@@ -89,3 +89,18 @@ export const updateUserAvatar: RequestHandler = async (req, res) => {
 
   return res.status(StatusCodes.OK).json(makeResponse.defaultResponse('Update user avatar success', StatusCodes.OK))
 }
+
+/**
+ * @desc Search user by username
+ * @route GET /users/search
+ * @access Public
+ */
+export const searchUserByUsername: RequestHandler = async (req, res) => {
+  const username = req.query.username as string
+
+  const data = await userService.searchUserByUsername(username)
+
+  return res
+    .status(StatusCodes.OK)
+    .json(makeResponse.defaultResponse('Search user by username success', StatusCodes.OK, data))
+}

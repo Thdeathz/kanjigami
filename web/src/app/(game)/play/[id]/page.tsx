@@ -1,6 +1,6 @@
 import GameDetail from '@/components/game/play/game-detail'
 import { getGameStackDetail } from '@/server/actions/game'
-import { auth } from '@/server/auth'
+import { getCurrentUserInfo } from '@/server/actions/user'
 
 type Props = {
   params: {
@@ -27,9 +27,9 @@ export default async function index({ params, searchParams }: Props) {
   const sessionId = searchParams?.s
   const logId = searchParams?.log
 
-  const session = await auth()
+  const currentUser = await getCurrentUserInfo()
 
-  if (!session) return <p>Please login.</p>
+  if (!currentUser) return <p>Please login.</p>
 
-  return <GameDetail id={id} sessionId={sessionId} userId={session.user.id} logId={logId} />
+  return <GameDetail id={id} sessionId={sessionId} userId={currentUser.id} logId={logId} />
 }

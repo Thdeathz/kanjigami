@@ -3,6 +3,7 @@ export interface ITopUser {
     id: string
     name: string
     image: string
+    isPlus: boolean
   }
   point: number
   time: string

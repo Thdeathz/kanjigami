@@ -1,9 +1,9 @@
+import { UserState } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import { StatusCodes } from 'http-status-codes'
 
-import gameLogService from './game-log.service'
-
 import prisma from '@/apis/databases/init.prisma'
+import gameLogService from '@/apis/services/game-log.service'
 import HttpError from '@/apis/utils/http-error'
 
 const getUserByEmail = async (email: string) => {
@@ -137,12 +137,17 @@ const getCurrentUserInfo = async (id: string) => {
       image: true,
       email: true,
       score: true,
+      role: true,
+      state: true,
     },
   })
 
   if (!user) throw new HttpError(StatusCodes.NOT_FOUND, 'User not found')
 
-  return user
+  return {
+    ...user,
+    isPlus: user.state === UserState.PLUS,
+  }
 }
 
 const updateUsername = async (id: string, username: string) => {
@@ -172,6 +177,33 @@ const updateUserAvatar = async (id: string, imageUrl: string) => {
   }
 }
 
+const updateUserPlan = async (id: string) => {
+  return await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      state: UserState.PLUS,
+    },
+  })
+}
+
+const searchUserByUsername = async (username: string) => {
+  return await prisma.user.findMany({
+    where: {
+      name: {
+        contains: username,
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      image: true,
+      email: true,
+    },
+  })
+}
+
 export default {
   getUserByEmail,
   getUserById,
@@ -183,4 +215,6 @@ export default {
   getCurrentUserInfo,
   updateUsername,
   updateUserAvatar,
+  updateUserPlan,
+  searchUserByUsername,
 }

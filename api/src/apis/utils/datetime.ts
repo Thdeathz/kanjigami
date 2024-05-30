@@ -4,8 +4,6 @@
  * @returns {number} The time in seconds
  */
 export const convertExToSeconds = (expiresIn: string) => {
-  if (!isNaN(parseInt(expiresIn))) return parseInt(expiresIn)
-
   const unit = expiresIn.substring(expiresIn.length - 1)
   let seconds = parseInt(expiresIn.split(unit)[0])
 
@@ -20,7 +18,7 @@ export const convertExToSeconds = (expiresIn: string) => {
       seconds *= 60 * 60 * 24
       break
     default:
-      throw new Error('Invalid unit')
+      seconds = parseInt(expiresIn)
   }
 
   return seconds

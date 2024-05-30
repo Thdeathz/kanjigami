@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { useGetAllBattlesQuery } from '@/data/battle'
 
 export default function LatestBattle() {
-  const { data: battles, isLoading } = useGetAllBattlesQuery('ONGOING')
+  const { data: battles, isLoading } = useGetAllBattlesQuery('FINISHED')
 
   if (!battles || battles.length < 1 || isLoading) {
     return <Loading className="text-4xl" />
@@ -20,7 +20,7 @@ export default function LatestBattle() {
       title="Latest battle"
       description="Compete with players around the world"
       icon={<RiSwordFill />}
-      viewButton={<Button onClick={() => {}}>View all battles</Button>}
+      viewButton={<Button link="/battles">View all battles</Button>}
     >
       <OnlineBattlePanel battleData={battles[0]} />
     </HomeSection>

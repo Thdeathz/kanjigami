@@ -9,6 +9,7 @@ export interface IUserInfo {
   image?: string
   score: number
   role: UserRole
+  isPlus: boolean
 }
 
 export interface IJwtPayload extends JwtPayload {

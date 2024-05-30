@@ -1,5 +1,0 @@
--- AlterTable
-ALTER TABLE "Event" ALTER COLUMN "status" SET DEFAULT 'UPCOMING';
-
--- AlterTable
-ALTER TABLE "Round" ALTER COLUMN "status" SET DEFAULT 'UPCOMING';

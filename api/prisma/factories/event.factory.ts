@@ -30,7 +30,7 @@ const eventFactory = async (users: User[], gameStacks: GameStack[]) => {
     const name = faker.lorem.words(2)
     const description = faker.lorem.sentences(1)
     const type = faker.helpers.arrayElement([BattleType.GOFT, BattleType.TIMEATTACK])
-    const status = faker.helpers.arrayElement([BattleStatus.UPCOMING, BattleStatus.ONGOING, BattleStatus.FINISHED])
+    const status = faker.helpers.arrayElement([BattleStatus.UPCOMING, BattleStatus.FINISHED])
 
     const maxPlayers = faker.number.int({ min: 10, max: 20 })
     const joinedUsers: User[] = faker.helpers.shuffle(users).slice(0, maxPlayers)

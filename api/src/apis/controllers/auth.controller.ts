@@ -41,9 +41,12 @@ export const refresh: RequestHandler = async (req, res) => {
 
   const newAccessToken = await jwtService.signNewAccessToken(user)
 
+  const newRefreshToken = await jwtService.signNewRefreshToken(user.id)
+
   return res.status(StatusCodes.OK).json(
     makeResponse.defaultResponse('Get new token successfully', StatusCodes.OK, {
       accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
     }),
   )
 }
