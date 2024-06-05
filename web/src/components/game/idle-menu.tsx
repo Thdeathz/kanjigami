@@ -17,7 +17,7 @@ export default function IdleMenu({ gameStack }: Props) {
       <p>{gameStack.numberOfWords} words</p>
       <p>{gameStack.timeLimit}s</p>
 
-      <ButtonStart gameStackId={gameStack.id} />
+      <ButtonStart type="OFFLINE" gameStackId={gameStack.id} />
     </Panel>
   )
 }

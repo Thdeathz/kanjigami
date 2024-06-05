@@ -31,8 +31,13 @@ export default function useQueryParams() {
     replace(`${pathname}?${params.toString()}`)
   }
 
+  const onResetSearch = () => {
+    replace(pathname)
+  }
+
   return {
     onSearch,
-    onHardSearch
+    onHardSearch,
+    onResetSearch
   }
 }

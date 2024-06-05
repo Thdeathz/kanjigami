@@ -8,14 +8,16 @@ export interface ICreateRoundRequest {
 export interface ICreateEventRequest {
   title: string
   description: string
-  maxPlayer: string
+  duration: number
   startAt: Date
   rounds: ICreateRoundRequest[]
 }
 
 export interface IStartEventData {
   id: string
+  slug: number
   startAt: Date
+  duration: number
   rounds: {
     id: string
     order: number

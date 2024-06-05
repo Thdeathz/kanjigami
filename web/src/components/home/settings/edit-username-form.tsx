@@ -51,7 +51,7 @@ export default function EditUsernameForm({ currentUsername }: Props) {
                 <div>
                   Your profile page:{' '}
                   <Link href={`/player/${currentUsername}`} className="text-default-link underline">
-                    http://localhost:3000/player/{currentUsername}
+                    https://kanjigami.pro/player/{currentUsername}
                   </Link>
                 </div>
               }

@@ -12,7 +12,7 @@ html {
 
 body {
   font-family: 'ClashGrotesk', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   -webkit-font-smoothing: antialiased;
   scrollbar-gutter: stable both-edges;
 }
@@ -32,4 +32,10 @@ body {
     DejaVu Sans Mono,
     Lucida Console,
     monospace;
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 14px;
+  }
 }

@@ -98,6 +98,7 @@ const getEventBySlug = async (slug: string, currentUserId?: string) => {
       type: true,
       status: true,
       startAt: true,
+      duration: true,
       rounds: {
         select: {
           id: true,
@@ -304,13 +305,12 @@ const getUserEventStats = async (userId: string, slug?: string) => {
 }
 
 const createNewEvent = async (data: ICreateEventRequest) => {
-  console.log('==> event start time', new Date(data.startAt))
-
   const event = await prisma.event.create({
     data: {
       name: data.title,
       description: data.description,
       startAt: new Date(data.startAt),
+      duration: data.duration,
       type: 'GOFT',
       rounds: {
         createMany: {
@@ -323,7 +323,9 @@ const createNewEvent = async (data: ICreateEventRequest) => {
     },
     select: {
       id: true,
+      slug: true,
       startAt: true,
+      duration: true,
       rounds: {
         select: {
           id: true,
@@ -344,14 +346,16 @@ const createNewEvent = async (data: ICreateEventRequest) => {
   return event
 }
 
-const getStartEventData = async (id: string) => {
+const getStartEventData = async (slug: number) => {
   const event = await prisma.event.findUnique({
     where: {
-      id,
+      slug,
     },
     select: {
       id: true,
+      slug: true,
       startAt: true,
+      duration: true,
       rounds: {
         select: {
           id: true,
@@ -370,10 +374,10 @@ const getStartEventData = async (id: string) => {
   return event
 }
 
-const updateEventStatus = async (id: string, status: BattleStatus) => {
+const updateEventStatus = async (slug: number, status: BattleStatus) => {
   return await prisma.event.update({
     where: {
-      id,
+      slug,
     },
     data: {
       status,

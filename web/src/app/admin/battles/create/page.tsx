@@ -1,7 +1,11 @@
+import dynamic from 'next/dynamic'
 import { RiSwordFill } from 'react-icons/ri'
 
-import CreateBattleForm from '@/components/admin/battles/create-battle-form'
 import PageHeader from '@/components/home/page-header'
+
+const CreateBattleForm = dynamic(() => import('@/components/admin/battles/create-battle-form'), {
+  ssr: false
+})
 
 export default function CreateBattlesPage() {
   return (

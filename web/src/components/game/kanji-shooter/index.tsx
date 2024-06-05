@@ -12,19 +12,30 @@ import useGameEvent from '@/hooks/game/use-game-event'
 type Props = {
   sessionId: string
   userId: string
+  type?: 'ONLINE' | 'OFFLINE'
+  battleSlug?: string
+  roundIndex?: number
 }
 
-export default function KanjiShooter({ sessionId, userId }: Props) {
+export default function KanjiShooter({ sessionId, userId, type = 'OFFLINE', battleSlug, roundIndex }: Props) {
   const [gameContent, setGameContent] = useState<IKanjiShooterContent[]>([])
   const [game, setGame] = useState<Game | null>(null)
 
   const onCalculateScore = () => {
-    socket.emit('game:calculate-score', { sessionId, userId, score: game?.userScore || 0 })
+    socket.emit('game:calculate-score', {
+      sessionId,
+      userId,
+      score: game?.userScore || 0,
+      type,
+      battleSlug,
+      roundIndex
+    })
   }
 
   useGameEvent({
     sessionId,
     userId,
+    type,
     setGameContent
   })
 

@@ -8,9 +8,10 @@ import ButtonStart from '../button-start'
 type Props = {
   gameStack: IGameStackDetail
   logId: string
+  type?: 'OFFLINE' | 'ONLINE'
 }
 
-export default function GameResult({ gameStack, logId }: Props) {
+export default function GameResult({ type = 'OFFLINE', gameStack, logId }: Props) {
   const { data: gameLog, isLoading } = useGetGameResultQuery(logId)
 
   if (isLoading) return <Loading className="text-4xl" />
@@ -26,7 +27,7 @@ export default function GameResult({ gameStack, logId }: Props) {
         <span>Time:</span> {gameLog.time}
       </h3>
 
-      <ButtonStart gameStackId={gameStack.id} />
+      {type === 'OFFLINE' && <ButtonStart type="OFFLINE" gameStackId={gameStack.id} />}
     </Panel>
   )
 }

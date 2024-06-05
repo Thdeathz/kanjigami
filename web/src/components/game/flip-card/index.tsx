@@ -12,19 +12,23 @@ import BlindCardGameContent from './GameContent'
 type Props = {
   userId: string
   sessionId: string
+  type?: 'ONLINE' | 'OFFLINE'
+  battleSlug?: string
+  roundIndex?: number
 }
 
-export default function FlipCard({ userId, sessionId }: Props) {
+export default function FlipCard({ userId, sessionId, type, battleSlug, roundIndex }: Props) {
   const [gameContent, setGameContent] = useState<FlipCardGameContent[]>([])
   const [score, setScore] = useState(0)
 
   const onCalculateScore = () => {
-    socket.emit('game:calculate-score', { sessionId, userId, score })
+    socket.emit('game:calculate-score', { sessionId, userId, score, type, battleSlug, roundIndex })
   }
 
   useGameEvent({
     sessionId,
     userId,
+    type,
     setGameContent
   })
 
@@ -38,6 +42,9 @@ export default function FlipCard({ userId, sessionId }: Props) {
       score={score}
       setScore={setScore}
       handleCalculateScore={onCalculateScore}
+      type={type}
+      battleSlug={battleSlug}
+      roundIndex={roundIndex}
     />
   )
 }

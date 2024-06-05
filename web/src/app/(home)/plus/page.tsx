@@ -1,11 +1,15 @@
+import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 
 import PageHeader from '@/components/home/page-header'
 import BenefitItem from '@/components/home/plus/benefit-item'
 import PricingPanel from '@/components/home/plus/pricing-panel'
-import SuccessToast from '@/components/home/plus/success-toast'
 import PlusBadge from '@/components/plus-badge'
 import { getCurrentUserInfo } from '@/server/actions/user'
+
+const SuccessToast = dynamic(() => import('@/components/home/plus/success-toast'), {
+  ssr: false
+})
 
 export const generateMetadata = () => {
   return {
@@ -30,7 +34,7 @@ export default async function PlusPage({ searchParams }: Props) {
     <div className="space-y-12">
       <PageHeader
         icon={<PlusBadge size="large" />}
-        title="Upgrade to Plus"
+        title={user?.isPlus ? 'You are Plus' : 'Upgrade to Plus'}
         description="Kanjigami is free and will always be free to play. Upgrading to PLUS gives you the following additional sweet benefits that make playing on Kanjigami a little more fun and enjoyable for you."
       />
 

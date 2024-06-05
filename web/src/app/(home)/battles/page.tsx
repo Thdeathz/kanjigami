@@ -37,14 +37,14 @@ export default function BattlesPage({
 
       <RootNotification />
 
-      <div className="flex gap-12">
+      <div className="flex flex-col gap-12 md:flex-row">
         <div className="shrink grow">
           <Suspense key={status} fallback={<Loading />}>
             <Battles status={status.toUpperCase() as BattleStatus} page={page} />
           </Suspense>
         </div>
 
-        <SectionWrapper title="All-time leaders" className="w-min-[18rem] w-[18rem]">
+        <SectionWrapper title="All-time leaders" className="w-full md:w-[18rem]">
           <BattlesLeaderboard />
         </SectionWrapper>
       </div>

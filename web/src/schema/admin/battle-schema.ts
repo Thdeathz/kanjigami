@@ -18,13 +18,13 @@ export const BattleDetailsSchema = z.object({
     .max(128, {
       message: 'Description is too long'
     }),
-  maxPlayer: z
+  duration: z
     .string()
     .min(1, {
-      message: 'Max player must in 1 to 100'
+      message: 'Max player must in 1 to 60'
     })
-    .max(99, {
-      message: 'Max player must in 1 to 100'
+    .max(60, {
+      message: 'Max player must in 1 to 60'
     }),
   startAt: z.string().min(1, {
     message: 'Start date is required'

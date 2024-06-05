@@ -4,6 +4,8 @@ import * as z from 'zod'
 import { FormField, FormInput } from '@/components/ui/form'
 import { BattleDetailsSchema } from '@/schema/admin/battle-schema'
 
+import SectionTitle from '../section-title'
+
 type Props = {
   form: UseFormReturn<z.infer<typeof BattleDetailsSchema>>
 }
@@ -26,8 +28,8 @@ export default function BattleDetailsForm({ form }: Props) {
       <div className="grid grid-cols-3 gap-6">
         <FormField
           control={form.control}
-          name="maxPlayer"
-          render={({ field }) => <FormInput label="Max player" type="number" min={0} max={100} {...field} />}
+          name="duration"
+          render={({ field }) => <FormInput label="Duration (minutes)" type="number" min={0} max={100} {...field} />}
         />
 
         <FormField
@@ -36,6 +38,8 @@ export default function BattleDetailsForm({ form }: Props) {
           render={({ field }) => <FormInput label="Start at" type="datetime-local" className="col-span-2" {...field} />}
         />
       </div>
+
+      <SectionTitle title="Note: Duration of each round in minutes, choose based on the size of the battle you want. (should between 1 and 60 minutes)" />
     </div>
   )
 }

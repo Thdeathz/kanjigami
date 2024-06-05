@@ -3,6 +3,7 @@ import type { Socket } from 'socket.io'
 
 import flipCardEvent from './events/flip-card.event'
 import gameEvent from './events/game.event'
+import onlineBattleEvent from './events/online-battle.event'
 
 dotenv.config()
 
@@ -12,6 +13,8 @@ const socketEvent = (socket: Socket) => {
   gameEvent(socket)
 
   flipCardEvent(socket)
+
+  onlineBattleEvent(socket)
 }
 
 export default socketEvent

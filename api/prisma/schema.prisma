@@ -179,6 +179,7 @@ model Event {
   slug        Int          @unique @default(autoincrement())
   name        String
   description String?
+  duration    Int
   type        BattleType
   status      BattleStatus @default(UPCOMING)
   startAt     DateTime

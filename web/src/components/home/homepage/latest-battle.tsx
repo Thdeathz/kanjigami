@@ -20,7 +20,11 @@ export default function LatestBattle() {
       title="Latest battle"
       description="Compete with players around the world"
       icon={<RiSwordFill />}
-      viewButton={<Button link="/battles">View all battles</Button>}
+      viewButton={
+        <Button link="/battles" className="w-min">
+          View all battles
+        </Button>
+      }
     >
       <OnlineBattlePanel battleData={battles[0]} />
     </HomeSection>

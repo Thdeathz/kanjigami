@@ -7,12 +7,13 @@ import useQueryParams from '@/hooks/use-query-params'
 type PropsType<T> = {
   sessionId: string
   userId: string
+  type?: 'ONLINE' | 'OFFLINE'
   setGameContent: React.Dispatch<React.SetStateAction<T[]>>
 }
 
-export default function useGameEvent<T>({ sessionId, userId, setGameContent }: PropsType<T>) {
+export default function useGameEvent<T>({ sessionId, userId, type, setGameContent }: PropsType<T>) {
   const { onSearch } = useQueryParams()
-  const { invalidateTag } = useInvalidateTag()
+  const { invalidateTag, invalidateTags } = useInvalidateTag()
 
   // const onContentNotFound = useOnContentNotFound(stackId, gameId)
 
@@ -26,13 +27,14 @@ export default function useGameEvent<T>({ sessionId, userId, setGameContent }: P
   const onCalculateScoreSuccess = useCallback(
     ({ logId }: { logId: string }) => {
       onSearch('log', logId)
-      invalidateTag(['stacks'])
+      // invalidateTag(['stacks'])
+      invalidateTags([['battles'], ['stacks']])
     },
     [onSearch]
   )
 
   useEffect(() => {
-    socket.emit('game:get', { sessionId, userId })
+    socket.emit('game:get', { sessionId, userId, type })
 
     socket.on('game:content', onGameContent)
 

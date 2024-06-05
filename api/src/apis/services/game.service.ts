@@ -177,7 +177,7 @@ const getMultipleChoiceGameContent = (words: IWord[]) => {
   return questions
 }
 
-const saveScore = async (gameStackId: string, userId: string, { score, time, type }: ISaveScoreRequest) => {
+const saveScoreOfflineGame = async (gameStackId: string, userId: string, { score, time, type }: ISaveScoreRequest) => {
   const currentLog = await prisma.gameLog.findUnique({
     where: {
       gameStackId_userId: {
@@ -274,9 +274,32 @@ const getResult = async (gameLogId: string) => {
   })
 }
 
+const saveScoreOnlineGame = async (roundId: string, userId: string, { score, time, type }: ISaveScoreRequest) => {
+  const gameLog = await prisma.gameLog.create({
+    data: {
+      point: score,
+      time,
+      type,
+      round: {
+        connect: {
+          id: roundId,
+        },
+      },
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  })
+
+  return gameLog
+}
+
 export default {
   getGameStackDetail,
   getGameData,
-  saveScore,
+  saveScoreOfflineGame,
+  saveScoreOnlineGame,
   getResult,
 }

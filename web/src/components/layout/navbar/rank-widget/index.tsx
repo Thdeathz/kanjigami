@@ -27,7 +27,7 @@ export default function RankWidget({ currentUserRole }: Props) {
         y: 0,
         opacity: 1
       }}
-      className="rank-widget relative top-[-2rem] h-0"
+      className="rank-widget relative top-[-2rem] hidden h-0 lg:block"
     >
       <Link
         href="/leaderboard"

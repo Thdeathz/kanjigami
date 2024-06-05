@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect } from 'react'
+import Confetti from 'react-confetti'
 import { toast } from 'sonner'
+import { useWindowSize } from 'usehooks-ts'
 
 type Props = {
   success?: string
@@ -9,6 +11,8 @@ type Props = {
 }
 
 export default function SuccessToast({ success, canceled }: Props) {
+  const { width, height } = useWindowSize()
+
   useEffect(() => {
     const handleShowToast = () => {
       if (success === 'true') {
@@ -26,6 +30,9 @@ export default function SuccessToast({ success, canceled }: Props) {
 
     handleShowToast()
   }, [])
+
+  if (success === 'true')
+    return <Confetti numberOfPieces={800} gravity={0.05} recycle={false} width={width} height={height} />
 
   return null
 }

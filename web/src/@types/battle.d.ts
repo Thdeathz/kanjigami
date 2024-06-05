@@ -37,6 +37,10 @@ export interface IRound {
     image: string
   }
   hightPoint?: IRoundTopUser
+  userPoint?: {
+    point: number
+    time: number
+  }
 }
 
 export interface ITopUser {
@@ -103,4 +107,20 @@ export interface ICreateBattleRequest extends z.infer<typeof BattleDetailsSchema
     index: number
     gameStackId: string
   }[]
+}
+
+export interface IBattleRoundData {
+  id: string
+  numberOfWords: number
+  timeLimit: number
+  stack: {
+    id: string
+    slug: number
+    name: string
+  }
+  game: {
+    id: string
+    name: string
+    image: string
+  }
 }

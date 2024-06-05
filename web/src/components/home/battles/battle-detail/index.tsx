@@ -19,6 +19,7 @@ import SectionWrapper from '../section-wrapper'
 
 import BattleDetailSideLeaderboard from './battle-detail-side-leaderboard'
 import BattleStacksList from './battle-stacks-list'
+import OngoingBattleLeaderboard from './ongoing-battle-leaderboard'
 
 type Props = {
   slug: string
@@ -70,19 +71,27 @@ export default function BattleDetail({ slug }: Props) {
       </PageHeader>
       <RootNotification />
 
-      <div className="flex gap-12">
-        <div className={cn('w-0 shrink grow', { 'px-48': battle.status === 'UPCOMING' })}>
+      <div className="flex flex-col gap-12 sm:flex-row">
+        <div className={cn('shrink grow sm:w-0', { 'px-48': battle.status === 'UPCOMING' })}>
           {battle.status !== 'UPCOMING' && (
             <BattleStacksList stacks={battle.rounds.map((round) => ({ ...round.stack, status: round.status }))} />
           )}
 
-          <RoundsList rounds={battle.rounds} />
+          <RoundsList battleSlug={battle.slug} rounds={battle.rounds} />
         </div>
 
-        {battle.status !== 'UPCOMING' && (
-          <div className="w-[18rem]">
+        {battle.status === 'FINISHED' && (
+          <div className="w-full sm:w-[18rem]">
             <SectionWrapper title="Battle leaders">
               <BattleDetailSideLeaderboard slug={slug} />
+            </SectionWrapper>
+          </div>
+        )}
+
+        {battle.status === 'ONGOING' && (
+          <div className="w-full sm:w-[18rem]">
+            <SectionWrapper title="Battle leaders">
+              <OngoingBattleLeaderboard slug={slug} />
             </SectionWrapper>
           </div>
         )}

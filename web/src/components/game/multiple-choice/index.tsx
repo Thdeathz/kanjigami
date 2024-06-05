@@ -12,9 +12,12 @@ import MultipleChoiceGameContent from './GameContent'
 type Props = {
   sessionId: string
   userId: string
+  type?: 'ONLINE' | 'OFFLINE'
+  battleSlug?: string
+  roundIndex?: number
 }
 
-export default function MultipleChoice({ sessionId, userId }: Props) {
+export default function MultipleChoice({ sessionId, userId, type, battleSlug, roundIndex }: Props) {
   const [gameContent, setGameContent] = useState<IMultipleChoiceGameContent[]>([])
 
   const onCalculateScore = () => {
@@ -28,7 +31,7 @@ export default function MultipleChoice({ sessionId, userId }: Props) {
       return acc
     }, 0)
 
-    socket.emit('game:calculate-score', { sessionId, userId, score })
+    socket.emit('game:calculate-score', { sessionId, userId, score, type, battleSlug, roundIndex })
   }
 
   const onSelectAnswer = (answer: number, question: number) => {
@@ -44,6 +47,7 @@ export default function MultipleChoice({ sessionId, userId }: Props) {
   useGameEvent({
     sessionId,
     userId,
+    type,
     setGameContent
   })
 

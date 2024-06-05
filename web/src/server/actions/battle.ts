@@ -59,7 +59,10 @@ export const adminGetAllBattles = async (page?: string) => {
 }
 
 export const createNewBattle = async (data: ICreateBattleRequest) => {
-  const { data: response } = await axiosAuth.post<ApiResponse<IBattle>>(`/events`, data)
+  const { data: response } = await axiosAuth.post<ApiResponse<IBattle>>(`/events`, {
+    ...data,
+    duration: Number(data.duration)
+  })
 
   return response.data
 }

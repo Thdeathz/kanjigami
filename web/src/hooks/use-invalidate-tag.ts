@@ -6,7 +6,14 @@ export default function useInvalidateTag() {
 
   const invalidateTag = (queryKey: QueryKey) => queryClient.invalidateQueries({ queryKey })
 
+  const invalidateTags = (queryKeys: QueryKey[]) => {
+    queryKeys.forEach((queryKey) => {
+      queryClient.invalidateQueries({ queryKey })
+    })
+  }
+
   return {
-    invalidateTag
+    invalidateTag,
+    invalidateTags
   }
 }

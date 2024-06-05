@@ -15,7 +15,7 @@ type Props = {
 export default function HomeSection({ title, description, icon, viewButton, className, children }: Props) {
   return (
     <div className={cn('min-w-full max-w-full', className)}>
-      <div className="mb-4 flex items-center justify-between">
+      <div className="Sm:items-center mb-4 flex flex-col gap-4 sm:flex-row sm:justify-between sm:gap-0">
         <div className="flex h-full items-center justify-start gap-4">
           {icon && (
             <div className="flex-center aspect-square h-14 w-14 rounded-full bg-border-1 text-2xl text-default-brand">

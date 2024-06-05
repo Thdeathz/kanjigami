@@ -10,7 +10,7 @@ import { RiSwordFill } from 'react-icons/ri'
 import { breadCrumb } from '@/lib/animation-variants'
 
 import CrumbItem from './CrumbItem'
-import PlayPageBreadcrumb from './play-page-breadcrumb'
+import PlayPageBreadcrumb, { BattlePlayPageBreadcrumb } from './play-page-breadcrumb'
 
 function Crumb({ pathnames }: { pathnames: string[] }) {
   if (pathnames.length < 2) return null
@@ -49,7 +49,11 @@ function Crumb({ pathnames }: { pathnames: string[] }) {
       </>
     )
 
-  if (pathnames[0] === 'play') return <PlayPageBreadcrumb id={pathnames[1]} />
+  if (pathnames[0] === 'play') {
+    if (pathnames.length === 3) return <BattlePlayPageBreadcrumb battleSlug={pathnames[1]} roundIndex={pathnames[2]} />
+
+    return <PlayPageBreadcrumb id={pathnames[1]} />
+  }
   return null
 }
 
@@ -60,7 +64,7 @@ export default function Breadcrumb() {
 
   return (
     <motion.div
-      className="flex items-center gap-1.5 font-medium"
+      className="hidden items-center gap-1.5 font-medium lg:flex"
       variants={breadCrumb.container()}
       initial="hidden"
       animate="enter"

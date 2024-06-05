@@ -4,6 +4,7 @@ import { IStartEventData } from '@/apis/@types/event'
 import eventService from '@/apis/services/event.service'
 import gameService from '@/apis/services/game.service'
 import redisService from '@/apis/services/redis.service'
+import io from '@/servers/init.socket'
 
 const startNextRound = async (event: IStartEventData) => {
   const currentRound = event.rounds.find((round) => round.status === 'ONGOING')
@@ -14,8 +15,10 @@ const startNextRound = async (event: IStartEventData) => {
 
   // update event status in database if all rounds are finished
   if (!nextRound && currentRound) {
-    await eventService.updateEventStatus(event.id, 'FINISHED')
-    await redisService.del('event', event.id)
+    await eventService.updateEventStatus(event.slug, 'FINISHED')
+    await redisService.del('event', event.slug.toString())
+    await redisService.del('event', `${event.slug}:users`)
+    io.to(event.slug.toString()).emit('battle:finished', event.slug.toString())
   }
 
   if (!nextRound) return
@@ -31,10 +34,10 @@ const startNextRound = async (event: IStartEventData) => {
   // get game data
   const gameData = await gameService.getGameData(roundData.gameStack.id)
 
-  await redisService.setex('event', `${event.id}:${nextRound.id}`, '1m', gameData)
+  await redisService.setex('event', `${event.slug}:${nextRound.id}`, `${event.duration}m`, gameData)
 
   // update round status in redis
-  await redisService.set('event', event.id, {
+  await redisService.set('event', event.slug.toString(), {
     ...event,
     rounds: [
       ...event.rounds.map((round) => {
@@ -61,27 +64,27 @@ const startNextRound = async (event: IStartEventData) => {
 const battleJob = (event: IStartEventData) => {
   // init event job
   scheduleJob(new Date(event.startAt), async () => {
-    const foundEvent = await eventService.getStartEventData(event.id)
+    const foundEvent = await eventService.getStartEventData(event.slug)
     if (!foundEvent) return
 
     console.log('===> start event now', foundEvent.id)
 
-    await eventService.updateEventStatus(event.id, 'ONGOING')
+    await eventService.updateEventStatus(event.slug, 'ONGOING')
 
-    await redisService.set('event', event.id, foundEvent)
+    await redisService.set('event', event.slug.toString(), foundEvent)
 
     // start round 1 immediately
     startNextRound(foundEvent)
   })
 
   const eventRoundStartTime = new Date(event.startAt).getTime()
-  const eventRoundEndTime = new Date(event.startAt).getTime() + (event.rounds.length + 1) * 1 * 60 * 1000
+  const eventRoundEndTime = new Date(event.startAt).getTime() + (event.rounds.length + 1) * event.duration * 60 * 1000
 
   console.log('===> event time', eventRoundStartTime, eventRoundEndTime)
 
   // init round job run every 1 minute after event start
-  scheduleJob({ start: eventRoundStartTime, end: eventRoundEndTime, rule: '*/1 * * * *' }, async () => {
-    const foundEvent = await redisService.get<IStartEventData>('event', event.id)
+  scheduleJob({ start: eventRoundStartTime, end: eventRoundEndTime, rule: `*/${event.duration} * * * *` }, async () => {
+    const foundEvent = await redisService.get<IStartEventData>('event', event.slug.toString())
     if (!foundEvent) return
 
     // start next round

@@ -5,7 +5,7 @@ import { ICreateEventRequest } from '@/apis/@types/event'
 export const createNewEventSchema = Joi.object<ICreateEventRequest>({
   title: Joi.string().required(),
   description: Joi.string().required(),
-  maxPlayer: Joi.string().required(),
+  duration: Joi.number().min(1).max(60).required(),
   startAt: Joi.date()
     .required()
     .greater(new Date().getTime() + 1 * 60 * 1000)

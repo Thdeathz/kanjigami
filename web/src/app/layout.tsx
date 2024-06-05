@@ -27,7 +27,6 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: 'default',
     title: APP_DEFAULT_TITLE
-    // startUpImage: [],
   },
   formatDetection: {
     telephone: false
@@ -56,7 +55,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <Providers>
-          <div className="flex h-screen w-screen overflow-y-auto bg-default-bg text-default-text">
+          <div className="flex h-screen w-screen overflow-y-auto overflow-x-hidden bg-default-bg text-default-text">
             <Sidebar />
 
             <div className="relative h-max w-0 shrink grow">

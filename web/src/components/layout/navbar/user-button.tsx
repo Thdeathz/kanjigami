@@ -68,7 +68,7 @@ export default function UserButton({ user }: Props) {
       <PopoverTrigger asChild>
         <Button className="space-x-0.5 px-2">
           <UserAvatar className="mr-2" size="small" src={user.image} alt={user.name} plus={user.isPlus} />
-          <span>{user.name}</span>
+          <span className="hidden lg:block">{user.name}</span>
           <FaCaretDown />
         </Button>
       </PopoverTrigger>

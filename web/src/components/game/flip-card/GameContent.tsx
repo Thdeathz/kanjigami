@@ -12,9 +12,22 @@ type Props = {
   handleCalculateScore?: () => void
   score: number
   setScore: React.Dispatch<React.SetStateAction<number>>
+  type?: 'ONLINE' | 'OFFLINE'
+  battleSlug?: string
+  roundIndex?: number
 }
 
-function BlindCardGameContent({ sessionId, userId, gameContent, score, setScore, handleCalculateScore }: Props) {
+function BlindCardGameContent({
+  sessionId,
+  userId,
+  gameContent,
+  score,
+  setScore,
+  handleCalculateScore,
+  type,
+  battleSlug,
+  roundIndex
+}: Props) {
   const [activeCard, setActiveCard] = useState<ActiveCard[]>([])
 
   const handleCardClick = (e: MouseEvent<HTMLDivElement>, word: IImageContent | IWordContent) => {
@@ -47,13 +60,16 @@ function BlindCardGameContent({ sessionId, userId, gameContent, score, setScore,
             socket.emit('game:flip-card:update', {
               userId,
               sessionId,
-              wordId: firstCard.word.id
+              wordId: firstCard.word.id,
+              type,
+              battleSlug,
+              roundIndex
             })
           }
 
-          if (score + 1 === 12 && typeof handleCalculateScore === 'function') {
-            handleCalculateScore()
-          }
+          // if (score + 1 === 12 && typeof handleCalculateScore === 'function') {
+          //   handleCalculateScore()
+          // }
         }, 100)
       }
 

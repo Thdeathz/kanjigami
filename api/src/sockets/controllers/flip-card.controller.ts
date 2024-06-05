@@ -7,7 +7,10 @@ import gameController from './game.controller'
 import { FlipCardGameContent, IGameData } from '@/apis/@types/game'
 import redisService from '@/apis/services/redis.service'
 
-const handleUpdateGameStatus = async (socket: Socket, { sessionId, wordId, userId }: IUpdateGameStatusRequest) => {
+const handleUpdateGameStatus = async (
+  socket: Socket,
+  { sessionId, wordId, userId, type, battleSlug, roundIndex }: IUpdateGameStatusRequest,
+) => {
   const gameData = await redisService.get<IGameData<FlipCardGameContent>>('game', sessionId)
 
   if (!gameData || userId !== gameData.user.id) {
@@ -30,7 +33,8 @@ const handleUpdateGameStatus = async (socket: Socket, { sessionId, wordId, userI
   })
 
   if (availableKanji === 0) {
-    gameController.handleSaveScore(socket, { sessionId, userId, score: 12 })
+    console.log('Game Over', type, battleSlug, roundIndex)
+    gameController.handleSaveScore(socket, { sessionId, userId, type, score: 12, battleSlug, roundIndex })
   }
 
   await redisService.reSet('game', sessionId, {

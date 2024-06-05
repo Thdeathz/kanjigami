@@ -24,7 +24,9 @@ function CountDownToStart({ roundIndex, startAt }: CountDownToStartProps) {
     invalidateTag(['battles'])
 
     router.refresh()
-    toast.success(`Round ${roundIndex + 1} started!`)
+    toast.success(`Round ${roundIndex + 1} started!`, {
+      id: 'round-started'
+    })
   }
 
   if (!startAt) return <p className="py-8 text-center font-medium">Coming soon.</p>
@@ -41,30 +43,32 @@ function CountDownToStart({ roundIndex, startAt }: CountDownToStartProps) {
 type TopUserInfoProps = {
   roundIndex: number
   topUser?: IRoundTopUser
+  userPoint?: { point: number; time: number }
   startAt?: Date
   status: BattleStatus
 }
 
-function TopUserInfo({ roundIndex, topUser, startAt, status }: TopUserInfoProps) {
+function TopUserInfo({ roundIndex, topUser, userPoint, startAt, status }: TopUserInfoProps) {
   if (status === 'UPCOMING') return <CountDownToStart startAt={startAt} roundIndex={roundIndex} />
 
   if (!topUser)
     return (
-      <div className="flex-center mt-4 flex-col gap-2">
+      <div className="mt-4 flex grow flex-col items-center justify-between gap-1.5">
         <p className="text-3xl font-medium leading-[1.4]">😭</p>
 
-        <p className="font-medium leading-[1.4] text-default-text-light">No highscore yet</p>
+        <div className="text-center font-medium leading-[1.4]">
+          <p className="text-default-text-light">No highscore yet</p>
+          <p className="text-default-text-lightest">Be the first?</p>
+        </div>
 
-        <p className="font-medium leading-[1.4] text-default-text-lightest">Be the first?</p>
-
-        <div className="font-secondary mt-4 w-full rounded-lg bg-online-round-bottom px-4 py-2 text-center text-sm">
+        <div className="font-secondary mt-4 w-full rounded-lg bg-online-round-bottom px-4 py-2 text-center text-sm font-medium">
           You - Not played
         </div>
       </div>
     )
 
   return (
-    <div className="flex-center flex-col gap-4 p-2">
+    <div className="mt-4 flex grow flex-col items-center justify-between gap-1.5">
       <UserAvatar src={topUser.user.image} alt={topUser.user.name} plus />
 
       <div className="text-center">
@@ -72,13 +76,15 @@ function TopUserInfo({ roundIndex, topUser, startAt, status }: TopUserInfoProps)
           <FaCrown className="text-default-brand" />
           {topUser.user.name}
         </Link>
-        <p className="font-secondary">
-          {topUser.point} - {topUser.time}s
-        </p>
+        <p className="font-secondary">{`${topUser.point} {${topUser.time}s}`}</p>
       </div>
 
-      <div className="font-secondary w-full rounded-lg bg-online-round-bottom px-4 py-2 text-center text-sm">
-        You - Not played
+      <div className="font-secondary w-full rounded-lg bg-online-round-bottom px-4 py-2 text-center text-sm font-medium">
+        {userPoint ? (
+          <span className="text-default-brand">{`You - ${userPoint.point} {${userPoint.time}s}`}</span>
+        ) : (
+          'You - Not played'
+        )}
       </div>
     </div>
   )
@@ -86,15 +92,24 @@ function TopUserInfo({ roundIndex, topUser, startAt, status }: TopUserInfoProps)
 
 type Props = {
   round: IRound
+  battleSlug: number
 }
 
-export default function BattleRoundCard({ round }: Props) {
+export default function BattleRoundCard({ battleSlug, round }: Props) {
   return (
     <CardWrapper
       imageUrl={round.game?.image}
       className="card-item pointer-events-auto z-10 cursor-pointer hover:scale-105 hover:opacity-100 group-hover:opacity-40"
+      link={`/play/${battleSlug}/${round.order + 1}`}
+      disabled={round.status !== 'ONGOING'}
     >
-      <TopUserInfo roundIndex={round.order} topUser={round.hightPoint} startAt={round.startAt} status={round.status} />
+      <TopUserInfo
+        roundIndex={round.order}
+        topUser={round.hightPoint}
+        userPoint={round.userPoint}
+        startAt={round.startAt}
+        status={round.status}
+      />
     </CardWrapper>
   )
 }

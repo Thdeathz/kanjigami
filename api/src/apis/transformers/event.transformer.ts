@@ -90,7 +90,7 @@ const getEventBySlug = (event: EventDetailResponse, currentUserLogs: GameLog[]) 
   status: event.status,
   startAt: event.startAt,
   rounds: event.rounds.map((round) => {
-    const startAt = new Date(new Date(event.startAt).getTime() + round.order * 1 * 60 * 1000)
+    const startAt = new Date(new Date(event.startAt).getTime() + round.order * event.duration * 60 * 1000)
 
     if (round.status === BattleStatus.UPCOMING) {
       return {

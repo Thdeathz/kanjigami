@@ -55,7 +55,7 @@ export const saveScore: RequestHandler = async (req, res) => {
 
   const user = req.user as JwtPayload
 
-  const data = await gameService.saveScore(gameStackId, user.id, { score, time, type })
+  const data = await gameService.saveScoreOfflineGame(gameStackId, user.id, { score, time, type })
 
   return res.status(StatusCodes.OK).json(makeResponse.defaultResponse('Save score success', StatusCodes.OK, data))
 }

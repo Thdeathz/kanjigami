@@ -9,17 +9,24 @@ type Props = {
   className?: string
   children: React.ReactNode
   imageUrl?: string
+  disabled?: boolean
 }
 
-export default function CardWrapper({ imageUrl = '/images/lock.png', link, className, children }: Props) {
+export default function CardWrapper({
+  imageUrl = '/images/lock.png',
+  link,
+  className,
+  disabled = false,
+  children
+}: Props) {
   return (
     <div
       className={cn(
-        'relative rounded-2xl bg-stack p-[0.6rem] shadow-stack-light transition-transform duration-200 hover:scale-105 dark:shadow-stack-dark',
+        'relative flex flex-col rounded-2xl bg-stack p-[0.6rem] shadow-stack-light transition-transform duration-200 hover:scale-105 dark:shadow-stack-dark',
         className
       )}
     >
-      {link && <Link href={link} className="absolute right-0 top-0 h-full w-full rounded-2xl" />}
+      {link && !disabled && <Link href={link} className="absolute right-0 top-0 h-full w-full rounded-2xl" />}
       <Image
         src={imageUrl}
         alt="kanji-stack"

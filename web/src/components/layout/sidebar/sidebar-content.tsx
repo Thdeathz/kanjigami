@@ -6,6 +6,7 @@ import React from 'react'
 import { BsStack, BsTrophyFill } from 'react-icons/bs'
 import { FaChartArea, FaHome, FaUser } from 'react-icons/fa'
 import { RiFolderDownloadFill, RiSettings3Fill, RiSwordFill } from 'react-icons/ri'
+import { useScreen } from 'usehooks-ts'
 
 import { IUserInfo } from '@/@types/auth'
 import AppLogo from '@/components/layout/sidebar/app-logo'
@@ -75,21 +76,24 @@ export function AdminSidebarMenu() {
   )
 }
 
-const sidebarVariants = cva('top-0 flex flex-col bg-sidebar backdrop-blur-sm', {
-  variants: {
-    fixed: {
-      true: 'absolute h-full z-50 transition-transform duration-300',
-      false: 'sticky'
+const sidebarVariants = cva(
+  'top-0 flex flex-col bg-sidebar backdrop-blur-sm h-full z-50 transition-transform duration-300',
+  {
+    variants: {
+      fixed: {
+        true: 'absolute',
+        false: 'lg:sticky absolute'
+      },
+      collapsed: {
+        true: 'translate-x-0',
+        false: 'translate-x-[-100%]'
+      }
     },
-    collapsed: {
-      true: 'translate-x-0',
-      false: 'translate-x-[-100%]'
+    defaultVariants: {
+      fixed: false
     }
-  },
-  defaultVariants: {
-    fixed: false
   }
-})
+)
 
 type Props = {
   currentUser: IUserInfo | null
@@ -100,9 +104,20 @@ export default function SidebarContent({ currentUser }: Props) {
   const { isOpenSidebar } = useGlobalContext()
 
   const isPlayPage = pathname.includes('/play/')
+  const screen = useScreen()
 
   return (
-    <aside className={cn(sidebarVariants({ fixed: isPlayPage, collapsed: !isPlayPage || isOpenSidebar }))}>
+    <aside
+      className={cn(
+        sidebarVariants({
+          fixed: isPlayPage,
+          collapsed: isOpenSidebar && (isPlayPage || screen?.width < 1024)
+        }),
+        {
+          'lg:transform-none': !isPlayPage
+        }
+      )}
+    >
       <div className="flex-center h-[3.75rem] bg-logo px-6">
         <AppLogo />
       </div>

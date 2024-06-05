@@ -17,8 +17,8 @@ function FooterLink({ link, title }: FooterLinkProps) {
 
 export default function Footer() {
   return (
-    <div className="flex min-h-[2.5rem] w-full items-center justify-between border-t border-border-1 bg-footer px-5 font-medium ">
-      <p className="text-base text-default-text-lightest">© 2023Thdeathz</p>
+    <div className="flex min-h-[2.5rem] w-full flex-col items-center justify-between gap-2 border-t border-border-1 bg-footer px-5 py-2 font-medium sm:flex-row sm:gap-0 sm:py-0">
+      <p className="text-center text-base text-default-text-lightest">© 2023Thdeathz</p>
       <div className="flex items-center justify-center gap-6 text-default-link">
         <FooterLink link="/" title="FAQs" />
         <FooterLink link="/" title="Contact" />

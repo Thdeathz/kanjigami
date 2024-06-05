@@ -15,6 +15,7 @@ type EventFactory = {
   status: BattleStatus
   startAt: Date
   joiners: User[]
+  duration: number
   rounds: {
     order: number
     status: BattleStatus
@@ -32,8 +33,8 @@ const eventFactory = async (users: User[], gameStacks: GameStack[]) => {
     const type = faker.helpers.arrayElement([BattleType.GOFT, BattleType.TIMEATTACK])
     const status = faker.helpers.arrayElement([BattleStatus.UPCOMING, BattleStatus.FINISHED])
 
-    const maxPlayers = faker.number.int({ min: 10, max: 20 })
-    const joinedUsers: User[] = faker.helpers.shuffle(users).slice(0, maxPlayers)
+    const duration = faker.number.int({ min: 10, max: 20 })
+    const joinedUsers: User[] = faker.helpers.shuffle(users).slice(0, 20)
 
     let startAt = faker.date.future()
     if (status === BattleStatus.FINISHED) startAt = faker.date.past()
@@ -77,6 +78,7 @@ const eventFactory = async (users: User[], gameStacks: GameStack[]) => {
       status,
       startAt,
       rounds,
+      duration,
       joiners: joinedUsers,
     })
   })

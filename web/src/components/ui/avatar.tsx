@@ -73,7 +73,7 @@ const plusBadgeVariants = cva('plus-badge absolute z-[2] translate-x-1/2', {
 
 const UserAvatar = ({ src, fallback, alt, plus = false, size, className, ...props }: UserAvatarProps) => {
   return (
-    <div className="relative transition-transform duration-150 hover:scale-105">
+    <div className="relative cursor-pointer transition-transform duration-200 hover:scale-110">
       <Avatar size={size} className={cn(plus && 'plus-avatar-mask', className)} {...props}>
         <AvatarImage src={src} alt={alt} />
         <AvatarFallback>{fallback ?? alt.slice(0, 1)}</AvatarFallback>
