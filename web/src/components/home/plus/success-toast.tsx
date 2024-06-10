@@ -8,9 +8,10 @@ import { useWindowSize } from 'usehooks-ts'
 type Props = {
   success?: string
   canceled?: string
+  isPlus?: boolean
 }
 
-export default function SuccessToast({ success, canceled }: Props) {
+export default function SuccessToast({ success, canceled, isPlus = false }: Props) {
   const { width, height } = useWindowSize()
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function SuccessToast({ success, canceled }: Props) {
     handleShowToast()
   }, [])
 
-  if (success === 'true')
+  if (success === 'true' || isPlus)
     return <Confetti numberOfPieces={800} gravity={0.05} recycle={false} width={width} height={height} />
 
   return null

@@ -7,24 +7,28 @@ import { toast } from 'sonner'
 import { ITopUser } from '@/@types/leaderboard'
 import { socket } from '@/components/connect-socket'
 import SideLeaderboard from '@/components/home/side-leaderboard'
+import useInvalidateTag from '@/hooks/use-invalidate-tag'
 
 type Props = {
   slug: string
 }
 
 export default function OngoingBattleLeaderboard({ slug }: Props) {
-  const [topUsers, setTopUsers] = useState<ITopUser[]>([])
   const router = useRouter()
+  const { invalidateTag } = useInvalidateTag()
+  const [topUsers, setTopUsers] = useState<ITopUser[]>([])
 
   const onLeaderboardData = (data: ITopUser[]) => {
     setTopUsers(data)
   }
 
   const onBattleFinished = () => {
+    invalidateTag(['battles'])
+
+    router.refresh()
     toast.info('Battle is finished', {
       id: 'battle-finished'
     })
-    router.refresh()
   }
 
   useEffect(() => {

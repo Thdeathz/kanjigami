@@ -81,7 +81,11 @@ const config = {
       },
       gridTemplateColumns: {
         'auto-22%': 'repeat(auto-fill, minmax(22%, 1fr))',
-        'auto-fill': 'repeat(auto-fill, minmax(14rem, 1fr))'
+        'auto-fill': 'repeat(auto-fill, minmax(14rem, 1fr))',
+        'auto-fill-stack': 'repeat(auto-fill, minmax(16rem, 1fr))',
+        'auto-fill-word': 'repeat(auto-fill, minmax(5rem, 1fr))',
+        'auto-fill-benefit': 'repeat(auto-fill, minmax(35rem, 1fr))',
+        'auto-game-list': 'repeat(4, 22rem)'
       },
       colors: {
         crown: {
@@ -189,6 +193,14 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out'
       }
+    },
+    screens: {
+      xs: '375px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px'
     }
   },
   plugins: [require('tailwindcss-animate')]

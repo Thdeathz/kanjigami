@@ -13,7 +13,8 @@ export const generateMetadata = async ({ params }: Props) => {
   const battle = await getBattleDetail(slug)
 
   return {
-    title: `Battle #${battle.slug} - ${battle.name}`
+    title: `Battle #${battle.slug} - ${battle.name}`,
+    description: battle.description
   }
 }
 
@@ -21,7 +22,7 @@ export default function index({ params }: Props) {
   const { slug } = params
 
   return (
-    <div className="space-y-12 px-[0.5rem]">
+    <div className="space-y-8 px-[0.5rem] sm:space-y-12">
       <BattleDetail slug={slug} />
     </div>
   )

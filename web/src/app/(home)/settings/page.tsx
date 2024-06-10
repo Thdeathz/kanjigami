@@ -13,10 +13,10 @@ export default async function ProfileSettingPage() {
   const currentUser = await getCurrentUserInfo()
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       <PageHeader icon={<RiSettings3Fill />} title="Settings" />
 
-      <Panel wrapperClass="mx-auto w-[55rem]">
+      <Panel wrapperClass="mx-auto max-w-[55rem] w-full">
         <ProfileSettingForm user={currentUser} />
       </Panel>
     </div>

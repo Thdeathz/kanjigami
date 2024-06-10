@@ -41,7 +41,7 @@ export default function FollowingBattle() {
       icon={<BsStack />}
       viewButton={<Button link="/stacks">View all kanji stacks</Button>}
     >
-      <div className="grid grid-cols-5 gap-8">
+      <div className="grid grid-cols-auto-fill-stack gap-8">
         {data.pages.map((eachPage) =>
           eachPage.map((stack) => (
             <StackCard

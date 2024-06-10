@@ -19,14 +19,14 @@ export default function GameItem({ game }: Props) {
 
       <Link
         href={`/play/${game.id}`}
-        className="rounded-2xl border-2 border-border bg-stack p-[0.6rem] transition-all duration-200 hover:border-default-brand hover:shadow-glory"
+        className="h-full w-full rounded-2xl border-2 border-border bg-stack p-[0.6rem] transition-all duration-200 hover:border-default-brand hover:shadow-glory"
       >
         <Image
           src={game.image}
           alt={game.name}
           width="400"
           height="400"
-          className="aspect-4/3 rounded-xl border-[3px] border-default-stack object-cover"
+          className="aspect-4/3 w-full rounded-xl border-[3px] border-default-stack object-cover"
           priority
         />
 

@@ -31,7 +31,7 @@ export default function WordDetail({ wordId }: Props) {
   }
 
   return (
-    <div className="relative grid grid-cols-2 gap-4">
+    <div className="relative space-y-4 sm:grid sm:grid-cols-2 sm:gap-4">
       <div className="space-y-4">
         <DetailItem
           label="Kanji"

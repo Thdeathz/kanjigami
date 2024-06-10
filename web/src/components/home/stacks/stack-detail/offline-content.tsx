@@ -44,7 +44,7 @@ export default function StackDetailOfflineContent({ slug, openWord }: Props) {
 
       <div className="flex gap-12">
         <div className="w-0 shrink grow">
-          <SectionWrapper title="Kanji stack">
+          <SectionWrapper title="Kanji list">
             <WordsList words={stack.words} openWord={openWord} />
           </SectionWrapper>
         </div>

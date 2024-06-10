@@ -10,7 +10,7 @@ export const metadata = () => ({
 
 export default function LeaderBoardPage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       <PageHeader icon={<BsTrophyFill />} title="Leaderboards">
         <FilterBox type="event" />
       </PageHeader>

@@ -9,7 +9,7 @@ const CreateBattleForm = dynamic(() => import('@/components/admin/battles/create
 
 export default function CreateBattlesPage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       <PageHeader
         icon={<RiSwordFill />}
         title="Create Online battles"

@@ -1,3 +1,4 @@
+import { AiFillEdit } from 'react-icons/ai'
 import { GiJewelCrown, GiLaurelCrown } from 'react-icons/gi'
 
 import { IUserData } from '@/@types/user'
@@ -31,12 +32,13 @@ export default function MainProfile({ user }: Props) {
 
         <div className="w-full">
           <Button link="/settings" variant="primary" className="float-right">
-            Edit profile
+            <span className="hidden sm:block">Edit profile</span>
+            <AiFillEdit className="block sm:hidden" />
           </Button>
         </div>
       </div>
 
-      <div className="flex-center mt-4 gap-4">
+      <div className="flex-center mt-4 flex-col gap-4 xs:flex-row">
         <ProfileStats icon={<GiJewelCrown />} label="Current rank" value="Kanji kunoichi" />
 
         <ProfileStats icon={<GiLaurelCrown />} label="Current rank point" value={user.score.toString()} />

@@ -5,7 +5,7 @@ import PageHeader from '@/components/home/page-header'
 
 export default function CreateStacksPage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       <PageHeader icon={<BsStack />} title="Create kanji stack" description="New stack for playing and learning" />
 
       <CreateStackForm />

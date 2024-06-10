@@ -38,7 +38,7 @@ const auraVariants = cva(
 )
 
 const podiumVariants = cva(
-  'flex-center text-secondary-podium bg-top-user top-user relative z-[1] text-[8rem] font-bold',
+  'flex-center text-secondary-podium bg-top-user top-user relative z-[1] sm:text-[8rem] text-[5rem] font-bold',
   {
     variants: {
       top: {
@@ -91,7 +91,7 @@ export default function TopUser({ top, topUser }: TopUserProps) {
 
         <Link
           href={`/player/${topUser.user.name}`}
-          className="mt-4 text-lg font-semibold text-default-link group-hover:text-default-brand"
+          className="mt-4 max-w-[6rem] truncate text-lg font-semibold text-default-link group-hover:text-default-brand"
         >
           {topUser.user.name}
         </Link>

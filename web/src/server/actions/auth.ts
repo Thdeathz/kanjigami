@@ -65,7 +65,7 @@ export async function loginRequest(data: z.infer<typeof LoginSchema>): Promise<A
   }
 }
 
-export async function loginWithSocial(provider: 'google') {
+export async function loginWithSocial(provider: 'google' | 'facebook') {
   return signIn(provider, {
     callbackUrl: DEFAULT_LOGIN_REDIRECT
   })

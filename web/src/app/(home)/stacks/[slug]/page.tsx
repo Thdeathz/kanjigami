@@ -13,7 +13,8 @@ export const generateMetadata = async ({ params }: Props) => {
   const stack = await getStackDetail(slug)
 
   return {
-    title: `${stack.name}`
+    title: `${stack.name}`,
+    description: stack.description
   }
 }
 
@@ -21,7 +22,7 @@ export default function index({ params }: Props) {
   const { slug } = params
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       <StackDetail slug={slug} />
     </div>
   )

@@ -8,7 +8,7 @@ import { useLoginWithSocialMutation } from '@/data/auth'
 export const Social = () => {
   const { mutateAsync } = useLoginWithSocialMutation()
 
-  const onClick = async (provider: 'google') => {
+  const onClick = async (provider: 'google' | 'facebook') => {
     await mutateAsync(provider)
   }
 

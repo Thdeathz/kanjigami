@@ -4,8 +4,8 @@ import { toast } from 'sonner'
 
 import { IUserInfo } from '@/@types/auth'
 import Loading from '@/components/loading'
+import PlusBadge from '@/components/plus-badge'
 import { Button } from '@/components/ui/button'
-import { Panel } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useCreateCheckoutSessionMutation } from '@/data/plus'
 
@@ -65,26 +65,38 @@ type Props = {
 }
 
 export default function PricingPanel({ user }: Props) {
+  if (user.isPlus) {
+    return (
+      <div className="space-y-6">
+        <div className="flex-center gap-2">
+          <span className="text-lg font-semibold text-default-heading">You are</span> <PlusBadge />
+        </div>
+
+        <p className="text-center font-medium text-default-text-light">
+          You&apos;re a PLUS member and we couldn&apos;t be more thrilled. Thank you for supporting us ❤️
+        </p>
+      </div>
+    )
+  }
+
   return (
-    <Panel wrapperClass="border-2 border-default-brand shadow-glory" className="p-6">
-      <Tabs defaultValue="yearly">
-        <TabsList className="w-full" variant="primary">
-          <TabsTrigger value="yearly" className="w-full rounded-full">
-            Yearly (40% off)
-          </TabsTrigger>
-          <TabsTrigger value="monthly" className="w-full rounded-full">
-            Monthly
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="yearly">
-          <PricingItem title="month" price="3" extra="$36 / year" />
-          <CreateCheckoutSession disabled={user.isPlus} userId={user.id} productId="prod_QB5N327UFq7cQi" />
-        </TabsContent>
-        <TabsContent value="monthly">
-          <PricingItem title="month" price="5" />
-          <CreateCheckoutSession disabled={user.isPlus} userId={user.id} productId="prod_QB5NuPPRduczHR" />
-        </TabsContent>
-      </Tabs>
-    </Panel>
+    <Tabs defaultValue="yearly">
+      <TabsList className="w-full" variant="primary">
+        <TabsTrigger value="yearly" className="w-full rounded-full">
+          Yearly (40% off)
+        </TabsTrigger>
+        <TabsTrigger value="monthly" className="w-full rounded-full">
+          Monthly
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="yearly">
+        <PricingItem title="month" price="3" extra="$36 / year" />
+        <CreateCheckoutSession disabled={user.isPlus} userId={user.id} productId="prod_QB5N327UFq7cQi" />
+      </TabsContent>
+      <TabsContent value="monthly">
+        <PricingItem title="month" price="5" />
+        <CreateCheckoutSession disabled={user.isPlus} userId={user.id} productId="prod_QB5NuPPRduczHR" />
+      </TabsContent>
+    </Tabs>
   )
 }

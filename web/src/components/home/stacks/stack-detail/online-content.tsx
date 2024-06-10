@@ -3,13 +3,13 @@
 import SectionWrapper from '@/components/home/battles/section-wrapper'
 import PageHeader from '@/components/home/page-header'
 import RootNotification from '@/components/home/root-notification'
+import ButtonBookmark from '@/components/home/stacks/stack-detail/button-bookmark'
+import ButtonDownLoad from '@/components/home/stacks/stack-detail/button-download'
 import GamesList from '@/components/home/stacks/stack-detail/games-list'
+import StackSideLeaderboard from '@/components/home/stacks/stack-detail/stack-side-leaderboard'
 import WordsList from '@/components/home/stacks/stack-detail/words-list'
 import Loading from '@/components/loading'
 import { useGetStackDetailQuery } from '@/data/stack'
-
-import ButtonDownLoad from './button-download'
-import StackSideLeaderboard from './stack-side-leaderboard'
 
 type Props = {
   slug: string
@@ -28,21 +28,24 @@ export default function StackDetailOnlineContent({ slug, openWord }: Props) {
   return (
     <>
       <PageHeader title={stack.name} description={stack.description}>
-        <ButtonDownLoad stack={stack} />
+        <div className="flex-center gap-4">
+          <ButtonDownLoad stack={stack} />
+          <ButtonBookmark />
+        </div>
       </PageHeader>
 
       <RootNotification />
 
       <GamesList games={stack.games} />
 
-      <div className="flex gap-12">
-        <div className="w-0 shrink grow">
-          <SectionWrapper title="Kanji stack">
+      <div className="flex flex-col gap-6 md:flex-row md:gap-12">
+        <div className="w-full shrink grow md:w-0">
+          <SectionWrapper title="Kanji list">
             <WordsList words={stack.words} openWord={openWord} />
           </SectionWrapper>
         </div>
 
-        <div className="w-[18rem]">
+        <div className="w-full md:w-[18rem]">
           <SectionWrapper title="Stack leaders">
             <StackSideLeaderboard slug={slug} />
           </SectionWrapper>

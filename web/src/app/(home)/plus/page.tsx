@@ -5,6 +5,7 @@ import PageHeader from '@/components/home/page-header'
 import BenefitItem from '@/components/home/plus/benefit-item'
 import PricingPanel from '@/components/home/plus/pricing-panel'
 import PlusBadge from '@/components/plus-badge'
+import { Panel } from '@/components/ui/card'
 import { getCurrentUserInfo } from '@/server/actions/user'
 
 const SuccessToast = dynamic(() => import('@/components/home/plus/success-toast'), {
@@ -31,7 +32,7 @@ export default async function PlusPage({ searchParams }: Props) {
   const user = await getCurrentUserInfo()
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       <PageHeader
         icon={<PlusBadge size="large" />}
         title={user?.isPlus ? 'You are Plus' : 'Upgrade to Plus'}
@@ -41,11 +42,13 @@ export default async function PlusPage({ searchParams }: Props) {
       {user && (
         <>
           <Suspense key={success} fallback={null}>
-            <SuccessToast success={success} canceled={canceled} />
+            <SuccessToast success={success} canceled={canceled} isPlus={user.isPlus} />
           </Suspense>
 
-          <div className="mx-auto w-[25rem]">
-            <PricingPanel user={user} />
+          <div className="mx-auto w-full max-w-[25rem]">
+            <Panel wrapperClass="border-2 border-default-brand shadow-glory" className="p-6">
+              <PricingPanel user={user} />
+            </Panel>
             <p className="mt-3 text-sm font-medium text-default-text-lightest">
               Cancel anytime. 100% refund if cancelled within 7 days. <br /> Additional taxes may apply.
             </p>
@@ -56,7 +59,7 @@ export default async function PlusPage({ searchParams }: Props) {
       <div>
         <h3 className="text-2xl font-semibold text-default-heading">Plus membership benefits ✨</h3>
 
-        <div className="mt-4 grid grid-cols-2 gap-8">
+        <div className="mt-4 gap-8 space-y-4 sm:grid sm:grid-cols-auto-fill-benefit sm:space-y-0">
           <BenefitItem index={1} />
 
           <BenefitItem index={2} />

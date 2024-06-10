@@ -23,7 +23,7 @@ export const CardWrapper = ({
   showSocial = false
 }: CardWrapperProps) => {
   return (
-    <Card className="relative w-[30rem]">
+    <Card className="relative sm:min-w-[30rem]">
       <h1 className="absolute top-[-4rem] w-full text-center text-[2rem] font-semibold text-default-heading">
         {headerLabel}
       </h1>

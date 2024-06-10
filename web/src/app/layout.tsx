@@ -12,7 +12,7 @@ import Providers, { OnlineContentProvider } from '@/components/providers'
 
 const APP_NAME = 'Kanjigami'
 const APP_DEFAULT_TITLE = 'Kanjigami'
-const APP_TITLE_TEMPLATE = '%s | 漢字ガミ'
+const APP_TITLE_TEMPLATE = '%s | Kanjigami'
 const APP_DESCRIPTION = '⚔️ 漢字ガミー Learn kanji through games'
 
 export const metadata: Metadata = {

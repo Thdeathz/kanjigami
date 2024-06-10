@@ -21,13 +21,13 @@ export default function UserStatusPage({ searchParams }: Props) {
   const { battle } = searchParams
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       <Suspense key={battle} fallback={<Loading className="text-4xl" />}>
         <PageHeader icon={<FaChartArea />} title="Your stats">
           <FilterBox currentBattle={battle} />
         </PageHeader>
 
-        <Panel wrapperClass="mx-auto w-[40rem]">
+        <Panel wrapperClass="mx-auto max-w-[40rem] w-full">
           <UserStatsTable battleSlug={battle} />
         </Panel>
       </Suspense>

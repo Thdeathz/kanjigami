@@ -1,6 +1,7 @@
 import { IStackGame } from '@/@types/stack'
 import GameItem from '@/components/home/stacks/stack-detail/game-item'
 import { Panel } from '@/components/ui/card'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 
 type Props = {
   games: IStackGame[]
@@ -8,10 +9,15 @@ type Props = {
 
 export default function GamesList({ games }: Props) {
   return (
-    <Panel theme="secondary" className="grid grid-cols-4 gap-8">
-      {games.map((game) => (
-        <GameItem key={game.id} game={game} />
-      ))}
+    <Panel theme="secondary">
+      <ScrollArea>
+        <div className="grid w-full grid-cols-auto-game-list justify-between gap-8 overflow-y-auto">
+          {games.map((game) => (
+            <GameItem key={game.id} game={game} />
+          ))}
+        </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
     </Panel>
   )
 }

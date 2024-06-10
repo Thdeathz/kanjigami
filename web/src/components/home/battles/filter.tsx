@@ -17,7 +17,7 @@ export default function Filter({ currentStatus }: Props) {
   const isPast = currentStatus === battle.STATUS.FINISHED
 
   return (
-    <div className="flex-center mt-4 gap-4">
+    <div className="flex-center mt-4 flex-col gap-4 sm:flex-row">
       <Button onClick={() => onSearch('status', battle.STATUS.ONGOING)} variant={isLatest ? 'primary' : 'default'}>
         Latest battles
       </Button>

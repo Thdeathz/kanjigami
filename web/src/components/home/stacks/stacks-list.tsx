@@ -43,7 +43,7 @@ export default function StacksList({ filterOption, searchValue }: Props) {
 
   return (
     <>
-      <div className="grid grid-cols-5 gap-8">
+      <div className="grid grid-cols-auto-fill-stack gap-8">
         {data.pages.map((eachPage) =>
           eachPage.map((stack) => (
             <StackCard

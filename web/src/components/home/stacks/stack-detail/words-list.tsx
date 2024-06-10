@@ -8,7 +8,7 @@ type Props = {
 
 export default function WordsList({ words, openWord }: Props) {
   return (
-    <div className="grid grid-cols-8 gap-4">
+    <div className="grid grid-cols-auto-fill-word gap-4">
       {words.map((word) => (
         <WordItem key={word.id} word={word} isOpen={word.content === openWord} />
       ))}

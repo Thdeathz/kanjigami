@@ -32,7 +32,7 @@ type Props = {
 
 export default function UserStats({ event, stack }: Props) {
   return (
-    <div className="flex gap-8">
+    <div className="flex flex-col gap-8 md:flex-row">
       <BattleStatsWrapper icon={<RiSwordFill />} title="Online battle stats">
         <StatsItem label="Battles played" value={event.totalGame} />
         <StatsItem label="Avg time" value={event.time} />

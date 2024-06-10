@@ -46,7 +46,7 @@ type Props = {
 
 export default function PageHeader({ icon, badge, showLightStick, title, description, children }: Props) {
   return (
-    <div className="page-header flex-center flex-col gap-4">
+    <div className="page-header flex-center flex-col gap-2 sm:gap-4">
       {icon && <div className="text-[2rem] text-default-brand">{icon}</div>}
 
       <div>

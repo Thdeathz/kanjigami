@@ -25,7 +25,7 @@ export default function OfflineContent() {
   }, [])
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       <PageHeader title="Saved stacks" description="Downloaded stacks for offline learning" />
 
       <div className="grid grid-cols-5 gap-8">

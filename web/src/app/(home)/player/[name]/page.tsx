@@ -8,7 +8,7 @@ type Props = {
 
 export const generateMetadata = ({ params }: Props) => {
   return {
-    title: `${params.name}`
+    title: `${decodeURIComponent(params.name)}`
   }
 }
 

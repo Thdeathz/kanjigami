@@ -11,7 +11,7 @@ type Props = {
 
 export default function OnlineContent({ session }: Props) {
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       <Thumbnail />
 
       <RootNotification />

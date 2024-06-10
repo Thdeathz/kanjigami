@@ -29,7 +29,7 @@ export const useLoginMutation = () => {
 export const useLoginWithSocialMutation = () => {
   return useMutation({
     mutationKey: ['login'],
-    mutationFn: async (provider: 'google') => loginWithSocial(provider)
+    mutationFn: async (provider: 'google' | 'facebook') => loginWithSocial(provider)
   })
 }
 

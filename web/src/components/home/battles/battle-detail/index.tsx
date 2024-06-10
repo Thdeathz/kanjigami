@@ -52,7 +52,7 @@ export default function BattleDetail({ slug }: Props) {
           <>
             <Badge variant={battle.status}>{battle.status}</Badge>
             <Badge>{battle.type}</Badge>
-            {battle.playedUsers && <Badge>{battle.playedUsers} played</Badge>}
+            {battle.playedUsers !== undefined && <Badge>{battle.playedUsers} played</Badge>}
           </>
         }
         showLightStick={battle.status}
@@ -72,7 +72,7 @@ export default function BattleDetail({ slug }: Props) {
       <RootNotification />
 
       <div className="flex flex-col gap-12 sm:flex-row">
-        <div className={cn('shrink grow sm:w-0', { 'px-48': battle.status === 'UPCOMING' })}>
+        <div className={cn('shrink grow sm:w-0', { 'xl:px-48': battle.status === 'UPCOMING' })}>
           {battle.status !== 'UPCOMING' && (
             <BattleStacksList stacks={battle.rounds.map((round) => ({ ...round.stack, status: round.status }))} />
           )}

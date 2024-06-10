@@ -62,8 +62,8 @@ type UserAvatarProps = {
 const plusBadgeVariants = cva('plus-badge absolute z-[2] translate-x-1/2', {
   variants: {
     size: {
-      normal: 'bottom-[-4px] right-1/2',
-      small: 'w-[25px] h-[12px] bottom-[-1px] right-[24px]'
+      normal: 'lg:bottom-[-4px] bottom-[-6px] right-1/2 max-lg:w-2/3 max-lg:h-2/3',
+      small: 'lg:w-[25px] lg:h-[12px] lg:bottom-[-1px] bottom-0 lg:right-[24px] w-[20px] h-[10px] right-[22px]'
     }
   },
   defaultVariants: {

@@ -66,7 +66,13 @@ export default function EditUsernameForm({ currentUsername }: Props) {
           variant="primary"
           disabled={!form.getValues('name') || form.getValues('name') === currentUsername || isPending}
         >
-          {isPending ? <Loading /> : 'Save Username (Edit username above to enable this button)'}
+          {isPending ? (
+            <Loading />
+          ) : (
+            <p>
+              Save Username <span className="hidden sm:inline">(Edit username above to enable this button)</span>
+            </p>
+          )}
         </Button>
       </form>
     </Form>

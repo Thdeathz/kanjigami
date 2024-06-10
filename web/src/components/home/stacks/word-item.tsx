@@ -16,7 +16,7 @@ export default function WordItem({ word, isOpen = false }: Props) {
       <DialogTrigger asChild>
         <Button>{word.content}</Button>
       </DialogTrigger>
-      <DialogContent className="w-[70rem]">
+      <DialogContent className="w-[90vw] xl:w-[70rem]">
         <DialogHeader>
           <DialogTitle>{word.content}</DialogTitle>
         </DialogHeader>

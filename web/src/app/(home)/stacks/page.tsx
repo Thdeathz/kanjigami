@@ -27,13 +27,13 @@ export default async function KanjiStackPage({
   const session = await auth()
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       <PageHeader icon={<BsStack />} title="Kanji stack" description="Play game and learn more kanji" />
 
       <RootNotification />
 
       <Suspense key={filterOption || searchValue} fallback={<Loading />}>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
           <SearchBox searchValue={searchValue} />
 
           {session && <FilterBox filterOption={filterOption} />}

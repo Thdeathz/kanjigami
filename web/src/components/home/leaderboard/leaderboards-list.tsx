@@ -27,7 +27,7 @@ export default function LeaderboardsList({ type }: Props) {
 
   return (
     <div className="mx-auto flex flex-col items-center gap-4">
-      <div className="flex w-[55rem] items-end gap-2">
+      <div className="flex w-[95vw] items-end gap-2 lg:w-[55rem]">
         {topUsers.slice(0, 3).map((topUser, index) => (
           <TopUser key={topUser.user.id} top={String(index + 1) as TopUserProps['top']} topUser={topUser} />
         ))}
@@ -35,7 +35,7 @@ export default function LeaderboardsList({ type }: Props) {
 
       <table>
         <motion.tbody
-          className="mx-auto flex w-[45rem] flex-col gap-4"
+          className="mx-auto flex w-[90vw] flex-col gap-4 lg:w-[45rem]"
           variants={grid.container(0.4)}
           initial="hidden"
           animate="enter"

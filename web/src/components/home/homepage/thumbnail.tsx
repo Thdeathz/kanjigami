@@ -58,7 +58,7 @@ export default function Thumbnail() {
                 width={1920}
                 height={1080}
                 priority
-                className="h-[30rem] w-full rounded-lg object-cover"
+                className="aspect-video w-full rounded-lg object-cover lg:h-[30rem]"
               />
             </CarouselItem>
           ))}
