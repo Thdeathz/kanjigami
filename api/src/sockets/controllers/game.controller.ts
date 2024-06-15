@@ -39,7 +39,6 @@ const handleSaveScore = async (
     roundIndex,
   }: IGetGameContentRequest & { score: number; battleSlug?: string; roundIndex?: string },
 ) => {
-  console.log('handleSaveScore', sessionId, userId, score, type, battleSlug, roundIndex)
   const gameData = await redisService.get<IGameData<IWord>>('game', sessionId)
   const time = await redisService.ttl('game', sessionId)
 
@@ -53,17 +52,19 @@ const handleSaveScore = async (
   const playTime = Math.abs(gameData.gameStack.timeLimit - time)
 
   if (type === 'OFFLINE') {
-    await gameService.saveScoreOfflineGame(gameData.gameStack.id, userId, {
+    console.log('save offline game score', gameData.gameStack.id)
+    const gameLog = await gameService.saveScoreOfflineGame(gameData.gameStack.id, userId, {
       score: calculateScore(gameData.gameStack.game.name, playTime, score),
       time: playTime,
       type,
     })
 
-    socket.emit('game:calculate-score:success')
+    socket.emit('game:calculate-score:success', { logId: gameLog.id })
     return
   }
 
   if (type === 'ONLINE' && battleSlug && roundIndex !== undefined) {
+    console.log('save online game score', battleSlug, roundIndex)
     const eventData = await redisService.get<IStartEventData>('event', battleSlug)
     const currentRound = eventData?.rounds.find((r) => r.order === Number(roundIndex))
 

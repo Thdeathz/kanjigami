@@ -81,7 +81,7 @@ const config = {
       },
       gridTemplateColumns: {
         'auto-22%': 'repeat(auto-fill, minmax(22%, 1fr))',
-        'auto-fill': 'repeat(auto-fill, minmax(14rem, 1fr))',
+        'auto-fill': 'repeat(auto-fill, minmax(15rem, 1fr))',
         'auto-fill-stack': 'repeat(auto-fill, minmax(16rem, 1fr))',
         'auto-fill-word': 'repeat(auto-fill, minmax(5rem, 1fr))',
         'auto-fill-benefit': 'repeat(auto-fill, minmax(35rem, 1fr))',

@@ -17,7 +17,7 @@ type Props = {
   roundIndex?: number
 }
 
-export default function MultipleChoice({ sessionId, userId, type, battleSlug, roundIndex }: Props) {
+export default function MultipleChoice({ sessionId, userId, type = 'OFFLINE', battleSlug, roundIndex }: Props) {
   const [gameContent, setGameContent] = useState<IMultipleChoiceGameContent[]>([])
 
   const onCalculateScore = () => {

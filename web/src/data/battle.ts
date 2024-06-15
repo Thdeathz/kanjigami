@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
 
 import { BattleStatus, ICreateBattleRequest } from '@/@types/battle'
 import {
@@ -10,11 +10,12 @@ import {
   getUserStats
 } from '@/server/actions/battle'
 
-export const useGetAllBattlesQuery = (status: BattleStatus, page?: string) =>
-  useQuery({
-    queryKey: ['battles', status, page],
-    queryFn: async () => getAllBattles({ status, page }),
-    placeholderData: (previousData) => previousData
+export const useGetAllBattlesQuery = (status: BattleStatus) =>
+  useInfiniteQuery({
+    queryKey: ['stacks', status],
+    queryFn: async ({ pageParam = 1 }) => getAllBattles({ status, page: pageParam }),
+    getNextPageParam: (lastPage, allPages) => (lastPage.length ? allPages.length + 1 : undefined),
+    initialPageParam: 1
   })
 
 export const useGetBattleDetailQuery = (slug: string) =>

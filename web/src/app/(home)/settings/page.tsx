@@ -16,7 +16,7 @@ export default async function ProfileSettingPage() {
     <div className="space-y-8 sm:space-y-12">
       <PageHeader icon={<RiSettings3Fill />} title="Settings" />
 
-      <Panel wrapperClass="mx-auto max-w-[55rem] w-full">
+      <Panel wrapperClass="mx-auto max-w-[55rem] w-full" className="p-6 md:p-8">
         <ProfileSettingForm user={currentUser} />
       </Panel>
     </div>

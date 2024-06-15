@@ -1,4 +1,5 @@
 import StackDetail from '@/components/home/stacks/stack-detail'
+import { getNewestNotification } from '@/server/actions/notification'
 import { getStackDetail } from '@/server/actions/stack'
 
 type Props = {
@@ -18,12 +19,13 @@ export const generateMetadata = async ({ params }: Props) => {
   }
 }
 
-export default function index({ params }: Props) {
+export default async function index({ params }: Props) {
   const { slug } = params
+  const notifications = await getNewestNotification()
 
   return (
     <div className="space-y-8 sm:space-y-12">
-      <StackDetail slug={slug} />
+      <StackDetail slug={slug} notifications={notifications} />
     </div>
   )
 }

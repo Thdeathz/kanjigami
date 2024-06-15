@@ -17,7 +17,7 @@ type Props = {
   roundIndex?: number
 }
 
-export default function FlipCard({ userId, sessionId, type, battleSlug, roundIndex }: Props) {
+export default function FlipCard({ userId, sessionId, type = 'OFFLINE', battleSlug, roundIndex }: Props) {
   const [gameContent, setGameContent] = useState<FlipCardGameContent[]>([])
   const [score, setScore] = useState(0)
 

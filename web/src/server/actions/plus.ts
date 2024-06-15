@@ -1,14 +1,24 @@
 'use server'
 
+import { revalidateTag } from 'next/cache'
+
 import { ApiResponse } from '@/@types'
-import axiosAuth from '@/lib/axios-auth'
+import fetchBase from '@/lib/fetch-base'
 
 export const createCheckoutSession = async (product: string, userId: string) => {
-  const { data: response } = await axiosAuth.post<
+  const { data: response } = await fetchBase<
     ApiResponse<{
       url: string
     }>
-  >('/plus', { product, userId })
+  >({
+    method: 'POST',
+    endpoint: '/plus',
+    body: JSON.stringify({ product, userId }),
+    tags: ['checkout-session']
+  })
 
-  return response.data
+  revalidateTag('me')
+  revalidateTag('checkout-session')
+
+  return response
 }

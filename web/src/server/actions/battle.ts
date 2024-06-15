@@ -1,5 +1,7 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+
 import { ApiResponse, PaginationApiResponse } from '@/@types'
 import {
   BattleStatus,
@@ -9,48 +11,58 @@ import {
   IBattleUserStats,
   ICreateBattleRequest
 } from '@/@types/battle'
-import axiosAuth from '@/lib/axios-auth'
+import fetchBase from '@/lib/fetch-base'
 import { makeEndpoint } from '@/lib/utils'
 
 type GetAllBattlesProps = {
   status: BattleStatus
-  page?: string
+  page?: number
 }
 
-export const getAllBattles = async ({ status, page = '1' }: GetAllBattlesProps) => {
-  const { data: response } = await axiosAuth.get<ApiResponse<IBattle[]>>(
-    `/events?status=${status}&page=${page}&offset=4`
-  )
+export const getAllBattles = async ({ status, page = 1 }: GetAllBattlesProps) => {
+  const { data: response } = await fetchBase<ApiResponse<IBattle[]>>({
+    method: 'GET',
+    endpoint: `/events?status=${status}&page=${page}&offset=4`,
+    tags: ['battles']
+  })
 
-  return response.data
+  return response
 }
 
 export const getBattleDetail = async (slug: string) => {
-  const { data: response } = await axiosAuth.get<ApiResponse<IBattleDetail>>(`/events/${slug}`)
+  const { data: response } = await fetchBase<ApiResponse<IBattleDetail>>({
+    method: 'GET',
+    endpoint: `/events/${slug}`
+  })
 
-  return response.data
+  return response
 }
 
 export const getUserPlayedBattles = async () => {
-  const { data: response } = await axiosAuth.get<ApiResponse<IBattleInfo[]>>(`/events/played`)
+  const { data: response } = await fetchBase<ApiResponse<IBattleInfo[]>>({
+    method: 'GET',
+    endpoint: `/events/played`
+  })
 
-  return response.data
+  return response
 }
 
 export const getUserStats = async (slug?: string) => {
-  const { data: response } = await axiosAuth.get<ApiResponse<IBattleUserStats>>(
-    makeEndpoint('/events/stats', {
+  const { data: response } = await fetchBase<ApiResponse<IBattleUserStats>>({
+    method: 'GET',
+    endpoint: makeEndpoint('/events/stats', {
       slug
     })
-  )
+  })
 
-  return response.data
+  return response
 }
 
 export const adminGetAllBattles = async (page?: string) => {
-  const { data: response } = await axiosAuth.get<PaginationApiResponse<IBattle[]>>(
-    makeEndpoint('/events', { page, offset: 10 })
-  )
+  const response = await fetchBase<PaginationApiResponse<IBattle[]>>({
+    method: 'GET',
+    endpoint: makeEndpoint('/events', { page, offset: 10 })
+  })
 
   return {
     data: response.data,
@@ -59,10 +71,16 @@ export const adminGetAllBattles = async (page?: string) => {
 }
 
 export const createNewBattle = async (data: ICreateBattleRequest) => {
-  const { data: response } = await axiosAuth.post<ApiResponse<IBattle>>(`/events`, {
-    ...data,
-    duration: Number(data.duration)
+  const { data: response } = await fetchBase<ApiResponse<IBattle>>({
+    method: 'POST',
+    endpoint: '/events',
+    body: JSON.stringify({
+      ...data,
+      duration: Number(data.duration)
+    })
   })
 
-  return response.data
+  revalidatePath('/admin/battles')
+
+  return response
 }

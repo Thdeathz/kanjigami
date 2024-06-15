@@ -1,5 +1,6 @@
 import BattleDetail from '@/components/home/battles/battle-detail'
 import { getBattleDetail } from '@/server/actions/battle'
+import { getNewestNotification } from '@/server/actions/notification'
 
 type Props = {
   params: {
@@ -18,12 +19,13 @@ export const generateMetadata = async ({ params }: Props) => {
   }
 }
 
-export default function index({ params }: Props) {
+export default async function index({ params }: Props) {
   const { slug } = params
+  const notifications = await getNewestNotification()
 
   return (
     <div className="space-y-8 px-[0.5rem] sm:space-y-12">
-      <BattleDetail slug={slug} />
+      <BattleDetail slug={slug} notifications={notifications} />
     </div>
   )
 }

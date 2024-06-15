@@ -90,6 +90,12 @@ const nextConfig = {
         hostname: 'picsum.photos',
         port: '',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        port: '',
+        pathname: '/kanjigami.pro/**'
       }
     ]
   }

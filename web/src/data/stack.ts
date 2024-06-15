@@ -2,6 +2,7 @@ import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query'
 
 import {
   adminGetAllStacks,
+  followStack,
   getAllStacks,
   getKanjiDetail,
   getStackDetail,
@@ -42,4 +43,10 @@ export const useAdminSearchStackMutation = () =>
   useMutation({
     mutationKey: ['admin-search-stacks'],
     mutationFn: async (searchValue: string) => searchStack(searchValue)
+  })
+
+export const useFollowStackMutation = () =>
+  useMutation({
+    mutationKey: ['follow-stack'],
+    mutationFn: async (id: string) => followStack(id)
   })

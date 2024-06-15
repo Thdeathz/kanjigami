@@ -9,38 +9,39 @@ import SectionWrapper from '@/components/home/battles/section-wrapper'
 import PageHeader from '@/components/home/page-header'
 import RootNotification from '@/components/home/root-notification'
 import Loading from '@/components/loading'
+import { getNewestNotification } from '@/server/actions/notification'
 
 export const metadata = () => ({
-  title: 'Battles'
+  title: 'Battles',
+  description: 'Compete with players around the world and learn more kanji'
 })
 
-export default function BattlesPage({
+export default async function BattlesPage({
   searchParams
 }: {
   searchParams?: {
     status?: string
-    page?: string
   }
 }) {
   const status = searchParams?.status || ''
-  const page = searchParams?.page || '1'
+  const notifications = await getNewestNotification()
 
   return (
     <div className="space-y-8 sm:space-y-12">
       <PageHeader
         icon={<RiSwordFill />}
         title="Online battles"
-        description="Compete with players around the world and learn kanji"
+        description="Compete with players around the world and learn more kanji"
       >
         <Filter currentStatus={status.toUpperCase() as BattleStatus} />
       </PageHeader>
 
-      <RootNotification />
+      <RootNotification notifications={notifications} />
 
       <div className="flex flex-col gap-12 md:flex-row">
         <div className="shrink grow">
           <Suspense key={status} fallback={<Loading />}>
-            <Battles status={status.toUpperCase() as BattleStatus} page={page} />
+            <Battles status={status.toUpperCase() as BattleStatus} />
           </Suspense>
         </div>
 

@@ -9,8 +9,7 @@ import * as z from 'zod'
 
 import { ActionError, ApiResponse, IFormItemError } from '@/@types'
 import { IResetPasswordRequest } from '@/@types/auth'
-import axiosAuth from '@/lib/axios-auth'
-import axiosBase from '@/lib/axios-base'
+import fetchBase from '@/lib/fetch-base'
 import decode from '@/lib/jwt-decode'
 import { getErrorString } from '@/lib/utils'
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
@@ -24,7 +23,11 @@ export async function registerRequest(
   data: z.infer<typeof RegisterSchema>
 ): Promise<ActionError<IFormItemError> | null> {
   try {
-    await axiosBase.post('/auth/register', data)
+    await fetchBase({
+      method: 'POST',
+      endpoint: '/auth/register',
+      body: JSON.stringify(data)
+    })
     return null
   } catch (error) {
     const errorMessage = getErrorString(error)
@@ -73,25 +76,26 @@ export async function loginWithSocial(provider: 'google' | 'facebook') {
 
 export async function refresh(token: JWT | Session) {
   try {
-    const { data: responseData } = await axiosBase.post<ApiResponse<{ accessToken: string; refreshToken: string }>>(
-      '/auth/refresh',
-      {
+    const { data: responseData } = await fetchBase<ApiResponse<{ accessToken: string; refreshToken: string }>>({
+      method: 'POST',
+      endpoint: '/auth/refresh',
+      body: JSON.stringify({
         token: token.refreshToken
-      }
-    )
+      })
+    })
 
-    if (!responseData.data.accessToken) {
+    if (!responseData.accessToken) {
       return {
         ...token,
         error: 'RefreshAccessTokenError'
       }
     }
 
-    const decodedToken = decode(responseData.data.accessToken)
+    const decodedToken = decode(responseData.accessToken)
 
     return {
-      accessToken: responseData.data.accessToken,
-      refreshToken: responseData.data.refreshToken,
+      accessToken: responseData.accessToken,
+      refreshToken: responseData.refreshToken,
       accessTokenExpires: decodedToken.exp
     }
   } catch (error) {
@@ -106,7 +110,11 @@ export async function forgotPasswordRequest(
   data: z.infer<typeof ForgotPasswordSchema>
 ): Promise<ActionError<string> | null> {
   try {
-    await axiosBase.post('/auth/password/token', { ...data })
+    await fetchBase({
+      method: 'POST',
+      endpoint: '/auth/password/token',
+      body: JSON.stringify({ ...data })
+    })
 
     return null
   } catch (error) {
@@ -119,7 +127,11 @@ export async function resetPasswordRequest({
   password
 }: IResetPasswordRequest): Promise<ActionError<string> | null> {
   try {
-    await axiosBase.post('/auth/password/reset', { password, token })
+    await fetchBase({
+      method: 'POST',
+      endpoint: '/auth/password/reset',
+      body: JSON.stringify({ token, password })
+    })
 
     return null
   } catch (error) {
@@ -134,7 +146,10 @@ export async function resetPasswordRequest({
 }
 
 export async function signOutRequest() {
-  axiosAuth.post('/auth/logout')
+  fetchBase({
+    method: 'POST',
+    endpoint: '/auth/logout'
+  })
 
   return signOut({
     redirectTo: '/login'

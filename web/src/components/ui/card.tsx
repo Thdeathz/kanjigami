@@ -60,7 +60,7 @@ interface PanelProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Panel = React.forwardRef<HTMLDivElement, PanelProps>(({ wrapperClass, className, theme, ...props }, ref) => (
   <Card className={wrapperClass} theme={theme} ref={ref}>
-    <CardContent className={cn('p-6 md:p-8', className)} {...props} />
+    <CardContent className={cn('p-8', className)} {...props} />
   </Card>
 ))
 Panel.displayName = 'Panel'

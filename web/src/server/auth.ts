@@ -4,7 +4,7 @@ import NextAuth from 'next-auth'
 
 import { ApiResponse } from '@/@types'
 import { ILoginResponse } from '@/@types/auth'
-import axiosBase from '@/lib/axios-base'
+import fetchBase from '@/lib/fetch-base'
 import decode from '@/lib/jwt-decode'
 
 import authConfig from './auth.config'
@@ -21,15 +21,19 @@ export const {
   callbacks: {
     async signIn({ user, account }) {
       if (account && account.provider === 'google') {
-        const { data: responseData } = await axiosBase.post<ApiResponse<ILoginResponse>>('/auth/google', {
-          token: account.id_token
+        const { data: responseData } = await fetchBase<ApiResponse<ILoginResponse>>({
+          method: 'POST',
+          endpoint: '/auth/google',
+          body: JSON.stringify({
+            token: account.id_token
+          })
         })
 
         if (!responseData) return false
 
-        user.id = responseData.data.user.id
-        user.accessToken = responseData.data.accessToken
-        user.refreshToken = responseData.data.refreshToken
+        user.id = responseData.user.id
+        user.accessToken = responseData.accessToken
+        user.refreshToken = responseData.refreshToken
       }
 
       return true

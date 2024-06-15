@@ -1,17 +1,17 @@
-'use client'
-
 import { RiSwordFill } from 'react-icons/ri'
 
+import { IBattle } from '@/@types/battle'
 import HomeSection from '@/components/home/homepage/home-section'
 import OnlineBattlePanel from '@/components/home/online-battle-panel'
 import Loading from '@/components/loading'
 import { Button } from '@/components/ui/button'
-import { useGetAllBattlesQuery } from '@/data/battle'
 
-export default function LatestBattle() {
-  const { data: battles, isLoading } = useGetAllBattlesQuery('FINISHED')
+type Props = {
+  battles?: IBattle[]
+}
 
-  if (!battles || battles.length < 1 || isLoading) {
+export default function LatestBattle({ battles }: Props) {
+  if (!battles || battles.length === 0) {
     return <Loading className="text-4xl" />
   }
 

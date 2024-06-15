@@ -46,6 +46,7 @@ export default function FollowingBattle() {
           eachPage.map((stack) => (
             <StackCard
               key={stack.id}
+              stackId={stack.id}
               name={stack.name}
               image={stack.image}
               slug={stack.slug}

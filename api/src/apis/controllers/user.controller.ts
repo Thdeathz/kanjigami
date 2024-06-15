@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 import { JwtPayload } from '@/apis/@types/auth'
 import { CACHE_KEY } from '@/apis/enum/cache-key'
 import redisService from '@/apis/services/redis.service'
+import uploadService from '@/apis/services/upload.service'
 import userService from '@/apis/services/user.service'
 import makeResponse from '@/apis/utils/make-response'
 
@@ -76,15 +77,14 @@ export const updateUserAvatar: RequestHandler = async (req, res) => {
   const image = req.file?.buffer
   const extension = req.file?.originalname.split('.').pop()
 
-  console.log(image, extension)
+  console.log('==> got req', user, image, extension)
 
   if (!image || !extension)
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json(makeResponse.defaultResponse('Image is required', StatusCodes.BAD_REQUEST))
 
-  // TODO: Upload image to google cloud storage
-  const imageUrl = 'xxx'
+  const imageUrl = await uploadService.upload({ fileBuffer: image, prefix: 'avatar/', extension })
   await userService.updateUserAvatar(user.id, imageUrl)
 
   return res.status(StatusCodes.OK).json(makeResponse.defaultResponse('Update user avatar success', StatusCodes.OK))

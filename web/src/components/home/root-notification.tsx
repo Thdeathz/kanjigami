@@ -3,17 +3,16 @@
 import AutoScroll from 'embla-carousel-auto-scroll'
 import Link from 'next/link'
 
+import { INotification } from '@/@types/notification'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import { useGetNotificationQuery } from '@/data/notification'
 
-import Loading from '../loading'
 import { UserAvatar } from '../ui/avatar'
 
-export default function RootNotification() {
-  const { data: notifications, isLoading } = useGetNotificationQuery()
+type Props = {
+  notifications?: INotification[]
+}
 
-  if (isLoading) return <Loading className="text-2xl" />
-
+export default function RootNotification({ notifications }: Props) {
   if (!notifications) return null
 
   return (

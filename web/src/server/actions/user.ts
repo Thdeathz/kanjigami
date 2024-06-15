@@ -1,21 +1,29 @@
 'use server'
 
+import { revalidateTag } from 'next/cache'
+
 import { ApiResponse } from '@/@types'
 import { IUserInfo } from '@/@types/auth'
 import { IUser, IUserData, IUserProfile } from '@/@types/user'
-import axiosAuth from '@/lib/axios-auth'
+import fetchBase from '@/lib/fetch-base'
 import { auth } from '@/server/auth'
 
 export const getAllUsers = async () => {
-  const { data: response } = await axiosAuth.get<ApiResponse<IUser[]>>('/users')
+  const { data: response } = await fetchBase<ApiResponse<IUser[]>>({
+    method: 'GET',
+    endpoint: '/users'
+  })
 
-  return response.data
+  return response
 }
 
 export const getUserProfile = async (name: string) => {
-  const { data: response } = await axiosAuth.get<ApiResponse<IUserProfile>>(`/users/profile?player=${name}`)
+  const { data: response } = await fetchBase<ApiResponse<IUserProfile>>({
+    method: 'GET',
+    endpoint: `/users/profile?player=${name}`
+  })
 
-  return response.data
+  return response
 }
 
 export const getCurrentUserInfo = async () => {
@@ -24,28 +32,47 @@ export const getCurrentUserInfo = async () => {
   if (!session) return null
 
   try {
-    const { data: response } = await axiosAuth.get<ApiResponse<IUserInfo>>(`/users/me`)
+    const { data: response } = await fetchBase<ApiResponse<IUserInfo>>({
+      method: 'GET',
+      endpoint: '/users/me',
+      tags: ['me']
+    })
 
-    return response.data
+    return response
   } catch (error) {
     return null
   }
 }
 
 export const updateUsername = async (username: string) => {
-  const { data: response } = await axiosAuth.put<ApiResponse<IUser>>(`/users/username`, { username })
+  const { data: response } = await fetchBase<ApiResponse<IUser>>({
+    method: 'PUT',
+    endpoint: '/users/username',
+    body: JSON.stringify({ username })
+  })
 
-  return response.data
+  revalidateTag('me')
+
+  return response
 }
 
 export const updateUserAvatar = async (formData: FormData) => {
-  const { data: response } = await axiosAuth.put<ApiResponse<IUser>>(`/users/avatar`, formData)
+  const { data: response } = await fetchBase<ApiResponse<IUser>>({
+    method: 'PUT',
+    endpoint: '/users/avatar',
+    body: formData
+  })
 
-  return response.data
+  revalidateTag('me')
+
+  return response
 }
 
 export const searchUserByUsername = async (username: string) => {
-  const { data: response } = await axiosAuth.get<ApiResponse<IUserData[]>>(`/users/search?username=${username}`)
+  const { data: response } = await fetchBase<ApiResponse<IUserData[]>>({
+    method: 'GET',
+    endpoint: `/users/search?username=${username}`
+  })
 
-  return response.data
+  return response
 }

@@ -162,19 +162,14 @@ const updateUsername = async (id: string, username: string) => {
 }
 
 const updateUserAvatar = async (id: string, imageUrl: string) => {
-  // TODO: Update user avatar
-  // return await prisma.user.update({
-  //   where: {
-  //     id,
-  //   },
-  //   data: {
-  //     image: imageUrl,
-  //   },
-  // })
-  return {
-    id,
-    imageUrl,
-  }
+  return await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      image: imageUrl,
+    },
+  })
 }
 
 const updateUserPlan = async (id: string) => {

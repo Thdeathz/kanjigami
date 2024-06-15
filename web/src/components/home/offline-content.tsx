@@ -32,6 +32,7 @@ export default function OfflineContent() {
         {stacks.map((stack) => (
           <StackCard
             key={stack.id}
+            stackId={stack.id}
             name={stack.name}
             image="/images/lock.png"
             slug={stack.slug}

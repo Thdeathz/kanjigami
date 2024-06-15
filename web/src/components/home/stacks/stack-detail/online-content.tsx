@@ -1,5 +1,6 @@
 'use client'
 
+import { INotification } from '@/@types/notification'
 import SectionWrapper from '@/components/home/battles/section-wrapper'
 import PageHeader from '@/components/home/page-header'
 import RootNotification from '@/components/home/root-notification'
@@ -14,9 +15,10 @@ import { useGetStackDetailQuery } from '@/data/stack'
 type Props = {
   slug: string
   openWord?: string
+  notifications?: INotification[]
 }
 
-export default function StackDetailOnlineContent({ slug, openWord }: Props) {
+export default function StackDetailOnlineContent({ slug, openWord, notifications }: Props) {
   const { data: stack, isLoading } = useGetStackDetailQuery(slug)
 
   if (isLoading) return <Loading className="text-4xl" />
@@ -30,11 +32,11 @@ export default function StackDetailOnlineContent({ slug, openWord }: Props) {
       <PageHeader title={stack.name} description={stack.description}>
         <div className="flex-center gap-4">
           <ButtonDownLoad stack={stack} />
-          <ButtonBookmark />
+          <ButtonBookmark stackId={stack.id} isFollowed={stack.isFollowed} />
         </div>
       </PageHeader>
 
-      <RootNotification />
+      <RootNotification notifications={notifications} />
 
       <GamesList games={stack.games} />
 

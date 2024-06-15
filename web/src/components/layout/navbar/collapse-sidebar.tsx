@@ -15,7 +15,7 @@ export default function CollapseSidebar() {
   const isPlayPage = pathname.includes('/play/')
 
   return (
-    <div className={cn('items-center gap-4', isPlayPage ? 'lg:flex' : 'lg:hidden', 'flex')}>
+    <div className={cn('items-center gap-2 sm:gap-4', isPlayPage ? 'lg:flex' : 'lg:hidden', 'flex')}>
       <Button className="text-xl" shape="circle" onClick={toggle}>
         {isOpenSidebar ? <AiOutlineClose /> : <AiOutlineMenu />}
       </Button>

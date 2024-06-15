@@ -35,7 +35,7 @@ export default function OnlineBattlePanel({ battleData }: Props) {
   const timeDifference = getTimeDifferenceFromNow(new Date(battleData.startAt))
 
   return (
-    <Panel className="flex flex-col gap-6 lg:flex-row lg:gap-12">
+    <Panel className="flex flex-col gap-6 p-6 md:p-8 lg:flex-row lg:gap-12">
       <div className="flex basis-1/3 flex-col items-start justify-between">
         <div className="flex w-full flex-col gap-5">
           <div className="flex items-center justify-start gap-2">

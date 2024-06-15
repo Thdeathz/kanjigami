@@ -2,10 +2,13 @@
 
 import { ApiResponse } from '@/@types'
 import { INotification } from '@/@types/notification'
-import axiosBase from '@/lib/axios-base'
+import fetchBase from '@/lib/fetch-base'
 
 export const getNewestNotification = async () => {
-  const { data: response } = await axiosBase.get<ApiResponse<INotification[]>>('/notifications')
+  const { data: response } = await fetchBase<ApiResponse<INotification[]>>({
+    method: 'GET',
+    endpoint: '/notifications'
+  })
 
-  return response.data
+  return response
 }

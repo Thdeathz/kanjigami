@@ -5,6 +5,7 @@ import * as React from 'react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import Loading from '../loading'
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center text-secondary-btn-text whitespace-nowrap text-sm font-semibold text-base transition-all duration-200 hover:translate-y-[-3px] active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
@@ -42,10 +43,27 @@ export interface ButtonProps
   asChild?: boolean
   tooltip?: string
   link?: string
+  isLoading?: boolean
+  disabled?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, shape, asChild = false, tooltip, link, children, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      shape,
+      asChild = false,
+      isLoading = false,
+      disabled = false,
+      tooltip,
+      link,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const Comp = asChild ? Slot : 'button'
     if (tooltip) {
       return (
@@ -55,9 +73,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               <Comp
                 className={cn(link && 'relative', buttonVariants({ variant, size, shape, className }))}
                 ref={ref}
+                disabled={disabled || isLoading}
                 {...props}
               >
-                {children}
+                {isLoading ? <Loading /> : children}
                 {link && <Link className="absolute left-0 top-0 h-full w-full rounded-full" href={link} />}
               </Comp>
             </TooltipTrigger>
@@ -73,9 +92,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         className={cn(link && 'relative', buttonVariants({ variant, size, shape, className }))}
         ref={ref}
+        disabled={disabled || isLoading}
         {...props}
       >
-        {children}
+        {isLoading ? <Loading /> : children}
         {link && <Link className="absolute left-0 top-0 h-full w-full rounded-full" href={link} />}
       </Comp>
     )

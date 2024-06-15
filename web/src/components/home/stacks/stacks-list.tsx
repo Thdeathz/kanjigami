@@ -48,6 +48,7 @@ export default function StacksList({ filterOption, searchValue }: Props) {
           eachPage.map((stack) => (
             <StackCard
               key={stack.id}
+              stackId={stack.id}
               name={stack.name}
               image={stack.image}
               slug={stack.slug}

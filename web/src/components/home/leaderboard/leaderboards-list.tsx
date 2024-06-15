@@ -2,25 +2,17 @@
 
 import { motion } from 'framer-motion'
 
-import { LeaderboardType } from '@/@types/leaderboard'
-import Loading from '@/components/loading'
-import { useGetAllTimeLeaderboardQuery } from '@/data/leaderboard'
+import { ITopUser } from '@/@types/leaderboard'
 import { grid } from '@/lib/animation-variants'
 
 import TopUser, { TopUserProps } from './top-user'
 import TopUserItem from './top-user-item'
 
 type Props = {
-  type: LeaderboardType
+  topUsers?: ITopUser[]
 }
 
-export default function LeaderboardsList({ type }: Props) {
-  const { data: topUsers, isLoading } = useGetAllTimeLeaderboardQuery(type)
-
-  if (isLoading) {
-    return <Loading className="text-4xl" />
-  }
-
+export default function LeaderboardsList({ topUsers }: Props) {
   if (!topUsers) {
     return <p>Leaderboard empty.</p>
   }

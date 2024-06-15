@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -19,13 +18,7 @@ export function cn(...inputs: ClassValue[]): string {
  * @returns {string} The error string
  */
 export function getErrorString(error: unknown): string {
-  if (error instanceof AxiosError) {
-    if (!error.response) return 'Network Error'
-
-    return error.response.data.message
-  }
-
-  return String(error)
+  return String(error).replace(/Error: /g, '')
 }
 
 /**

@@ -29,7 +29,6 @@ export default function EditUsernameForm({ currentUsername }: Props) {
       await mutateAsync(data.name)
 
       toast.success('Username updated successfully')
-      window.location.reload()
     } catch (error) {
       console.error(error)
       toast.error('Something went wrong. Please try again later.')

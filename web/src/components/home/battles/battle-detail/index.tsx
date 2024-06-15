@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
+import { INotification } from '@/@types/notification'
 import Loading from '@/components/loading'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
@@ -23,9 +24,10 @@ import OngoingBattleLeaderboard from './ongoing-battle-leaderboard'
 
 type Props = {
   slug: string
+  notifications?: INotification[]
 }
 
-export default function BattleDetail({ slug }: Props) {
+export default function BattleDetail({ slug, notifications }: Props) {
   const router = useRouter()
   const { invalidateTag } = useInvalidateTag()
   const { data: battle, isLoading } = useGetBattleDetailQuery(slug)
@@ -69,7 +71,7 @@ export default function BattleDetail({ slug }: Props) {
           <CountDown size="large" type="animate" endTime={battle.startAt} onFinish={onBattleStart} />
         )}
       </PageHeader>
-      <RootNotification />
+      <RootNotification notifications={notifications} />
 
       <div className="flex flex-col gap-12 sm:flex-row">
         <div className={cn('shrink grow sm:w-0', { 'xl:px-48': battle.status === 'UPCOMING' })}>

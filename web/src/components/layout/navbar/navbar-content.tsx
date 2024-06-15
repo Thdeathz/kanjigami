@@ -30,7 +30,7 @@ export default function NavbarContent({ currentUser }: Props) {
 
       <RankWidget currentUserRole={currentUser?.role} />
 
-      <div className="flex w-full items-center justify-end gap-4">
+      <div className="flex w-full items-center justify-end gap-2 sm:gap-4">
         <ThemeButtonClient />
 
         {currentUser && <NotificationButton />}
