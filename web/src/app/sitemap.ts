@@ -43,11 +43,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${appUrl}/register`,
       lastModified: new Date(),
       priority: 0.5
-    },
-    {
-      url: `${appUrl}/forgot-password`,
-      lastModified: new Date(),
-      priority: 0.5
     }
   ]
 }

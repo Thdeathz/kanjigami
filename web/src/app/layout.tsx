@@ -13,7 +13,8 @@ import Providers, { OnlineContentProvider } from '@/components/providers'
 const APP_NAME = 'Kanjigami'
 const APP_DEFAULT_TITLE = 'Kanjigami'
 const APP_TITLE_TEMPLATE = '%s | Kanjigami'
-const APP_DESCRIPTION = '⚔️ 漢字ガミー Learn kanji through games'
+const APP_DESCRIPTION =
+  '⚔️ 漢字ガミー Learn Japanese kanji through an engaging, game-based platform. Master kanji characters with interactive lessons, fun challenges, and community support. Perfect for all skill levels, Kanjigami makes learning Japanese kanji an adventure!'
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
