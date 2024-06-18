@@ -1,31 +1,66 @@
 services:
-  api:
-    image: api:latest
+  nginx:
+    image: kanjigami:nginx-latest
     restart: unless-stopped
-    ports:
-      - 3500:3500
     tty: true
-    command: >
-      yarn prisma migrate reset --force &&
-      yarn seed &&
-      yarn prod
+    ports:
+      - 80:80
+    links:
+      - web
+      - api
+    depends_on:
+      - web
+
+  api:
+    image: kanjigami:api-latest
+    restart: unless-stopped
+    tty: true
     links:
       - postgres
       - redis
     depends_on:
       - postgres
       - redis
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URI=${REDIS_URI}
+      - MAILER_EMAIL=${MAILER_EMAIL}
+      - MAILER_PASSWORD=${MAILER_PASSWORD}
+      - ACCESS_TOKEN_EXPIRES=${ACCESS_TOKEN_EXPIRES}
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - REFRESH_TOKEN_EXPIRES=${REFRESH_TOKEN_EXPIRES}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+      - VERIFY_TOKEN_SECRET=${VERIFY_TOKEN_SECRET}
+      - VERIFY_TOKEN_EXPIRES=${VERIFY_TOKEN_EXPIRES}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_PROJECT_ID=${GOOGLE_PROJECT_ID}
+      - GOOGLE_STORAGE_BUCKET=${GOOGLE_STORAGE_BUCKET}
+      - GOOGLE_SERVICE_ACCOUNT_PATH=${GOOGLE_SERVICE_ACCOUNT_PATH}
+      - STRIPE_PUBLIC_KEY=${STRIPE_PUBLIC_KEY}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+      - RAPID_API_KEY=${RAPID_API_KEY}
+      - RAPID_API_HOST=${RAPID_API_HOST}
 
   web:
-    image: web:latest
+    image: kanjigami:web-latest
     restart: unless-stopped
-    ports:
-      - 3000:3000
     tty: true
     links:
       - api
     depends_on:
       - api
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - API_URL=${API_URL}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - NEXT_PUBLIC_SOCKET_URL=${NEXT_PUBLIC_SOCKET_URL}
+      - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
 
   redis:
     image: redis:7.2-alpine
@@ -37,8 +72,6 @@ services:
       --requirepass ${REDIS_PASSWORD:-redis}
     ports:
       - ${REDIS_PORT:-6379}:6379
-    networks:
-      - default
 
   postgres:
     image: postgres:11-alpine

@@ -49,7 +49,7 @@ export default function SideLeaderboardItem({ top = 'default', topUser }: SideLe
           {top !== 'default' && <FaCrown className={crownClass} />}
 
           <Link
-            href="/player"
+            href={`/player/${topUser.user.name}`}
             className="w-32 truncate font-semibold text-default-link transition-colors group-hover:text-default-brand"
           >
             {topUser.user.name}

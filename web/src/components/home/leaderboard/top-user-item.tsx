@@ -34,7 +34,7 @@ export default function TopUserItem({ topUser, index }: Props) {
         <UserAvatar src={topUser.user.image} alt={topUser.user.name} plus={topUser.user.isPlus} />
 
         <Link
-          href="/player"
+          href={`/player/${topUser.user.name}`}
           className="inline-block max-w-[6rem] truncate font-semibold text-default-link group-hover:text-default-brand"
         >
           {topUser.user.name}

@@ -1,3 +1,5 @@
+declare module 'use-sound'
+
 export interface ApiResponse<T> {
   status: number
   message: string

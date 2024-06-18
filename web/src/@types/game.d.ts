@@ -77,6 +77,10 @@ export interface IEnemy {
   id: number
   scale?: number
   maxLives?: number
+  audios?: {
+    hit: HTMLAudioElement
+    death: HTMLAudioElement
+  }
 }
 
 // FLIP CARD GAME

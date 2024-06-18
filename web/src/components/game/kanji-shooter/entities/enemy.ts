@@ -26,6 +26,8 @@ class Enemy extends Sprite {
 
   maxLives: number
 
+  audios
+
   constructor({ game, sprites, radius, speed = 0.5, damage, framesHold, id, scale = 1 }: IEnemy & { game: Game }) {
     super({
       position: { x: 0, y: 0 },
@@ -51,10 +53,10 @@ class Enemy extends Sprite {
     this.free = true
     this.angle = 0
     this.maxLives = 1
-    // this.audios = {
-    //   hit: new Audio('../assets/audio/hit.ogg'),
-    //   death: new Audio('../assets/audio/explosion_small.ogg')
-    // }
+    this.audios = {
+      hit: new Audio('https://storage.googleapis.com/kanjigami.pro/audio/hit.ogg'),
+      death: new Audio('https://storage.googleapis.com/kanjigami.pro/audio/explosion_small.ogg')
+    }
   }
 
   start() {
@@ -89,9 +91,9 @@ class Enemy extends Sprite {
     this.lives -= damage
     if (this.lives < 1) {
       this.velocity = { x: 0, y: 0 }
-      // this.audios.death.play()
+      this.audios.death.play()
     } else {
-      // this.audios.hit.play()
+      this.audios.hit.play()
     }
   }
 

@@ -86,9 +86,9 @@ class Nairan extends Enemy {
     if (this.lives < 1) {
       this.swapState('dead')
       this.velocity = { x: 0, y: 0 }
-      // this.audios.death.play()
+      this.audios.death.play()
     } else {
-      // this.audios.hit.play()
+      this.audios.hit.play()
     }
   }
 
