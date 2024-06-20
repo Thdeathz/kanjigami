@@ -19,7 +19,7 @@ export default function StacksTable({ page }: Props) {
 
   if (isLoading) return <Loading className="text-4xl" />
 
-  if (!stacks) return <p>Stacks empty.</p>
+  if (!stacks || !stacks.data) return <p>Stacks empty.</p>
 
   return (
     <>
@@ -82,7 +82,7 @@ export default function StacksTable({ page }: Props) {
         }))}
       />
 
-      <PagePagination className="mt-4" currentPage={Number(page)} availablePages={stacks.pagination.totalPages} />
+      <PagePagination className="mt-4" currentPage={Number(page)} availablePages={stacks.pagination?.totalPages ?? 0} />
     </>
   )
 }

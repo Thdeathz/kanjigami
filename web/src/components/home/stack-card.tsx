@@ -13,9 +13,10 @@ type Props = {
   slug: number
   userPoint?: number
   isFollowed: boolean
+  isLoggedIn?: boolean
 }
 
-export default function StackCard({ stackId, name, image, slug, userPoint, isFollowed }: Props) {
+export default function StackCard({ stackId, name, image, slug, userPoint, isFollowed, isLoggedIn = false }: Props) {
   const { mutateAsync, isPending } = useFollowStackMutation()
   const { invalidateTag } = useInvalidateTag()
 
@@ -36,13 +37,15 @@ export default function StackCard({ stackId, name, image, slug, userPoint, isFol
 
         <UserHiScore score={userPoint} />
 
-        <button
-          type="button"
-          className="absolute bottom-4 right-4 z-10 aspect-square rounded-full bg-border-1 p-3 transition-transform duration-200 active:scale-90"
-          onClick={handleFollow}
-        >
-          {isFollowed ? <BsBookmarksFill /> : <BsBookmarks />}
-        </button>
+        {isLoggedIn && (
+          <button
+            type="button"
+            className="absolute bottom-4 right-4 z-10 aspect-square rounded-full bg-border-1 p-3 transition-transform duration-200 active:scale-90"
+            onClick={handleFollow}
+          >
+            {isFollowed ? <BsBookmarksFill /> : <BsBookmarks />}
+          </button>
+        )}
       </div>
     </CardWrapper>
   )

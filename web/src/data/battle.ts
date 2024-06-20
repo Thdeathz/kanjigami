@@ -14,7 +14,7 @@ export const useGetAllBattlesQuery = (status: BattleStatus) =>
   useInfiniteQuery({
     queryKey: ['stacks', status],
     queryFn: async ({ pageParam = 1 }) => getAllBattles({ status, page: pageParam }),
-    getNextPageParam: (lastPage, allPages) => (lastPage.length ? allPages.length + 1 : undefined),
+    getNextPageParam: (lastPage, allPages) => (lastPage?.length ? allPages.length + 1 : undefined),
     initialPageParam: 1
   })
 

@@ -97,11 +97,11 @@ export default function CreateBattleForm() {
               <div className="flex h-full cursor-pointer flex-col justify-between rounded-xl border-2 border-default-green bg-primary-title p-6 font-medium transition-colors hover:bg-primary-title-light">
                 <div>
                   <Badge variant="ONGOING" className="mb-4">
-                    CODE GOLF
+                    GOLF RUN
                   </Badge>
 
                   <p className="font-secondary text-sm">
-                    The classic mode where the players with the shortest code and a 100% match win!
+                    The classic golf game where winners are the highest scores in the leaderboard.
                   </p>
                 </div>
 

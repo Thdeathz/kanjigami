@@ -24,9 +24,11 @@ export default function ButtonStart({ type, gameStackId, battleSlug, roundIndex,
   const onStartGame = () => {
     startTransition(async () => {
       if (type === 'OFFLINE') {
-        const { sessionId } = await mutateAsync(gameStackId)
+        const data = await mutateAsync(gameStackId)
 
-        onHardSearch('s', sessionId)
+        if (!data) return
+
+        onHardSearch('s', data.sessionId)
         return
       }
 

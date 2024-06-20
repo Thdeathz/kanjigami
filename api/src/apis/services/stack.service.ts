@@ -3,7 +3,7 @@ import { StacksFilterOption } from '../@types/stack'
 import prisma from '../databases/init.prisma'
 import stackTransformer, { StackDetailResponse, StacksResponse } from '../transformers/stack.transformer'
 
-const getFilter = (filter?: StacksFilterOption, currentUserId?: string, search?: string) => {
+const getFilter = (filter?: StacksFilterOption, currentUserId?: string, search?: string, topic?: string) => {
   let returnFilter = {}
 
   if (filter === 'played' && currentUserId)
@@ -46,6 +46,16 @@ const getFilter = (filter?: StacksFilterOption, currentUserId?: string, search?:
       },
     }
 
+  if (topic)
+    returnFilter = {
+      ...returnFilter,
+      topics: {
+        some: {
+          name: topic,
+        },
+      },
+    }
+
   return returnFilter
 }
 
@@ -54,8 +64,9 @@ const getAllStacks = async (
   currentUserId?: string,
   filter?: StacksFilterOption,
   search?: string,
+  topic?: string,
 ) => {
-  const where = getFilter(filter, currentUserId, search)
+  const where = getFilter(filter, currentUserId, search, topic)
 
   const total = await prisma.stack.count({
     where,

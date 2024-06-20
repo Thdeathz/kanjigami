@@ -26,7 +26,7 @@ export default {
 
         const { email, password } = validatedFields.data
 
-        const { data: responseData } = await fetchBase<ApiResponse<ILoginResponse>>({
+        const response = await fetchBase<ApiResponse<ILoginResponse>>({
           method: 'POST',
           endpoint: '/auth/login',
           body: JSON.stringify({
@@ -35,12 +35,12 @@ export default {
           })
         })
 
-        if (!responseData) return null
+        if (!response || !response.data) return null
 
         return {
-          ...responseData.user,
-          accessToken: responseData.accessToken,
-          refreshToken: responseData.refreshToken
+          ...response.data.user,
+          accessToken: response.data.accessToken,
+          refreshToken: response.data.refreshToken
         }
       }
     })

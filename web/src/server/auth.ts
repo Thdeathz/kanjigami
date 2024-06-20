@@ -21,7 +21,7 @@ export const {
   callbacks: {
     async signIn({ user, account }) {
       if (account && account.provider === 'google') {
-        const { data: responseData } = await fetchBase<ApiResponse<ILoginResponse>>({
+        const response = await fetchBase<ApiResponse<ILoginResponse>>({
           method: 'POST',
           endpoint: '/auth/google',
           body: JSON.stringify({
@@ -29,11 +29,11 @@ export const {
           })
         })
 
-        if (!responseData) return false
+        if (!response || !response.data) return false
 
-        user.id = responseData.user.id
-        user.accessToken = responseData.accessToken
-        user.refreshToken = responseData.refreshToken
+        user.id = response.data.user.id
+        user.accessToken = response.data.accessToken
+        user.refreshToken = response.data.refreshToken
       }
 
       return true

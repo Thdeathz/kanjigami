@@ -9,12 +9,15 @@ import { useGetAllStacksQuery } from '@/data/stack'
 type Props = {
   filterOption?: string
   searchValue?: string
+  topic?: string
+  isLoggedIn?: boolean
 }
 
-export default function StacksList({ filterOption, searchValue }: Props) {
+export default function StacksList({ filterOption, searchValue, topic, isLoggedIn = false }: Props) {
   const { fetchNextPage, hasNextPage, isFetchingNextPage, data, isLoading } = useGetAllStacksQuery(
     filterOption,
-    searchValue
+    searchValue,
+    topic
   )
 
   const intObserver = useRef<IntersectionObserver>()
@@ -45,7 +48,7 @@ export default function StacksList({ filterOption, searchValue }: Props) {
     <>
       <div className="grid grid-cols-auto-fill-stack gap-8">
         {data.pages.map((eachPage) =>
-          eachPage.map((stack) => (
+          eachPage?.map((stack) => (
             <StackCard
               key={stack.id}
               stackId={stack.id}
@@ -54,6 +57,7 @@ export default function StacksList({ filterOption, searchValue }: Props) {
               slug={stack.slug}
               userPoint={stack.userPoint}
               isFollowed={stack.isFollowed}
+              isLoggedIn={isLoggedIn}
             />
           ))
         )}

@@ -76,7 +76,7 @@ export async function loginWithSocial(provider: 'google' | 'facebook') {
 
 export async function refresh(token: JWT | Session) {
   try {
-    const { data: responseData } = await fetchBase<ApiResponse<{ accessToken: string; refreshToken: string }>>({
+    const response = await fetchBase<ApiResponse<{ accessToken: string; refreshToken: string }>>({
       method: 'POST',
       endpoint: '/auth/refresh',
       body: JSON.stringify({
@@ -84,18 +84,18 @@ export async function refresh(token: JWT | Session) {
       })
     })
 
-    if (!responseData.accessToken) {
+    if (!response || !response.data.accessToken) {
       return {
         ...token,
         error: 'RefreshAccessTokenError'
       }
     }
 
-    const decodedToken = decode(responseData.accessToken)
+    const decodedToken = decode(response.data.accessToken)
 
     return {
-      accessToken: responseData.accessToken,
-      refreshToken: responseData.refreshToken,
+      accessToken: response.data.accessToken,
+      refreshToken: response.data.refreshToken,
       accessTokenExpires: decodedToken.exp
     }
   } catch (error) {
