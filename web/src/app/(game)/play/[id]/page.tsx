@@ -17,6 +17,11 @@ export const generateMetadata = async ({ params }: Props) => {
 
   const gameStack = await getGameStackDetail(id)
 
+  if (!gameStack)
+    return {
+      title: 'Game not found'
+    }
+
   return {
     title: `${gameStack.game.name} - ${gameStack.stack.name}`
   }

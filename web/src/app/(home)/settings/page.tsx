@@ -12,6 +12,8 @@ export const metadata = () => ({
 export default async function ProfileSettingPage() {
   const currentUser = await getCurrentUserInfo()
 
+  if (!currentUser) return <p>Please login.</p>
+
   return (
     <div className="space-y-8 sm:space-y-12">
       <PageHeader icon={<RiSettings3Fill />} title="Settings" />

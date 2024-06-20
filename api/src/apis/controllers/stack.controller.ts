@@ -19,6 +19,7 @@ export const getAllStacks: RequestHandler = async (req, res) => {
   const offset = parseInt(<string>req.query.offset) || 10
   const filter = req.query.filter as StacksFilterOption
   const search = req.query.search as string
+  const topic = req.query.topic as string
 
   const user = req.user as JwtPayload
 
@@ -30,6 +31,7 @@ export const getAllStacks: RequestHandler = async (req, res) => {
     user?.id,
     filter,
     search?.trim(),
+    topic,
   )
 
   res.json(makeResponse.pagination('Get all stacks success', StatusCodes.OK, stacks, total, offset, page))

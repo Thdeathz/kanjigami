@@ -27,7 +27,7 @@ export default function ButtonBookmark({ stackId, isFollowed = false }: Props) {
   }
 
   return (
-    <Button shape="circle" isLoading={isPending} onClick={handleFollow}>
+    <Button isLoading={isPending} onClick={handleFollow}>
       {isFollowed ? <BsBookmarksFill /> : <BsBookmarks />}
     </Button>
   )

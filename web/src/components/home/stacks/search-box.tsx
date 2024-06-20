@@ -9,12 +9,19 @@ import InputSearch from '../input-search'
 
 type Props = {
   searchValue?: string
+  topic?: string
 }
 
-export default function SearchBox({ searchValue }: Props) {
-  const { onSearch } = useQueryParams()
+export default function SearchBox({ searchValue, topic }: Props) {
+  const { onSearch, onResetSearch } = useQueryParams()
 
-  const handleSearch = (term: string) => onSearch('search', term)
+  const handleSearch = (term: string) => {
+    if (term.trim() === '') return onResetSearch()
+
+    if (term.startsWith('#')) return onSearch('topic', term.slice(1))
+
+    return onSearch('search', term)
+  }
 
   const debounced = useDebounceCallback(handleSearch, 500)
 
@@ -22,7 +29,7 @@ export default function SearchBox({ searchValue }: Props) {
     <Panel className="p-2">
       <InputSearch
         placeholder="面白い動画 。。。"
-        defaultValue={searchValue}
+        defaultValue={searchValue + (topic ? `#${topic}` : '')}
         onChange={(e) => debounced(e.target.value)}
       />
     </Panel>

@@ -17,7 +17,7 @@ const CollapseSidebar = dynamic(() => import('@/components/layout/navbar/collaps
 })
 
 type Props = {
-  currentUser: IUserInfo | null
+  currentUser?: IUserInfo | null
 }
 
 export default function NavbarContent({ currentUser }: Props) {

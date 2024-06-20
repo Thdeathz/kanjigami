@@ -8,12 +8,12 @@ import { makeEndpoint } from '@/lib/utils'
 export const getBattleLeaderboard = async (battleId?: string) => {
   const endpoint = battleId ? `/leaderboards/event/${battleId}` : '/leaderboards/event'
 
-  const { data: response } = await fetchBase<ApiResponse<ITopUser[]>>({
+  const response = await fetchBase<ApiResponse<ITopUser[]>>({
     method: 'GET',
     endpoint
   })
 
-  return response
+  return response?.data
 }
 
 export const getAllTimeLeaderboard = async (type: LeaderboardType, slug?: string, offset?: number) => {
@@ -21,11 +21,11 @@ export const getAllTimeLeaderboard = async (type: LeaderboardType, slug?: string
 
   endpoint = makeEndpoint(endpoint, { slug, offset })
 
-  const { data: response } = await fetchBase<ApiResponse<ITopUser[]>>({
+  const response = await fetchBase<ApiResponse<ITopUser[]>>({
     method: 'GET',
     endpoint,
     tags: ['leaderboard', slug ?? 'all-time']
   })
 
-  return response
+  return response?.data
 }

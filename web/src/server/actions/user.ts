@@ -9,21 +9,21 @@ import fetchBase from '@/lib/fetch-base'
 import { auth } from '@/server/auth'
 
 export const getAllUsers = async () => {
-  const { data: response } = await fetchBase<ApiResponse<IUser[]>>({
+  const response = await fetchBase<ApiResponse<IUser[]>>({
     method: 'GET',
     endpoint: '/users'
   })
 
-  return response
+  return response?.data
 }
 
 export const getUserProfile = async (name: string) => {
-  const { data: response } = await fetchBase<ApiResponse<IUserProfile>>({
+  const response = await fetchBase<ApiResponse<IUserProfile>>({
     method: 'GET',
     endpoint: `/users/profile?player=${name}`
   })
 
-  return response
+  return response?.data
 }
 
 export const getCurrentUserInfo = async () => {
@@ -32,20 +32,20 @@ export const getCurrentUserInfo = async () => {
   if (!session) return null
 
   try {
-    const { data: response } = await fetchBase<ApiResponse<IUserInfo>>({
+    const response = await fetchBase<ApiResponse<IUserInfo>>({
       method: 'GET',
       endpoint: '/users/me',
       tags: ['me']
     })
 
-    return response
+    return response?.data
   } catch (error) {
     return null
   }
 }
 
 export const updateUsername = async (username: string) => {
-  const { data: response } = await fetchBase<ApiResponse<IUser>>({
+  const response = await fetchBase<ApiResponse<IUser>>({
     method: 'PUT',
     endpoint: '/users/username',
     body: JSON.stringify({ username })
@@ -53,11 +53,11 @@ export const updateUsername = async (username: string) => {
 
   revalidateTag('me')
 
-  return response
+  return response?.data
 }
 
 export const updateUserAvatar = async (formData: FormData) => {
-  const { data: response } = await fetchBase<ApiResponse<IUser>>({
+  const response = await fetchBase<ApiResponse<IUser>>({
     method: 'PUT',
     endpoint: '/users/avatar',
     body: formData
@@ -65,14 +65,14 @@ export const updateUserAvatar = async (formData: FormData) => {
 
   revalidateTag('me')
 
-  return response
+  return response?.data
 }
 
 export const searchUserByUsername = async (username: string) => {
-  const { data: response } = await fetchBase<ApiResponse<IUserData[]>>({
+  const response = await fetchBase<ApiResponse<IUserData[]>>({
     method: 'GET',
     endpoint: `/users/search?username=${username}`
   })
 
-  return response
+  return response?.data
 }

@@ -13,6 +13,13 @@ export const generateMetadata = async ({ params }: Props) => {
 
   const battle = await getBattleDetail(slug)
 
+  if (!battle) {
+    return {
+      title: 'Battle not found',
+      description: 'Battle not found'
+    }
+  }
+
   return {
     title: `Battle #${battle.slug} - ${battle.name}`,
     description: battle.description

@@ -34,22 +34,26 @@ const fetchBase = async <T>({ method, endpoint, body, tags, noCache = false }: P
     }
   }
 
-  const response = await fetch(`${baseUrl}${endpoint}`, {
-    method,
-    headers,
-    next: {
-      revalidate: noCache || method !== 'GET' ? 0 : 3600, // 1 hour
-      tags
-    },
-    body
-  })
+  try {
+    const response = await fetch(`${baseUrl}${endpoint}`, {
+      method,
+      headers,
+      next: {
+        revalidate: noCache || method !== 'GET' ? 0 : 3600, // 1 hour
+        tags
+      },
+      body
+    })
 
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.message || 'Something went wrong')
+    if (!response.ok) {
+      const error = await response.json()
+      return null
+    }
+
+    return (await response.json()) as T
+  } catch (error) {
+    return null
   }
-
-  return (await response.json()) as T
 }
 
 export default fetchBase

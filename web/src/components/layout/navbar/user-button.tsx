@@ -44,7 +44,7 @@ function Item({ icon, text, to, primary = false, onClick }: ItemProps) {
 }
 
 type Props = {
-  user: IUserInfo | null
+  user?: IUserInfo | null
 }
 
 export default function UserButton({ user }: Props) {

@@ -32,7 +32,7 @@ export default function FollowingBattle() {
     return <Loading className="text-4xl" />
   }
 
-  if (!data || data.pages[0].length === 0) return null
+  if (!data || data.pages.length === 0) return null
 
   return (
     <HomeSection
@@ -43,7 +43,7 @@ export default function FollowingBattle() {
     >
       <div className="grid grid-cols-auto-fill-stack gap-8">
         {data.pages.map((eachPage) =>
-          eachPage.map((stack) => (
+          eachPage?.map((stack) => (
             <StackCard
               key={stack.id}
               stackId={stack.id}

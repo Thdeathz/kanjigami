@@ -6,7 +6,7 @@ import { ApiResponse } from '@/@types'
 import fetchBase from '@/lib/fetch-base'
 
 export const createCheckoutSession = async (product: string, userId: string) => {
-  const { data: response } = await fetchBase<
+  const response = await fetchBase<
     ApiResponse<{
       url: string
     }>
@@ -20,5 +20,5 @@ export const createCheckoutSession = async (product: string, userId: string) => 
   revalidateTag('me')
   revalidateTag('checkout-session')
 
-  return response
+  return response?.data
 }

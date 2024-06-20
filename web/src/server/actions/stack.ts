@@ -11,51 +11,53 @@ type GetAllStacksProps = {
   pageParam?: number
   filterOption?: string
   searchValue?: string
+  topic?: string
 }
 
-export const getAllStacks = async ({ pageParam = 1, filterOption = 'all', searchValue }: GetAllStacksProps) => {
+export const getAllStacks = async ({ pageParam = 1, filterOption = 'all', searchValue, topic }: GetAllStacksProps) => {
   const endpoint = makeEndpoint('/stacks', {
     filter: filterOption,
     page: pageParam,
     offset: 20,
-    search: searchValue
+    search: searchValue,
+    topic
   })
 
-  const { data: response } = await fetchBase<ApiResponse<IStack[]>>({
+  const response = await fetchBase<ApiResponse<IStack[]>>({
     method: 'GET',
     endpoint,
     tags: ['stacks']
   })
 
-  return response
+  return response?.data
 }
 
 export const getStackDetail = async (slug: string) => {
-  const { data: response } = await fetchBase<ApiResponse<IStackDetail>>({
+  const response = await fetchBase<ApiResponse<IStackDetail>>({
     method: 'GET',
     endpoint: `/stacks/${slug}`,
     noCache: true
   })
 
-  return response
+  return response?.data
 }
 
 export const getWordDetail = async (id: string) => {
-  const { data: response } = await fetchBase<ApiResponse<IWordDetail>>({
+  const response = await fetchBase<ApiResponse<IWordDetail>>({
     method: 'GET',
     endpoint: `/stacks/word/${id}`
   })
 
-  return response
+  return response?.data
 }
 
 export const getKanjiDetail = async (kanji: string) => {
-  const { data: response } = await fetchBase<ApiResponse<IKanjiDetail>>({
+  const response = await fetchBase<ApiResponse<IKanjiDetail>>({
     method: 'GET',
     endpoint: `/stacks/kanji?kanji=${kanji}`
   })
 
-  return response
+  return response?.data
 }
 
 export const adminGetAllStacks = async (pageParam?: string) => {
@@ -66,27 +68,27 @@ export const adminGetAllStacks = async (pageParam?: string) => {
   })
 
   return {
-    data: response.data,
-    pagination: response.pagination
+    data: response?.data,
+    pagination: response?.pagination
   }
 }
 
 export const searchStack = async (searchValue: string) => {
-  const { data: response } = await fetchBase<ApiResponse<ISearchStackResult>>({
+  const response = await fetchBase<ApiResponse<ISearchStackResult>>({
     method: 'GET',
     endpoint: `/stacks/search?search=${searchValue}`
   })
 
-  return response
+  return response?.data
 }
 
 export const followStack = async (id: string) => {
-  const { data: response } = await fetchBase<ApiResponse<string>>({
+  const response = await fetchBase<ApiResponse<string>>({
     method: 'POST',
     endpoint: `/stacks/${id}/follow`
   })
 
   revalidateTag('stacks')
 
-  return response
+  return response?.data
 }

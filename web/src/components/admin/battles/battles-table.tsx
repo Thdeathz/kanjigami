@@ -18,7 +18,7 @@ export default function BattlesTable({ page }: Props) {
 
   if (isLoading) return <Loading className="text-4xl" />
 
-  if (!battles) return <p>Battles empty.</p>
+  if (!battles || !battles.data) return <p>Battles empty.</p>
 
   return (
     <>
@@ -77,7 +77,11 @@ export default function BattlesTable({ page }: Props) {
         }))}
       />
 
-      <PagePagination className="mt-4" currentPage={Number(page)} availablePages={battles.pagination.totalPages} />
+      <PagePagination
+        className="mt-4"
+        currentPage={Number(page)}
+        availablePages={battles.pagination?.totalPages ?? 0}
+      />
     </>
   )
 }

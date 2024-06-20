@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import React from 'react'
 import { BsStack, BsTrophyFill } from 'react-icons/bs'
 import { FaChartArea, FaHome, FaUser } from 'react-icons/fa'
-import { RiFolderDownloadFill, RiSettings3Fill, RiSwordFill } from 'react-icons/ri'
+import { RiSettings3Fill, RiSwordFill } from 'react-icons/ri'
 import { useScreen } from 'usehooks-ts'
 
 import { IUserInfo } from '@/@types/auth'
@@ -48,9 +48,9 @@ export function UserSidebarMenu({ currentUsername, isPlus = false }: SideMenuPro
               <SideLink link="/settings" icon={<RiSettings3Fill />} title="Settings" />
             </SideSection>
 
-            <SideSection title="offline">
+            {/* <SideSection title="offline">
               <SideLink link="/downloads" icon={<RiFolderDownloadFill />} title="Download stacks" />
-            </SideSection>
+            </SideSection> */}
           </>
         )}
       </div>
@@ -96,7 +96,7 @@ const sidebarVariants = cva(
 )
 
 type Props = {
-  currentUser: IUserInfo | null
+  currentUser?: IUserInfo | null
 }
 
 export default function SidebarContent({ currentUser }: Props) {
