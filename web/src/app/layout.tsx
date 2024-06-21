@@ -5,6 +5,7 @@ import './globals.css'
 import './fonts.css'
 import './colors.css'
 import './custom.css'
+import JsonLd from '@/components/json-ld'
 import Footer from '@/components/layout/footer'
 import Navbar from '@/components/layout/navbar'
 import Sidebar from '@/components/layout/sidebar'
@@ -43,6 +44,15 @@ export const metadata: Metadata = {
   }
 }
 
+const structuredData = {
+  '@context': 'http://schema.org',
+  '@type': 'Organization',
+  name: APP_NAME,
+  url: 'https://kanjigami.pro',
+  logo: 'https://kanjigami.pro/favicon.ico',
+  sameAs: ['https://www.facebook.com/profile.php?id=61561101158518']
+}
+
 export const viewport: Viewport = {
   themeColor: '#FFFFFF'
 }
@@ -67,6 +77,8 @@ export default function RootLayout({
             </div>
           </div>
         </Providers>
+
+        <JsonLd data={structuredData} />
       </body>
     </html>
   )

@@ -42,6 +42,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.0",
     "react-icons": "^5.0.1",
+    "schema-dts": "^1.1.2",
     "sharp": "^0.33.4",
     "socket.io-client": "^4.7.5",
     "sonner": "^1.4.3",
