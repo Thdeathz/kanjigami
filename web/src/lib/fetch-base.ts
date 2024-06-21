@@ -8,9 +8,10 @@ type Props = {
   body?: XMLHttpRequestBodyInit
   tags?: string[]
   noCache?: boolean
+  revalidate?: number
 }
 
-const fetchBase = async <T>({ method, endpoint, body, tags, noCache = false }: Props) => {
+const fetchBase = async <T>({ method, endpoint, body, tags, noCache = false, revalidate = 3600 }: Props) => {
   const baseUrl = process.env.API_URL
 
   const session = await auth()
@@ -39,7 +40,7 @@ const fetchBase = async <T>({ method, endpoint, body, tags, noCache = false }: P
       method,
       headers,
       next: {
-        revalidate: noCache || method !== 'GET' ? 0 : 3600, // 1 hour
+        revalidate: noCache || method !== 'GET' ? 0 : revalidate, // 1 hour
         tags
       },
       body

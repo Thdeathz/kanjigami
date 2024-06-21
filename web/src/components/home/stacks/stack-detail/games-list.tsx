@@ -11,7 +11,7 @@ export default function GamesList({ games }: Props) {
   return (
     <Panel theme="secondary">
       <ScrollArea>
-        <div className="grid w-full grid-cols-auto-game-list justify-between gap-8 overflow-y-auto">
+        <div className="flex-center w-full gap-8 overflow-y-auto">
           {games.map((game) => (
             <GameItem key={game.id} game={game} />
           ))}

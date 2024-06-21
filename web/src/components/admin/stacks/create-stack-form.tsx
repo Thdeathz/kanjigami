@@ -7,12 +7,10 @@ import { useForm } from 'react-hook-form'
 import { IFile } from '@/@types'
 import SectionTitle from '@/components/admin/section-title'
 import NewWordForm from '@/components/admin/stacks/new-word-form'
-import NewWordInput from '@/components/admin/stacks/new-word-input'
 import StackDetailsForm from '@/components/admin/stacks/stack-details-form'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { SectionDivider } from '@/components/ui/separator'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export default function CreateStackForm() {
   const form = useForm()
@@ -61,18 +59,7 @@ export default function CreateStackForm() {
           <div>
             <SectionTitle title="Add new word" />
 
-            <Tabs defaultValue="all">
-              <TabsList>
-                <TabsTrigger value="all">All in one</TabsTrigger>
-                <TabsTrigger value="step">Step by step</TabsTrigger>
-              </TabsList>
-              <TabsContent value="all">
-                <NewWordInput />
-              </TabsContent>
-              <TabsContent value="step">
-                <NewWordForm />
-              </TabsContent>
-            </Tabs>
+            <NewWordForm />
           </div>
         </div>
 

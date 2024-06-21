@@ -58,7 +58,7 @@ export default function UserButton({ user }: Props) {
 
   if (!user)
     return (
-      <Link href="/login">
+      <Link href="/login" aria-label="Sign In / Sign Up">
         <Button>Sign In / Sign Up</Button>
       </Link>
     )

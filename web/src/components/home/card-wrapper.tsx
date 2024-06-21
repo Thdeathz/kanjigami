@@ -10,6 +10,7 @@ type Props = {
   children: React.ReactNode
   imageUrl?: string
   disabled?: boolean
+  linkLabel?: string
 }
 
 export default function CardWrapper({
@@ -17,6 +18,7 @@ export default function CardWrapper({
   link,
   className,
   disabled = false,
+  linkLabel = 'Card link',
   children
 }: Props) {
   return (
@@ -26,7 +28,9 @@ export default function CardWrapper({
         className
       )}
     >
-      {link && !disabled && <Link href={link} className="absolute right-0 top-0 h-full w-full rounded-2xl" />}
+      {link && !disabled && (
+        <Link href={link} className="absolute right-0 top-0 h-full w-full rounded-2xl" aria-label={linkLabel} />
+      )}
       <Image
         src={imageUrl}
         alt="kanji-stack"

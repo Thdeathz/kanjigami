@@ -17,7 +17,12 @@ export default function ThemeButton() {
   }
 
   return (
-    <Button className="text-xl" shape="circle" onClick={onToggleTheme}>
+    <Button
+      className="text-xl"
+      shape="circle"
+      onClick={onToggleTheme}
+      aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+    >
       {theme === 'light' ? <BsMoonFill /> : <BsSunFill />}
     </Button>
   )

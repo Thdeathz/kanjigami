@@ -77,7 +77,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 {...props}
               >
                 {isLoading ? <Loading /> : children}
-                {link && <Link className="absolute left-0 top-0 h-full w-full rounded-full" href={link} />}
+                {link && (
+                  <Link
+                    className="absolute left-0 top-0 h-full w-full rounded-full"
+                    href={link}
+                    aria-label="Button link"
+                  />
+                )}
               </Comp>
             </TooltipTrigger>
             <TooltipContent>
@@ -96,7 +102,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {isLoading ? <Loading /> : children}
-        {link && <Link className="absolute left-0 top-0 h-full w-full rounded-full" href={link} />}
+        {link && (
+          <Link className="absolute left-0 top-0 h-full w-full rounded-full" href={link} aria-label="Button link" />
+        )}
       </Comp>
     )
   }

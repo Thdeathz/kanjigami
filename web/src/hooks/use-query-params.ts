@@ -19,6 +19,20 @@ export default function useQueryParams() {
     replace(`${pathname}?${params.toString()}`)
   }
 
+  const onSearchArray = (data: { key: string; value: string }[]) => {
+    const params = new URLSearchParams(searchParams)
+
+    data.forEach(({ key, value }) => {
+      if (value) {
+        params.set(key, value)
+      } else {
+        params.delete(key)
+      }
+    })
+
+    replace(`${pathname}?${params.toString()}`)
+  }
+
   const onHardSearch = (key: string, value: string) => {
     const params = new URLSearchParams()
 
@@ -37,6 +51,7 @@ export default function useQueryParams() {
 
   return {
     onSearch,
+    onSearchArray,
     onHardSearch,
     onResetSearch
   }

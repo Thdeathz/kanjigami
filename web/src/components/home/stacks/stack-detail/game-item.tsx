@@ -14,7 +14,7 @@ type Props = {
 
 export default function GameItem({ game }: Props) {
   return (
-    <div className="flex-center flex-col gap-4">
+    <div className="flex-center w-[22rem] flex-col gap-4">
       <Badge>{game.name}</Badge>
 
       <Link

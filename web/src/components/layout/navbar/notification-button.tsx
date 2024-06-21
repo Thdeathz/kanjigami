@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 
 export default function NotificationButton() {
   return (
-    <Button className="text-xl" shape="circle">
+    <Button className="text-xl" shape="circle" aria-label="Open notification menu">
       <FaBell />
     </Button>
   )

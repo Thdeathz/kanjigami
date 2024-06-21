@@ -7,7 +7,8 @@ import fetchBase from '@/lib/fetch-base'
 export const getNewestNotification = async () => {
   const response = await fetchBase<ApiResponse<INotification[]>>({
     method: 'GET',
-    endpoint: '/notifications'
+    endpoint: '/notifications',
+    revalidate: 60 // 1 minute
   })
 
   return response?.data

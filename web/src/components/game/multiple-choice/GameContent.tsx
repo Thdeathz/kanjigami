@@ -17,13 +17,7 @@ type Props = {
 }
 
 export default function MultipleChoiceGameContent({ gameContent, onCalculateScore, onSelectAnswer }: Props) {
-  const [currentStep, { canGoToPrevStep, canGoToNextStep, goToNextStep, goToPrevStep, setStep }] = useStep(
-    gameContent.length
-  )
-
-  const onChangeStep = (step: number) => {
-    setStep(step)
-  }
+  const [currentStep, { canGoToPrevStep, canGoToNextStep, goToNextStep, goToPrevStep }] = useStep(gameContent.length)
 
   return (
     <div className="flex h-content w-full flex-col gap-6">

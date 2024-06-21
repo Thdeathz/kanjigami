@@ -178,7 +178,7 @@ const getMultipleChoiceGameContent = (words: IWord[]) => {
 }
 
 const saveScoreOfflineGame = async (gameStackId: string, userId: string, { score, time, type }: ISaveScoreRequest) => {
-  const currentLog = await prisma.gameLog.findUnique({
+  const hightestScore = await prisma.gameLog.findUnique({
     where: {
       gameStackId_userId: {
         gameStackId,
@@ -191,7 +191,14 @@ const saveScoreOfflineGame = async (gameStackId: string, userId: string, { score
     },
   })
 
-  if (currentLog && currentLog.point >= score) return currentLog
+  if (hightestScore && hightestScore.point >= score)
+    return {
+      ...hightestScore,
+      currentScore: {
+        point: score,
+        time,
+      },
+    }
 
   const currentStack = await prisma.gameStack.findUnique({
     where: {
@@ -239,7 +246,7 @@ const saveScoreOfflineGame = async (gameStackId: string, userId: string, { score
 
   await notificationService.recordNewHighScore(gameStackId, userId)
 
-  return gameLog
+  return { ...gameLog, currentScore: null }
 }
 
 const getResult = async (gameLogId: string) => {

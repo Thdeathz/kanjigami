@@ -9,6 +9,8 @@ type Props = {
   searchParams?: {
     s?: string
     log?: string
+    score?: string
+    time?: string
   }
 }
 
@@ -31,10 +33,12 @@ export default async function index({ params, searchParams }: Props) {
   const { id } = params
   const sessionId = searchParams?.s
   const logId = searchParams?.log
+  const score = searchParams?.score
+  const time = searchParams?.time
 
   const currentUser = await getCurrentUserInfo()
 
   if (!currentUser) return <p>Please login.</p>
 
-  return <GameDetail id={id} sessionId={sessionId} userId={currentUser.id} logId={logId} />
+  return <GameDetail id={id} sessionId={sessionId} userId={currentUser.id} logId={logId} score={score} time={time} />
 }

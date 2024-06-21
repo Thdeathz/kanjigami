@@ -21,6 +21,7 @@ body {
   @apply flex items-center justify-center;
 }
 
+.font-app-icon,
 .app-icon p {
   font-family: 'Saira Stencil One';
 }

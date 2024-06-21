@@ -1,10 +1,12 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { useCallback, useRef } from 'react'
 
 import StackCard from '@/components/home/stack-card'
 import Loading from '@/components/loading'
 import { useGetAllStacksQuery } from '@/data/stack'
+import { grid } from '@/lib/animation-variants'
 
 type Props = {
   filterOption?: string
@@ -46,7 +48,12 @@ export default function StacksList({ filterOption, searchValue, topic, isLoggedI
 
   return (
     <>
-      <div className="grid grid-cols-auto-fill-stack gap-8">
+      <motion.div
+        className="grid grid-cols-auto-fill-stack gap-8"
+        variants={grid.container()}
+        initial="hidden"
+        animate="enter"
+      >
         {data.pages.map((eachPage) =>
           eachPage?.map((stack) => (
             <StackCard
@@ -63,7 +70,7 @@ export default function StacksList({ filterOption, searchValue, topic, isLoggedI
         )}
 
         <div ref={lastPostRef} />
-      </div>
+      </motion.div>
 
       {isFetchingNextPage && hasNextPage && (
         <div className="flex-center w-full">
