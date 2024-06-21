@@ -6,7 +6,11 @@ import PageHeader from '@/components/home/page-header'
 import { getAllTimeLeaderboard } from '@/server/actions/leaderboard'
 
 export const metadata = () => ({
-  title: 'Leaderboard'
+  title: 'Battle Leaderboard',
+  description: 'See your rank on Online battle, make your way to the top!',
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/leaderboard/battle`
+  }
 })
 
 export default async function LeaderBoardPage() {

@@ -15,7 +15,10 @@ import { getCurrentUserInfo } from '@/server/actions/user'
 
 export const metadata = () => ({
   title: 'Battles',
-  description: 'Compete with players around the world and learn more kanji'
+  description: 'Compete with players around the world and learn more kanji',
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/battles`
+  }
 })
 
 export default async function BattlesPage({

@@ -13,7 +13,10 @@ import { getCurrentUserInfo } from '@/server/actions/user'
 
 export const metadata = () => ({
   title: 'Kanji stacks',
-  description: 'Play game and learn more kanji'
+  description: 'Play game and learn more kanji',
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/stacks`
+  }
 })
 
 export default async function KanjiStackPage({

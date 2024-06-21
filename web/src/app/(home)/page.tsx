@@ -8,7 +8,10 @@ import { auth } from '@/server/auth'
 
 export const metadata = {
   description:
-    '⚔️ 漢字ガミー Learn Japanese kanji through an engaging, game-based platform. Master kanji characters with interactive lessons, fun challenges, and community support. Perfect for all skill levels, Kanjigami makes learning Japanese kanji an adventure!'
+    '⚔️ 漢字ガミー Learn Japanese kanji through an engaging, game-based platform. Master kanji characters with interactive lessons, fun challenges, and community support. Perfect for all skill levels, Kanjigami makes learning Japanese kanji an adventure!',
+  alternates: {
+    canonical: process.env.NEXT_PUBLIC_BASE_URL
+  }
 }
 
 export default async function Home() {
