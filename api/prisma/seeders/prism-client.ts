@@ -1,28 +1,31 @@
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient().$extends({
+  query: {
+    gameLog: {
+      async upsert({ args, query }) {
+        const { update, create } = args
 
-prisma.$use(async (params, next) => {
-  if (params.model === 'GameLog') {
-    if (params.action === 'create' || params.action === 'update') {
-      const { data } = params.args
+        const userId = update.userId || create.userId || null
+        const point = update.point || create.point || null
 
-      if (data?.point && data?.userId) {
-        await prisma.user.update({
-          where: {
-            id: data.userId,
-          },
-          data: {
-            score: {
-              increment: Number(data.point),
+        if (typeof userId === 'string' && typeof point === 'number') {
+          await prisma.user.update({
+            where: {
+              id: userId,
             },
-          },
-        })
-      }
-    }
-  }
+            data: {
+              score: {
+                increment: Number(point),
+              },
+            },
+          })
+        }
 
-  return next(params)
+        return query(args)
+      },
+    },
+  },
 })
 
 export default prisma

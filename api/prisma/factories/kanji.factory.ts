@@ -31,7 +31,7 @@ const kanjiFactory = async () => {
   const data = await getKanjis()
 
   await Promise.all(
-    data.slice(0, 500).map(async ({ kanji, references }: any) => {
+    data.map(async ({ kanji, references }: any) => {
       kanjis.push({
         content: kanji.character,
         grade: references.grade,

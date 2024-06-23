@@ -8,6 +8,7 @@ import notificationRoutes from '@/apis/routes/v1/notification.route'
 import plusRoutes from '@/apis/routes/v1/plus.route'
 import stackRoutes from '@/apis/routes/v1/stack.route'
 import userRoutes from '@/apis/routes/v1/user.route'
+import kanjiRoutes from '@/apis/routes/v1/kanji.route'
 
 const router = Router()
 
@@ -26,5 +27,7 @@ router.use('/games', gameRoutes)
 router.use('/notifications', notificationRoutes)
 
 router.use('/plus', plusRoutes)
+
+router.use('/kanjis', kanjiRoutes)
 
 export default router

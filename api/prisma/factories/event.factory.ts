@@ -14,6 +14,7 @@ type EventFactory = {
   type: BattleType
   status: BattleStatus
   startAt: Date
+  createdBy: User
   joiners: User[]
   duration: number
   rounds: {
@@ -35,6 +36,7 @@ const eventFactory = async (users: User[], gameStacks: GameStack[]) => {
 
     const duration = faker.number.int({ min: 10, max: 20 })
     const joinedUsers: User[] = faker.helpers.shuffle(users).slice(0, 20)
+    const createdBy = faker.helpers.arrayElement(joinedUsers)
 
     let startAt = faker.date.future()
     if (status === BattleStatus.FINISHED) startAt = faker.date.past()
@@ -80,6 +82,7 @@ const eventFactory = async (users: User[], gameStacks: GameStack[]) => {
       rounds,
       duration,
       joiners: joinedUsers,
+      createdBy,
     })
   })
 

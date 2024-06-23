@@ -41,6 +41,11 @@ enum NotificationType {
   ADMIN
 }
 
+enum ReportType {
+  GENERAL
+  INAPPROPRIATE_CONTENT
+}
+
 model Account {
   id                String   @id @default(cuid())
   type              String
@@ -53,6 +58,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model User {
@@ -75,6 +81,11 @@ model User {
   followedStacks Stack[] @relation("FollowedStacks")
   notifications  Notification[]
   checkouts      Checkout[]
+  creatorEvents  Event[] @relation("creator")
+  reports        Report[]
+  ranks          Rank[]
+
+  @@index([name])
 }
 
 model Kanji {
@@ -89,6 +100,8 @@ model Kanji {
   updatedAt DateTime @updatedAt
 
   words Word[]
+
+  @@index([content])
 }
 
 model Word {
@@ -104,6 +117,8 @@ model Word {
   kanjis    Kanji[]
   examples  Example[]
   stacks    Stack[]
+
+  @@index([content])
 }
 
 model Example {
@@ -133,7 +148,9 @@ model Stack {
   topics        Topic[]
   games         GameStack[]
   followedUsers User[] @relation("FollowedStacks")
+  reports       Report[]
 
+  @@index([authorId])
   // This config still not working with Postgres
   // Hope it will be work soon, check here: https://github.com/prisma/prisma/issues/8950
   // @@fulltext([name])
@@ -146,16 +163,20 @@ model Topic {
   updatedAt DateTime @updatedAt
 
   stacks Stack[]
+
+  @@index([name])
 }
 
 model Game {
   id        String   @id @default(cuid())
-  name      String
+  name      String   @unique
   image     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   stacks GameStack[]
+
+  @@index([name])
 }
 
 model GameStack {
@@ -172,6 +193,8 @@ model GameStack {
 
   logs   GameLog[]
   rounds Round[]
+
+  @@index([gameId, stackId])
 }
 
 model Event {
@@ -183,11 +206,16 @@ model Event {
   type        BattleType
   status      BattleStatus @default(UPCOMING)
   startAt     DateTime
+  createdBy   String
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 
+  creator User @relation("creator", fields: [createdBy], references: [id])
+
   rounds  Round[]
   joiners User[]
+
+  @@index([slug])
 }
 
 model Round {
@@ -203,6 +231,8 @@ model Round {
   gameStack GameStack @relation(fields: [gameStackId], references: [id])
 
   logs GameLog[]
+
+  @@index([eventId])
 }
 
 model GameLog {
@@ -222,6 +252,7 @@ model GameLog {
 
   @@unique([gameStackId, userId])
   @@unique([roundId, userId])
+  @@index([userId])
 }
 
 model Notification {
@@ -249,4 +280,40 @@ model Checkout {
   user User @relation(fields: [userId], references: [id])
 
   @@unique([sessionId, userId])
+  @@index([userId])
+}
+
+model Report {
+  id            String     @id @default(cuid())
+  type          ReportType
+  description   String
+  userId        String
+  stackId       String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now())
+
+  user          User       @relation(fields: [userId], references: [id])
+  stack         Stack?     @relation(fields: [stackId], references: [id])
+
+  @@index([userId])
+  @@index([stackId])
+}
+
+model Rank {
+  id            String   @id @default(cuid())
+  name          String
+  icon          String
+  score         Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+
+  users         User[]
+}
+
+model Setting {
+  id                String   @id @default(cuid())
+  imageUrl          String
+  alt               String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now())
 }

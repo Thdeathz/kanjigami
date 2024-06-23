@@ -9,6 +9,7 @@ import stackSeeder from './stack.seeder'
 import topicSeeder from './topic.seeder'
 import userSeeder from './user.seeder'
 import wordSeeder from './word.seeder'
+import settingSeeder from './setting.seeder'
 
 async function seed() {
   const users = await userSeeder()
@@ -30,6 +31,8 @@ async function seed() {
   await eventSeeder(users, gameStacks)
 
   await gameLogSeeder(users, gameStacks)
+
+  await settingSeeder()
 }
 
 seed()

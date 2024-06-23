@@ -79,8 +79,9 @@ export const getUserEventStats: RequestHandler = async (req, res) => {
  */
 export const createNewEvent: RequestHandler = async (req, res) => {
   const data = <ICreateEventRequest>req.body
+  const user = req.user as JwtPayload
 
-  const event = await eventService.createNewEvent(data)
+  const event = await eventService.createNewEvent(data, user.id)
 
   res.json(makeResponse.defaultResponse('Create new event success', StatusCodes.CREATED, event))
 }

@@ -304,7 +304,7 @@ const getUserEventStats = async (userId: string, slug?: string) => {
   return eventTransformer.getUserStats(event[0] as UserStatsResponse)
 }
 
-const createNewEvent = async (data: ICreateEventRequest) => {
+const createNewEvent = async (data: ICreateEventRequest, createdBy: string) => {
   const event = await prisma.event.create({
     data: {
       name: data.title,
@@ -318,6 +318,11 @@ const createNewEvent = async (data: ICreateEventRequest) => {
             order: index,
             gameStackId: round.gameStackId,
           })),
+        },
+      },
+      creator: {
+        connect: {
+          id: createdBy,
         },
       },
     },

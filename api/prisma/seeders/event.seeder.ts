@@ -21,6 +21,7 @@ const eventSeeder = async (users: User[], gameStacks: GameStack[]) => {
           joiners: {
             connect: event.joiners.map((user) => ({ id: user.id })),
           },
+          createdBy: event.createdBy.id,
         },
       })
 
