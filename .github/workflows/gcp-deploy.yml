@@ -4,3 +4,46 @@ on:
   push:
     branches:
       - prod-gcp
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Prepare environment variables
+        working-directory: ./web
+        run: |
+          echo NODE_ENV=${{ secrets.NODE_ENV }} > .env.production
+          echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> .env.production
+          echo NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} >> .env.production
+          echo AUTH_SECRET=${{ secrets.AUTH_SECRET }} >> .env.production
+          echo API_URL=${{ secrets.API_URL }} >> .env.production
+          echo GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} >> .env.production
+          echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> .env.production
+          echo NEXT_PUBLIC_SOCKET_URL=${{ secrets.NEXT_PUBLIC_SOCKET_URL }} >> .env.production
+          echo NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }} >> .env.production
+          echo NEXT_SHARP_PATH=${{ secrets.NEXT_SHARP_PATH }} >> .env.production
+
+      - name: Build web image
+        run: |
+          docker build -t thdeathzz/kanjigami:web-${{github.run_number}} -t thdeathzz/kanjigami:web-latest -f ./deploy/web.Dockerfile ./web
+
+      - name: Build api image
+        run: |
+          docker build -t thdeathzz/kanjigami:api-${{github.run_number}} -t thdeathzz/kanjigami:api-latest -f ./deploy/api.Dockerfile ./api
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          access-token: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
+      - name: Push Images to Docker Hub
+        run: |
+          docker push thdeathzz/kanjigami:web-${{github.run_number}}
+          docker push thdeathzz/kanjigami:web-latest
+          docker push thdeathzz/kanjigami:api-${{github.run_number}}
+          docker push thdeathzz/kanjigami:api-latest
