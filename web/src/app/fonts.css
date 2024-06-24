@@ -1,80 +1,60 @@
 @font-face {
   font-family: 'Saira Stencil One';
-  src: url('../../public/fonts/SairaStencilOne-Regular.ttf') format('truetype');
+  src: url('/fonts/SairaStencilOne-Regular.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'ClashGrotesk';
-  src:
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Regular.woff2') format('woff2'),
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Regular.woff') format('woff'),
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Regular.ttf') format('truetype');
+  src: url('/fonts/ClashGrotesk/ClashGrotesk-Regular.ttf') format('truetype');
   font-weight: 400;
-  font-display: swap;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'ClashGrotesk';
-  src:
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Medium.woff2') format('woff2'),
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Medium.woff') format('woff'),
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Medium.ttf') format('truetype');
+  src: url('/fonts/ClashGrotesk/ClashGrotesk-Medium.ttf') format('truetype');
   font-weight: 500;
-  font-display: swap;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'ClashGrotesk';
-  src:
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Semibold.woff2') format('woff2'),
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Semibold.woff') format('woff'),
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Semibold.ttf') format('truetype');
+  src: url('/fonts/ClashGrotesk/ClashGrotesk-Semibold.ttf') format('truetype');
   font-weight: 600;
-  font-display: swap;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'ClashGrotesk';
-  src:
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Bold.woff2') format('woff2'),
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Bold.woff') format('woff'),
-    url('../../public/fonts/ClashGrotesk/ClashGrotesk-Bold.ttf') format('truetype');
+  src: url('/fonts/ClashGrotesk/ClashGrotesk-Bold.ttf') format('truetype');
   font-weight: 700;
-  font-display: swap;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'IBMPlexMono';
-  src: url('../../public/fonts/IBMPlexMono/IBMPlexMono-Regular.ttf') format('truetype');
+  src: url('/fonts/IBMPlexMono/IBMPlexMono-Regular.ttf') format('truetype');
   font-weight: 400;
-  font-display: swap;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'IBMPlexMono';
-  src: url('../../public/fonts/IBMPlexMono/IBMPlexMono-Medium.ttf') format('truetype');
+  src: url('/fonts/IBMPlexMono/IBMPlexMono-Medium.ttf') format('truetype');
   font-weight: 500;
-  font-display: swap;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'IBMPlexMono';
-  src: url('../../public/fonts/IBMPlexMono/IBMPlexMono-SemiBold.ttf') format('truetype');
+  src: url('/fonts/IBMPlexMono/IBMPlexMono-SemiBold.ttf') format('truetype');
   font-weight: 600;
-  font-display: swap;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'IBMPlexMono';
-  src: url('../../public/fonts/IBMPlexMono/IBMPlexMono-Bold.ttf') format('truetype');
+  src: url('/fonts/IBMPlexMono/IBMPlexMono-Bold.ttf') format('truetype');
   font-weight: 700;
-  font-display: swap;
   font-style: normal;
 }

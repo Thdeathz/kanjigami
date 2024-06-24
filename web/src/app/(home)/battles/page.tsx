@@ -10,6 +10,7 @@ import PageHeader from '@/components/home/page-header'
 import RootNotification from '@/components/home/root-notification'
 import Loading from '@/components/loading'
 import { Button } from '@/components/ui/button'
+import { getBattleLeaderboard } from '@/server/actions/leaderboard'
 import { getNewestNotification } from '@/server/actions/notification'
 import { getCurrentUserInfo } from '@/server/actions/user'
 
@@ -31,6 +32,7 @@ export default async function BattlesPage({
   const status = searchParams?.status || ''
   const notifications = await getNewestNotification()
   const user = await getCurrentUserInfo()
+  const topUsers = await getBattleLeaderboard()
 
   return (
     <div className="space-y-8 sm:space-y-12">
@@ -63,7 +65,7 @@ export default async function BattlesPage({
         </div>
 
         <SectionWrapper title="All-time leaders" className="w-full md:w-[18rem]">
-          <BattlesLeaderboard />
+          <BattlesLeaderboard topUsers={topUsers} />
         </SectionWrapper>
       </div>
     </div>

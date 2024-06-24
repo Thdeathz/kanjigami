@@ -1,17 +1,11 @@
-'use client'
+import { ITopUser } from '@/@types/leaderboard'
+import SideLeaderboard from '@/components/home/side-leaderboard'
 
-import Loading from '@/components/loading'
-import { useGetBattleLeaderboardQuery } from '@/data/leaderboard'
+type Props = {
+  topUsers?: ITopUser[] | null
+}
 
-import SideLeaderboard from '../side-leaderboard'
-
-export default function BattlesLeaderboard() {
-  const { data: topUsers, isLoading } = useGetBattleLeaderboardQuery()
-
-  if (isLoading) {
-    return <Loading className="text-4xl" />
-  }
-
+export default function BattlesLeaderboard({ topUsers }: Props) {
   if (!topUsers) {
     return <p>Leaderboard not found</p>
   }

@@ -12,7 +12,7 @@ const exampleFactory = async (words: Word[]) => {
   const examples: ExampleFactory[] = []
 
   await Promise.all(
-    Array.from({ length: 750 }).map(async () => {
+    Array.from({ length: 250 }).map(async () => {
       const uniqueWords = faker.helpers.uniqueArray(words, faker.number.int({ min: 1, max: 4 }))
 
       const content = faker.lorem.words({

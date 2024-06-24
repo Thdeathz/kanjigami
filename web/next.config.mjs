@@ -98,7 +98,8 @@ const nextConfig = {
         pathname: '/kanjigami.pro/**'
       }
     ]
-  }
+  },
+  output: 'standalone'
 }
 
 export default nextConfig

@@ -1,0 +1,6 @@
+name: Build and Deploy to GCP
+
+on:
+  push:
+    branches:
+      - prod-gcp
