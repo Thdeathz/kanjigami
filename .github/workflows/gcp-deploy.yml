@@ -47,3 +47,19 @@ jobs:
           docker push thdeathzz/kanjigami:web-latest
           docker push thdeathzz/kanjigami:api-${{github.run_number}}
           docker push thdeathzz/kanjigami:api-latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into GCP VM and pull latest image
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.GCP_HOST }}
+          username: ${{ secrets.GCP_USERNAME }}
+          key: ${{ secrets.GCP_VM_SSH_KEY }}
+          script: |
+            cd kanjigami
+            docker pull thdeathzz/kanjigami:web-latest
+            docker pull thdeathzz/kanjigami:api-latest
+            docker compose up -d
+            docker image prune -f
