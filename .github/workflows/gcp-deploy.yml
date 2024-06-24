@@ -49,6 +49,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: SSH into GCP VM and pull latest image
         uses: appleboy/ssh-action@master
