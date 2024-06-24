@@ -28,7 +28,7 @@ type EventFactory = {
 const eventFactory = async (users: User[], gameStacks: GameStack[]) => {
   const events: EventFactory[] = []
 
-  Array.from({ length: 60 }).map(() => {
+  Array.from({ length: 30 }).map(() => {
     const name = faker.lorem.words(2)
     const description = faker.lorem.sentences(1)
     const type = faker.helpers.arrayElement([BattleType.GOFT, BattleType.TIMEATTACK])

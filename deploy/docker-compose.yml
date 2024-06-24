@@ -1,20 +1,10 @@
 services:
-  nginx:
-    image: kanjigami:nginx-latest
+  api:
+    image: thdeathzz/kanjigami:api-latest
     restart: unless-stopped
     tty: true
     ports:
-      - 80:80
-    links:
-      - web
-      - api
-    depends_on:
-      - web
-
-  api:
-    image: kanjigami:api-latest
-    restart: unless-stopped
-    tty: true
+      - 3500:3500
     links:
       - postgres
       - redis
@@ -23,6 +13,7 @@ services:
       - redis
     environment:
       - NODE_ENV=${NODE_ENV}
+      - WEB_URL=${WEB_URL}
       - DATABASE_URL=${DATABASE_URL}
       - REDIS_URI=${REDIS_URI}
       - MAILER_EMAIL=${MAILER_EMAIL}
@@ -40,27 +31,17 @@ services:
       - STRIPE_PUBLIC_KEY=${STRIPE_PUBLIC_KEY}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
       - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
-      - RAPID_API_KEY=${RAPID_API_KEY}
-      - RAPID_API_HOST=${RAPID_API_HOST}
 
   web:
-    image: kanjigami:web-latest
+    image: thdeathzz/kanjigami:web-latest
     restart: unless-stopped
     tty: true
+    ports:
+      - 3000:3000
     links:
       - api
     depends_on:
       - api
-    environment:
-      - NODE_ENV=${NODE_ENV}
-      - NEXTAUTH_URL=${NEXTAUTH_URL}
-      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
-      - AUTH_SECRET=${AUTH_SECRET}
-      - API_URL=${API_URL}
-      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
-      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
-      - NEXT_PUBLIC_SOCKET_URL=${NEXT_PUBLIC_SOCKET_URL}
-      - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
 
   redis:
     image: redis:7.2-alpine

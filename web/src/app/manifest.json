@@ -1,5 +1,5 @@
 {
-  "name": "漢字ガミ",
+  "name": "Kanjigami",
   "short_name": "kanjigami",
   "icons": [
     { "src": "/icons/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },

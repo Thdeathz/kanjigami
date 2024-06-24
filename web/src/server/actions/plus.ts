@@ -14,11 +14,10 @@ export const createCheckoutSession = async (product: string, userId: string) => 
     method: 'POST',
     endpoint: '/plus',
     body: JSON.stringify({ product, userId }),
-    tags: ['checkout-session']
+    noCache: true
   })
 
   revalidateTag('me')
-  revalidateTag('checkout-session')
 
   return response?.data
 }
