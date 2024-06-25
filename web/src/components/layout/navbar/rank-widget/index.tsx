@@ -105,7 +105,14 @@ export default function RankWidget({ currentUserRole, rankInfo }: Props) {
             </div>
           ) : (
             <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }}>
-              <Image src={rankInfo.icon} width="72" height="36" alt="rank-icon" priority className="object-contain" />
+              <Image
+                src={rankInfo.icon}
+                width="120"
+                height="60"
+                alt="rank-icon"
+                priority
+                className="h-[3.75rem] w-[7.5rem] object-contain"
+              />
             </motion.div>
           )}
         </div>
