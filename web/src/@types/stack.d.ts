@@ -83,3 +83,5 @@ export interface ISearchStackResult {
   numberWords: number
   numberFollowed: number
 }
+
+export interface ICreateWordRequest {}

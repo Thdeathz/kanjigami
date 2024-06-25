@@ -17,5 +17,8 @@ export const StackDetailsSchema = z.object({
     })
     .max(128, {
       message: 'Description is too long'
-    })
+    }),
+  topic: z.string().min(1, {
+    message: 'Topic is required'
+  })
 })

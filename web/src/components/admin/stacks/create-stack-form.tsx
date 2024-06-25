@@ -1,8 +1,10 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 
 import { IFile } from '@/@types'
 import SectionTitle from '@/components/admin/section-title'
@@ -11,11 +13,20 @@ import StackDetailsForm from '@/components/admin/stacks/stack-details-form'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { SectionDivider } from '@/components/ui/separator'
+import { StackDetailsSchema } from '@/schema/admin/stack-schema'
 
 export default function CreateStackForm() {
-  const form = useForm()
+  const form = useForm<z.infer<typeof StackDetailsSchema>>({
+    resolver: zodResolver(StackDetailsSchema),
+    defaultValues: {
+      name: '',
+      description: '',
+      topic: ''
+    }
+  })
 
   const [image, setImage] = useState<IFile | null>(null)
+  const [words, setWords] = useState<string[]>([])
 
   return (
     <Form {...form}>

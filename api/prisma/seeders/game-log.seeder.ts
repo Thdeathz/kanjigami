@@ -10,28 +10,51 @@ const gameLogSeeder = async (users: User[], gameStacks: GameStack[]) => {
 
   const gameLogs = await Promise.all(
     gameLogsData.map(async (gameLog) => {
-      await prisma.gameLog.upsert({
+      const oldGameLog = await prisma.gameLog.findUnique({
         where: {
           gameStackId_userId: {
             gameStackId: gameLog.gameStackId,
             userId: gameLog.userId,
           },
         },
-        update: {
-          point: gameLog.point,
-          time: gameLog.time,
-          type: gameLog.type,
-          gameStackId: gameLog.gameStackId,
-          userId: gameLog.userId,
-        },
-        create: {
-          point: gameLog.point,
-          time: gameLog.time,
-          type: gameLog.type,
-          gameStackId: gameLog.gameStackId,
-          userId: gameLog.userId,
+        select: {
+          point: true,
         },
       })
+
+      if (oldGameLog) {
+        if (oldGameLog.point < gameLog.point)
+          await prisma.gameLog.update({
+            where: {
+              gameStackId_userId: {
+                gameStackId: gameLog.gameStackId,
+                userId: gameLog.userId,
+              },
+            },
+            data: {
+              point: gameLog.point,
+              time: gameLog.time,
+            },
+          })
+      } else {
+        await prisma.gameLog.create({
+          data: {
+            point: gameLog.point,
+            time: gameLog.time,
+            type: gameLog.type,
+            gameStack: {
+              connect: {
+                id: gameLog.gameStackId,
+              },
+            },
+            user: {
+              connect: {
+                id: gameLog.userId,
+              },
+            },
+          },
+        })
+      }
 
       const currentStack = await prisma.gameStack.findUnique({
         where: {

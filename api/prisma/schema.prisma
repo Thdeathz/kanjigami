@@ -83,7 +83,6 @@ model User {
   checkouts      Checkout[]
   creatorEvents  Event[] @relation("creator")
   reports        Report[]
-  ranks          Rank[]
 
   @@index([name])
 }
@@ -306,8 +305,6 @@ model Rank {
   score         Int
   createdAt     DateTime @default(now())
   updatedAt     DateTime @default(now())
-
-  users         User[]
 }
 
 model Setting {

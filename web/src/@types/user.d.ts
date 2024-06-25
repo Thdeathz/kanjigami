@@ -1,4 +1,4 @@
-import { UserRole } from './auth'
+import { IUserRank, UserRole } from './auth'
 
 export interface IUser {
   id: string
@@ -13,6 +13,7 @@ export interface IUserData {
   email: string
   image: string
   score: number
+  rank?: IUserRank
 }
 
 export interface IUserStats {

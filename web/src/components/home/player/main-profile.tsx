@@ -39,7 +39,12 @@ export default function MainProfile({ user }: Props) {
       </div>
 
       <div className="flex-center mt-4 flex-col gap-4 xs:flex-row">
-        <ProfileStats icon={<GiJewelCrown />} label="Current rank" value="Kanji kunoichi" />
+        <ProfileStats
+          icon={<GiJewelCrown />}
+          label="Current rank"
+          value={user.rank?.name ?? 'Unknown'}
+          valueClassName="text-xl font-kanji"
+        />
 
         <ProfileStats icon={<GiLaurelCrown />} label="Current rank point" value={user.score.toString()} />
       </div>

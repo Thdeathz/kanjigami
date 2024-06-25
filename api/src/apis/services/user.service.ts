@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import prisma from '@/apis/databases/init.prisma'
 import gameLogService from '@/apis/services/game-log.service'
+import rankService from '@/apis/services/rank.service'
 import HttpError from '@/apis/utils/http-error'
 
 const getUserByEmail = async (email: string) => {
@@ -121,9 +122,17 @@ const getUserProfile = async (name: string) => {
 
   if (!user) throw new HttpError(StatusCodes.NOT_FOUND, 'User not found')
 
+  const userRank = await rankService.getUserRank(user.score)
+
   const stats = await gameLogService.getUserStats(user.id)
 
-  return { user, stats }
+  return {
+    user: {
+      ...user,
+      rank: userRank,
+    },
+    stats,
+  }
 }
 
 const getCurrentUserInfo = async (id: string) => {
@@ -144,9 +153,12 @@ const getCurrentUserInfo = async (id: string) => {
 
   if (!user) throw new HttpError(StatusCodes.NOT_FOUND, 'User not found')
 
+  const userRank = await rankService.getUserRank(user.score)
+
   return {
     ...user,
     isPlus: user.state === UserState.PLUS,
+    rank: userRank,
   }
 }
 

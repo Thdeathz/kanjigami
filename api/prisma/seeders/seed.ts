@@ -5,14 +5,19 @@ import gameStackSeeder from './game-stack.factory'
 import gameSeeder from './game.seeder'
 import kanjiSeeder from './kanji.seeder'
 import prisma from './prism-client'
+import rankSeeder from './rank.seeder'
+import settingSeeder from './setting.seeder'
 import stackSeeder from './stack.seeder'
 import topicSeeder from './topic.seeder'
 import userSeeder from './user.seeder'
 import wordSeeder from './word.seeder'
-import settingSeeder from './setting.seeder'
 
 async function seed() {
   const users = await userSeeder()
+
+  await settingSeeder()
+
+  await rankSeeder()
 
   const kanjis = await kanjiSeeder()
 
@@ -31,8 +36,6 @@ async function seed() {
   await eventSeeder(users, gameStacks)
 
   await gameLogSeeder(users, gameStacks)
-
-  await settingSeeder()
 }
 
 seed()

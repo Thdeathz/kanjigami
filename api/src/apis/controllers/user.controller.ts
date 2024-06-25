@@ -77,8 +77,6 @@ export const updateUserAvatar: RequestHandler = async (req, res) => {
   const image = req.file?.buffer
   const extension = req.file?.originalname.split('.').pop()
 
-  console.log('==> got req', user, image, extension)
-
   if (!image || !extension)
     return res
       .status(StatusCodes.BAD_REQUEST)

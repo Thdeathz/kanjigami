@@ -35,6 +35,11 @@ body {
     monospace;
 }
 
+.font-kanji {
+  font-family: YujiMai, 'Noto Sans JP', sans-serif !important;
+  color: var(--clr-brand) !important;
+}
+
 @media (max-width: 1024px) {
   html {
     font-size: 14px;
