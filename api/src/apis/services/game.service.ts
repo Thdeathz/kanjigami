@@ -216,33 +216,38 @@ const saveScoreOfflineGame = async (gameStackId: string, userId: string, { score
 
   if (!currentStack) throw new HttpError(StatusCodes.NOT_FOUND, 'Game stack not found')
 
-  const gameLog = await prisma.gameLog.upsert({
-    where: {
-      gameStackId_userId: {
-        gameStackId,
+  let gameLog
+  if (hightestScore) {
+    gameLog = await prisma.gameLog.update({
+      where: {
+        id: hightestScore.id,
+      },
+      data: {
+        point: score,
+        time,
+        type,
         userId,
       },
-    },
-    update: {
-      point: score,
-      time,
-    },
-    create: {
-      point: score,
-      time,
-      type,
-      gameStack: {
-        connect: {
-          id: gameStackId,
+    })
+  } else {
+    gameLog = await prisma.gameLog.create({
+      data: {
+        point: score,
+        time,
+        type,
+        gameStack: {
+          connect: {
+            id: gameStackId,
+          },
+        },
+        user: {
+          connect: {
+            id: userId,
+          },
         },
       },
-      user: {
-        connect: {
-          id: userId,
-        },
-      },
-    },
-  })
+    })
+  }
 
   await notificationService.recordNewHighScore(gameStackId, userId)
 

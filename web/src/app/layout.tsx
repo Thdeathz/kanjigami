@@ -42,7 +42,9 @@ export const metadata: Metadata = {
       template: APP_TITLE_TEMPLATE
     },
     description: APP_DESCRIPTION
-  }
+  },
+  keywords:
+    'Kanjigami, Kanji, Japanese, Learning, Game, Study, Language, Vocabulary, Hiragana, Katakana, Nihongo, 日本語, 漢字, かんじ, ひらがな, カタカナ'
 }
 
 const structuredData = {

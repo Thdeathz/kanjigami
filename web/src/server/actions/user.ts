@@ -20,7 +20,8 @@ export const getAllUsers = async () => {
 export const getUserProfile = async (name: string) => {
   const response = await fetchBase<ApiResponse<IUserProfile>>({
     method: 'GET',
-    endpoint: `/users/profile?player=${name}`
+    endpoint: `/users/profile?player=${name}`,
+    tags: [name]
   })
 
   return response?.data
@@ -35,7 +36,7 @@ export const getCurrentUserInfo = async () => {
     const response = await fetchBase<ApiResponse<IUserInfo>>({
       method: 'GET',
       endpoint: '/users/me',
-      tags: ['me']
+      noCache: true
     })
 
     return response?.data

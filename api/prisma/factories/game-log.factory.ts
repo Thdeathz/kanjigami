@@ -39,7 +39,22 @@ const gameLogFactory = async (users: User[], gameStacks: GameStack[]) => {
     }),
   )
 
-  return gameLogs
+  return gameLogs.reduce((acc: GameLogFactory[], gameLog) => {
+    const existingGameLog = acc.find(
+      (item) => item.gameStackId === gameLog.gameStackId && item.userId === gameLog.userId,
+    )
+
+    if (existingGameLog) {
+      if (existingGameLog.point < gameLog.point) {
+        existingGameLog.point = gameLog.point
+        existingGameLog.time = gameLog.time
+      }
+
+      return acc
+    }
+
+    return [...acc, gameLog]
+  }, [])
 }
 
 export default gameLogFactory

@@ -58,3 +58,10 @@
   font-weight: 700;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'YujiMai';
+  src: url('/fonts/YujiMai-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}

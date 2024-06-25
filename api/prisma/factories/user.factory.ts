@@ -16,16 +16,18 @@ const userFactory = async () => {
     email: 'admin@gmail.com',
     password: '$2b$10$S1DyrPjcRntNMjTdhAyeXu5zfp9EB0xyvLOvy90/LQTmTd75zdfqa',
     name: 'admin',
-    image: faker.image.avatar(),
+    image: faker.image.avatarGitHub(),
     role: UserRole.ADMIN,
     state: UserState.NORMAL,
   })
 
   Array.from({ length: 50 }).forEach(() => {
-    const email = faker.internet.email()
     const password = '$2b$10$S1DyrPjcRntNMjTdhAyeXu5zfp9EB0xyvLOvy90/LQTmTd75zdfqa'
-    const name = faker.internet.displayName()
-    const image = faker.image.avatar()
+    const name = faker.helpers.unique(faker.person.lastName)
+    const email = faker.internet.email({
+      lastName: name,
+    })
+    const image = faker.image.avatarGitHub()
     const role = UserRole.USER
     const state = Math.random() > 0.7 ? 'PLUS' : 'NORMAL'
 

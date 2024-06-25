@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic'
 import { IUserInfo } from '@/@types/auth'
 import Breadcrumb from '@/components/layout/navbar/breadcrumb'
 import NotificationButton from '@/components/layout/navbar/notification-button'
-import RankWidget from '@/components/layout/navbar/rank-widget'
 import UserButton from '@/components/layout/navbar/user-button'
 
 const ThemeButtonClient = dynamic(() => import('@/components/layout/navbar/theme-button'), {
@@ -13,6 +12,10 @@ const ThemeButtonClient = dynamic(() => import('@/components/layout/navbar/theme
 })
 
 const CollapseSidebar = dynamic(() => import('@/components/layout/navbar/collapse-sidebar'), {
+  ssr: false
+})
+
+const RankWidget = dynamic(() => import('@/components/layout/navbar/rank-widget'), {
   ssr: false
 })
 
@@ -28,7 +31,7 @@ export default function NavbarContent({ currentUser }: Props) {
         <Breadcrumb />
       </div>
 
-      <RankWidget currentUserRole={currentUser?.role} />
+      <RankWidget currentUserRole={currentUser?.role} rankInfo={currentUser?.rank} />
 
       <div className="flex w-full items-center justify-end gap-2 sm:gap-4">
         <ThemeButtonClient />

@@ -4,18 +4,19 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useToggle } from 'usehooks-ts'
 
-import { UserRole } from '@/@types/auth'
+import { IUserRank, UserRole } from '@/@types/auth'
 
 import styles from './RankWidget.module.css'
 
 type Props = {
   currentUserRole?: UserRole
+  rankInfo?: IUserRank
 }
 
-export default function RankWidget({ currentUserRole }: Props) {
+export default function RankWidget({ currentUserRole, rankInfo }: Props) {
   const [showRankName, toggle, setShowRankName] = useToggle(false)
 
-  if (currentUserRole !== 'USER') return null
+  if (currentUserRole !== 'USER' || !rankInfo) return null
 
   return (
     <motion.div
@@ -91,35 +92,20 @@ export default function RankWidget({ currentUserRole }: Props) {
 
         <div className="flex-center absolute left-0 right-0 h-full">
           {showRankName ? (
-            <div className="flex-center app-icon flex-col gap-1 font-medium">
+            <div className="flex-center app-icon flex-col text-3xl text-default-brand">
               <motion.p
+                className="font-kanji text-neon"
                 animate={{ y: 0, opacity: 1 }}
                 initial={{ y: -10, opacity: 0 }}
                 exit={{ y: -10, opacity: 0 }}
                 transition={{ delay: 0.1 }}
               >
-                Kanji
-              </motion.p>
-
-              <motion.p
-                animate={{ y: 0, opacity: 1 }}
-                initial={{ y: -10, opacity: 0 }}
-                exit={{ y: -10, opacity: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                Kunoichi
+                {rankInfo.name}
               </motion.p>
             </div>
           ) : (
             <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }}>
-              <Image
-                src="/images/bronze.png"
-                width="72"
-                height="36"
-                alt="rank-icon"
-                priority
-                className="object-contain"
-              />
+              <Image src={rankInfo.icon} width="72" height="36" alt="rank-icon" priority className="object-contain" />
             </motion.div>
           )}
         </div>

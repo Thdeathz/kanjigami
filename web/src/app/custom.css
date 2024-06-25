@@ -336,3 +336,15 @@
 .card-back.pre-hidden > div {
   transform: translateX(-3px) !important;
 }
+
+/* TEXT NEON */
+.text-neon {
+  text-shadow:
+    0 0 10px #ffdf00,
+    0 0 21px #ffdf00,
+    0 0 32px #ffdf00,
+    0 0 0px #ffdf00,
+    0 0 0px #ffdf00,
+    0 0 0px #ffdf00,
+    0 0 0px #ffdf00;
+}

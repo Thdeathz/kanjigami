@@ -15,9 +15,13 @@ export default async function HomePageSetting() {
 
       <div>
         <SectionDivider title="Thumbnail" />
-        <SectionTitle title="Note: Best in webm format and has 1920x1080 resolution" />
+        <SectionTitle title="Note: Best in webp format and has 1920x1080 resolution" />
 
         <ThumbnailSetting thumbnails={thumbnails} />
+      </div>
+
+      <div>
+        <SectionDivider title="Ranking名" />
       </div>
     </div>
   )
