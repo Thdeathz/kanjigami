@@ -12,3 +12,11 @@ export interface IThumbnailSetting {
   alt: string
   file?: IFile
 }
+
+export interface IRankSetting {
+  id: string
+  name: string
+  score: string
+  icon: string
+  file?: IFile
+}
