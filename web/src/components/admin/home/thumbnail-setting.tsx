@@ -23,19 +23,18 @@ export default function ThumbnailSetting({ thumbnails }: Props) {
   const [isPending, startTransition] = useTransition()
 
   const onSaveChanges = () => {
-    if (images?.length === 0 || !images?.find((e) => e.file)) return
-
     startTransition(async () => {
       try {
         const formData = new FormData()
 
-        images?.forEach((image) => {
+        images?.forEach((image, index) => {
+          formData.append('ids[]', image.id)
           if (image.file) {
-            console.log(image)
-            formData.append('ids[]', image.id)
             formData.append('images', image.file)
-            formData.append('alts[]', image.alt)
+          } else {
+            formData.append(`imageUrls[${index}]`, image.imageUrl)
           }
+          formData.append('alts[]', image.alt)
         })
 
         await editThumbnail(formData)
@@ -67,12 +66,7 @@ export default function ThumbnailSetting({ thumbnails }: Props) {
 
   return (
     <div className="space-y-2">
-      <Button
-        variant="primary"
-        disabled={!images?.find((e) => e.file) || isPending}
-        isLoading={isPending}
-        onClick={onSaveChanges}
-      >
+      <Button variant="primary" isLoading={isPending} onClick={onSaveChanges}>
         Upload & Save
       </Button>
 
@@ -105,14 +99,14 @@ export default function ThumbnailSetting({ thumbnails }: Props) {
             <Input
               value={image.alt}
               onChange={(e) => {
-                const newImages = images.map((img) => {
-                  if (img.id === image.id) {
-                    return { ...img, alt: e.target.value }
-                  }
-                  return img
-                })
-
-                setImages(newImages)
+                setImages((prev) =>
+                  prev?.map((img) => {
+                    if (img.id === image.id) {
+                      return { ...img, alt: e.target.value }
+                    }
+                    return img
+                  })
+                )
               }}
             />
           </div>

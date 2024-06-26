@@ -7,17 +7,34 @@ const getAllThumbnails = async () => {
       imageUrl: true,
       alt: true,
     },
+    orderBy: {
+      id: 'asc',
+    },
   })
 }
 
-const editThumbnail = async (ids: string[], imageUrls: string[], alts: string[]) => {
+type EditThumbnailProps = {
+  ids: string[]
+  imageUrls: string[]
+  alts: string[]
+  newImageUrls: string[]
+}
+
+const editThumbnail = async ({ ids, imageUrls, alts, newImageUrls }: EditThumbnailProps) => {
   for (let i = 0; i < ids.length; i++) {
+    let imageUrl = ''
+    if (imageUrls?.length > 0 && imageUrls[i]) {
+      imageUrl = imageUrls[i]
+    } else {
+      imageUrl = newImageUrls.shift() as string
+    }
+
     await prisma.setting.update({
       where: {
         id: ids[i],
       },
       data: {
-        imageUrl: imageUrls[i],
+        imageUrl,
         alt: alts[i],
       },
     })
