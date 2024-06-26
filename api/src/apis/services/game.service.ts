@@ -188,6 +188,15 @@ const saveScoreOfflineGame = async (gameStackId: string, userId: string, { score
     select: {
       id: true,
       point: true,
+      gameStack: {
+        select: {
+          stack: {
+            select: {
+              slug: true,
+            },
+          },
+        },
+      },
     },
   })
 
@@ -228,6 +237,18 @@ const saveScoreOfflineGame = async (gameStackId: string, userId: string, { score
         type,
         userId,
       },
+      select: {
+        id: true,
+        gameStack: {
+          select: {
+            stack: {
+              select: {
+                slug: true,
+              },
+            },
+          },
+        },
+      },
     })
   } else {
     gameLog = await prisma.gameLog.create({
@@ -243,6 +264,18 @@ const saveScoreOfflineGame = async (gameStackId: string, userId: string, { score
         user: {
           connect: {
             id: userId,
+          },
+        },
+      },
+      select: {
+        id: true,
+        gameStack: {
+          select: {
+            stack: {
+              select: {
+                slug: true,
+              },
+            },
           },
         },
       },

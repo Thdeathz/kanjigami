@@ -23,12 +23,11 @@ export async function registerRequest(
   data: z.infer<typeof RegisterSchema>
 ): Promise<ActionError<IFormItemError> | null> {
   try {
-    await fetchBase({
+    return await fetchBase({
       method: 'POST',
       endpoint: '/auth/register',
       body: JSON.stringify(data)
     })
-    return null
   } catch (error) {
     const errorMessage = getErrorString(error)
 

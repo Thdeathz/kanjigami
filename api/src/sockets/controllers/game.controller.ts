@@ -59,7 +59,11 @@ const handleSaveScore = async (
       type,
     })
 
-    socket.emit('game:calculate-score:success', { logId: gameLog.id, currentScore: gameLog.currentScore })
+    socket.emit('game:calculate-score:success', {
+      stackSlug: gameLog.gameStack.stack.slug,
+      logId: gameLog.id,
+      currentScore: gameLog.currentScore,
+    })
     return
   }
 

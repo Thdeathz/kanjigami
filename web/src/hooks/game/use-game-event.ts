@@ -12,10 +12,8 @@ type PropsType<T> = {
 }
 
 export default function useGameEvent<T>({ sessionId, userId, type, setGameContent }: PropsType<T>) {
-  const { onSearch, onSearchArray } = useQueryParams()
-  const { invalidateTag, invalidateTags } = useInvalidateTag()
-
-  // const onContentNotFound = useOnContentNotFound(stackId, gameId)
+  const { onSearchArray } = useQueryParams()
+  const { invalidateTags } = useInvalidateTag()
 
   const onGameContent = useCallback(
     ({ words }: { words: T[] }) => {
@@ -25,7 +23,17 @@ export default function useGameEvent<T>({ sessionId, userId, type, setGameConten
   )
 
   const onCalculateScoreSuccess = useCallback(
-    ({ logId, currentScore }: { logId: string; currentScore?: { point: number; time: number } | null }) => {
+    ({
+      stackSlug,
+      logId,
+      currentScore
+    }: {
+      stackSlug: string
+      logId: string
+      currentScore?: { point: number; time: number } | null
+    }) => {
+      console.log('logId', logId, stackSlug)
+
       const searchData = [
         {
           key: 'log',
@@ -47,7 +55,6 @@ export default function useGameEvent<T>({ sessionId, userId, type, setGameConten
       }
 
       onSearchArray(searchData)
-      // invalidateTag(['stacks'])
       invalidateTags([['battles'], ['stacks']])
     },
     [onSearchArray]
