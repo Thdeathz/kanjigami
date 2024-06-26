@@ -12,6 +12,7 @@ import { getBattleTopUser } from '@/sockets/events/online-battle.event'
 
 const handleGetContent = async (socket: Socket, { sessionId, userId, type }: IGetGameContentRequest) => {
   const gameData = await redisService.get<IGameData<IWord>>('game', sessionId)
+  const gameTime = await redisService.ttl('game', sessionId)
 
   if (!gameData || userId !== gameData.user.id) {
     if (type === 'ONLINE') {
@@ -25,6 +26,7 @@ const handleGetContent = async (socket: Socket, { sessionId, userId, type }: IGe
 
   socket.emit('game:content', {
     words: gameData.words,
+    gameTime: gameTime - 5,
   })
 }
 
@@ -86,8 +88,6 @@ const handleSaveScore = async (
     const usersList = (await redisService.get<IJoinedUser[]>('event', `${battleSlug}:users`)) || []
     const foundedUser = usersList?.find((u) => u.user.id === userId)
 
-    console.log('foundedUser', foundedUser)
-
     if (!foundedUser) {
       socket.emit('game:calculate-score:failed')
       return
@@ -106,8 +106,6 @@ const handleSaveScore = async (
       ...usersList.filter((u) => u.user.id !== userId),
       { user: foundedUser.user, round: foundedUserRound },
     ]
-
-    console.log('newUsersList', newUsersList, foundedUserRound)
 
     await redisService.set('event', `${battleSlug}:users`, newUsersList)
 

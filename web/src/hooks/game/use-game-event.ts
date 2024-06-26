@@ -9,15 +9,17 @@ type PropsType<T> = {
   userId: string
   type?: 'ONLINE' | 'OFFLINE'
   setGameContent: React.Dispatch<React.SetStateAction<T[]>>
+  setGameTime: React.Dispatch<React.SetStateAction<string | null>>
 }
 
-export default function useGameEvent<T>({ sessionId, userId, type, setGameContent }: PropsType<T>) {
+export default function useGameEvent<T>({ sessionId, userId, type, setGameContent, setGameTime }: PropsType<T>) {
   const { onSearchArray } = useQueryParams()
   const { invalidateTags } = useInvalidateTag()
 
   const onGameContent = useCallback(
-    ({ words }: { words: T[] }) => {
+    ({ words, gameTime }: { words: T[]; gameTime: string }) => {
       setGameContent(words)
+      setGameTime(new Date(new Date().getTime() + Number(gameTime) * 1000 + 1000).toString())
     },
     [setGameContent]
   )

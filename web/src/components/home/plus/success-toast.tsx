@@ -1,5 +1,7 @@
 'use client'
 
+import { checkoutSuccess } from '@/server/actions/plus'
+import { revalidateTag } from 'next/cache'
 import { useEffect } from 'react'
 import Confetti from 'react-confetti'
 import { toast } from 'sonner'
@@ -9,14 +11,16 @@ type Props = {
   success?: string
   canceled?: string
   isPlus?: boolean
+  userId?: string
 }
 
-export default function SuccessToast({ success, canceled, isPlus = false }: Props) {
+export default function SuccessToast({ success, canceled, isPlus = false, userId }: Props) {
   const { width, height } = useWindowSize()
 
   useEffect(() => {
-    const handleShowToast = () => {
-      if (success === 'true') {
+    const handleShowToast = async () => {
+      if (success === 'true' && userId) {
+        await checkoutSuccess(userId)
         toast.success('Payment successful! 🎉', {
           id: 'success-toast'
         })

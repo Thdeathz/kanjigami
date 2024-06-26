@@ -8,6 +8,7 @@ import Loading from '@/components/loading'
 import useGameEvent from '@/hooks/game/use-game-event'
 
 import MultipleChoiceGameContent from './GameContent'
+import GameTime from '@/components/game/game-time'
 
 type Props = {
   sessionId: string
@@ -19,6 +20,7 @@ type Props = {
 
 export default function MultipleChoice({ sessionId, userId, type = 'OFFLINE', battleSlug, roundIndex }: Props) {
   const [gameContent, setGameContent] = useState<IMultipleChoiceGameContent[]>([])
+  const [gameTime, setGameTime] = useState<string | null>(null)
 
   const onCalculateScore = () => {
     const score = gameContent.reduce((acc, question) => {
@@ -48,16 +50,21 @@ export default function MultipleChoice({ sessionId, userId, type = 'OFFLINE', ba
     sessionId,
     userId,
     type,
-    setGameContent
+    setGameContent,
+    setGameTime
   })
 
   if (gameContent?.length === 0) return <Loading className="text-3xl" />
 
   return (
-    <MultipleChoiceGameContent
-      gameContent={gameContent}
-      onCalculateScore={onCalculateScore}
-      onSelectAnswer={onSelectAnswer}
-    />
+    <>
+      <MultipleChoiceGameContent
+        gameContent={gameContent}
+        onCalculateScore={onCalculateScore}
+        onSelectAnswer={onSelectAnswer}
+      />
+
+      <GameTime gameTime={gameTime} onTimeEnd={onCalculateScore} />
+    </>
   )
 }
