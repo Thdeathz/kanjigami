@@ -5,6 +5,7 @@ import { revalidateTag } from 'next/cache'
 import { ApiResponse } from '@/@types'
 import { IGameResult, IGameStackDetail } from '@/@types/game'
 import fetchBase from '@/lib/fetch-base'
+import { auth } from '@/server/auth'
 
 export const getGameStackDetail = async (id: string) => {
   const response = await fetchBase<ApiResponse<IGameStackDetail>>({
@@ -26,6 +27,10 @@ export const startGame = async (id: string) => {
 }
 
 export const getGameResult = async (id: string) => {
+  const session = await auth()
+
+  if (!session) return null
+
   const response = await fetchBase<ApiResponse<IGameResult>>({
     method: 'GET',
     endpoint: `/games/${id}/log`,
@@ -33,6 +38,7 @@ export const getGameResult = async (id: string) => {
   })
 
   revalidateTag('leaderboard')
+  revalidateTag(session.user.id)
 
   return response?.data
 }
