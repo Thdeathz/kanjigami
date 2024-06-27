@@ -34,7 +34,6 @@ RUN chown expressjs:nodejs dist
 COPY --from=builder --chown=expressjs:nodejs /app/dist ./
 COPY --from=builder --chown=expressjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=expressjs:nodejs /app/tsconfig.json ./
-COPY --from=builder --chown=expressjs:nodejs /app/service-account-key.json ./service-account-key.json
 
 USER expressjs
 
