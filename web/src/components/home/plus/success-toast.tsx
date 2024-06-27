@@ -5,18 +5,22 @@ import Confetti from 'react-confetti'
 import { toast } from 'sonner'
 import { useWindowSize } from 'usehooks-ts'
 
+import { checkoutSuccess } from '@/server/actions/plus'
+
 type Props = {
   success?: string
   canceled?: string
   isPlus?: boolean
+  userId?: string
 }
 
-export default function SuccessToast({ success, canceled, isPlus = false }: Props) {
+export default function SuccessToast({ success, canceled, isPlus = false, userId }: Props) {
   const { width, height } = useWindowSize()
 
   useEffect(() => {
-    const handleShowToast = () => {
-      if (success === 'true') {
+    const handleShowToast = async () => {
+      if (success === 'true' && userId) {
+        await checkoutSuccess(userId)
         toast.success('Payment successful! 🎉', {
           id: 'success-toast'
         })

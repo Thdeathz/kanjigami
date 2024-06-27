@@ -1,7 +1,6 @@
 'use client'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { usePathname } from 'next/navigation'
 import React, { useState } from 'react'
 
@@ -44,8 +43,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           queries: {
             staleTime: 1000 * 60 * 15, // 15 minutes
             refetchOnWindowFocus: true,
-            refetchInterval: 60 * 1000 * 10, // 10 minute
-            refetchOnMount: false
+            refetchInterval: 60 * 1000 * 10 // 10 minute
           }
         }
       })
@@ -53,8 +51,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools />
-
       <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
         <GlobalContextProvider>{children}</GlobalContextProvider>
         <Toaster position="top-right" />

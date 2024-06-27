@@ -5,6 +5,7 @@ import OngoingBattleLeaderboard from '@/components/home/battles/battle-detail/on
 import { Panel } from '../ui/card'
 
 import ButtonStart from './button-start'
+import LobbyInfoItem from './lobby-info-item'
 
 type Props = {
   battleSlug: string
@@ -17,13 +18,18 @@ export default function OnlineMenu({ gameStack, battleSlug, roundIndex, user }: 
   return (
     <div className="mx-auto grid w-[50vw] grid-cols-2 gap-4">
       <Panel>
-        <h1 className="text-xl font-semibold">{gameStack.game.name}</h1>
+        <h1 className="mb-4 text-center text-2xl font-semibold">{gameStack.game.name}</h1>
 
-        <p>Battle #{battleSlug}</p>
-        <p>Round {roundIndex}</p>
-        <p>{gameStack.stack.name}</p>
-        <p>{gameStack.numberOfWords} words</p>
-        <p>{gameStack.timeLimit}s</p>
+        <LobbyInfoItem label="Battle" className="rounded-t-md">
+          #{battleSlug}
+        </LobbyInfoItem>
+        <LobbyInfoItem label="Round">{roundIndex}</LobbyInfoItem>
+
+        <LobbyInfoItem label="Stack Name">{gameStack.stack.name}</LobbyInfoItem>
+        <LobbyInfoItem label="Number of Words">{gameStack.numberOfWords} 📝</LobbyInfoItem>
+        <LobbyInfoItem label="Time Limit" className="rounded-b-md">
+          {gameStack.timeLimit}s ⏳
+        </LobbyInfoItem>
 
         <ButtonStart
           type="ONLINE"

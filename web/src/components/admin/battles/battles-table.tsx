@@ -5,6 +5,7 @@ import { AiTwotoneDelete, AiTwotoneEdit } from 'react-icons/ai'
 import Loading from '@/components/loading'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Panel } from '@/components/ui/card'
 import { PagePagination } from '@/components/ui/pagination'
 import { DefaultTable } from '@/components/ui/table'
 import { useAdminGetAllBattlesQuery } from '@/data/battle'
@@ -18,10 +19,10 @@ export default function BattlesTable({ page }: Props) {
 
   if (isLoading) return <Loading className="text-4xl" />
 
-  if (!battles || !battles.data) return <p>Battles empty.</p>
+  if (!battles || !battles.data || battles.data.length === 0) return <p>Battles empty.</p>
 
   return (
-    <>
+    <Panel>
       <DefaultTable
         columns={[
           {
@@ -55,19 +56,19 @@ export default function BattlesTable({ page }: Props) {
           {
             title: 'Action',
             dataIndex: 'action',
-            render: () => (
+            render: (_, row) => (
               <div className="flex-center gap-4">
-                <Button variant="primary" shape="circle">
+                <Button variant="primary" shape="circle" disabled={row.status !== 'UPCOMING'}>
                   <AiTwotoneEdit />
                 </Button>
-                <Button variant="danger" shape="circle">
+                <Button variant="danger" shape="circle" disabled={row.status !== 'UPCOMING'}>
                   <AiTwotoneDelete />
                 </Button>
               </div>
             )
           }
         ]}
-        dataSources={battles.data.map((battle) => ({
+        dataSources={battles?.data?.map((battle) => ({
           slug: battle.slug,
           name: battle.name,
           type: battle.type,
@@ -82,6 +83,6 @@ export default function BattlesTable({ page }: Props) {
         currentPage={Number(page)}
         availablePages={battles.pagination?.totalPages ?? 0}
       />
-    </>
+    </Panel>
   )
 }

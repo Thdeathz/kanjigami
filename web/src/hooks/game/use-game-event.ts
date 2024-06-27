@@ -9,23 +9,33 @@ type PropsType<T> = {
   userId: string
   type?: 'ONLINE' | 'OFFLINE'
   setGameContent: React.Dispatch<React.SetStateAction<T[]>>
+  setGameTime: React.Dispatch<React.SetStateAction<string | null>>
 }
 
-export default function useGameEvent<T>({ sessionId, userId, type, setGameContent }: PropsType<T>) {
-  const { onSearch, onSearchArray } = useQueryParams()
-  const { invalidateTag, invalidateTags } = useInvalidateTag()
-
-  // const onContentNotFound = useOnContentNotFound(stackId, gameId)
+export default function useGameEvent<T>({ sessionId, userId, type, setGameContent, setGameTime }: PropsType<T>) {
+  const { onSearchArray } = useQueryParams()
+  const { invalidateTags } = useInvalidateTag()
 
   const onGameContent = useCallback(
-    ({ words }: { words: T[] }) => {
+    ({ words, gameTime }: { words: T[]; gameTime: string }) => {
       setGameContent(words)
+      setGameTime(new Date(new Date().getTime() + Number(gameTime) * 1000 + 1000).toString())
     },
     [setGameContent]
   )
 
   const onCalculateScoreSuccess = useCallback(
-    ({ logId, currentScore }: { logId: string; currentScore?: { point: number; time: number } | null }) => {
+    ({
+      stackSlug,
+      logId,
+      currentScore
+    }: {
+      stackSlug: string
+      logId: string
+      currentScore?: { point: number; time: number } | null
+    }) => {
+      console.log('logId', logId, stackSlug)
+
       const searchData = [
         {
           key: 'log',
@@ -47,7 +57,6 @@ export default function useGameEvent<T>({ sessionId, userId, type, setGameConten
       }
 
       onSearchArray(searchData)
-      // invalidateTag(['stacks'])
       invalidateTags([['battles'], ['stacks']])
     },
     [onSearchArray]

@@ -8,10 +8,8 @@ const kanjiShooterEvent = (socket: Socket) => {
 
   socket.on(
     'game:calculate-score',
-    (data: IGetGameContentRequest & { score: number; battleSlug?: string; roundIndex?: string }) => {
-      console.log('game:calculate-score', data)
-      return gameController.handleSaveScore(socket, data)
-    },
+    (data: IGetGameContentRequest & { score: number; battleSlug?: string; roundIndex?: string }) =>
+      gameController.handleSaveScore(socket, data),
   )
 }
 

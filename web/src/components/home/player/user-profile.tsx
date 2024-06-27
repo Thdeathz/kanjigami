@@ -1,19 +1,14 @@
 'use client'
 
+import { IUserProfile } from '@/@types/user'
 import MainProfile from '@/components/home/player/main-profile'
 import UserStats from '@/components/home/player/user-stats'
-import Loading from '@/components/loading'
-import { useGetUserProfileQuery } from '@/data/user'
 
 type Props = {
-  username: string
+  userProfile?: IUserProfile
 }
 
-export default function UserProfile({ username }: Props) {
-  const { data: userProfile, isLoading } = useGetUserProfileQuery(username)
-
-  if (isLoading) return <Loading className="text-4xl" />
-
+export default function UserProfile({ userProfile }: Props) {
   if (!userProfile) return <div>User not found.</div>
 
   return (

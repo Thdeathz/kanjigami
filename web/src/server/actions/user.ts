@@ -21,7 +21,7 @@ export const getUserProfile = async (name: string) => {
   const response = await fetchBase<ApiResponse<IUserProfile>>({
     method: 'GET',
     endpoint: `/users/profile?player=${name}`,
-    tags: [name]
+    noCache: true
   })
 
   return response?.data
@@ -36,7 +36,7 @@ export const getCurrentUserInfo = async () => {
     const response = await fetchBase<ApiResponse<IUserInfo>>({
       method: 'GET',
       endpoint: '/users/me',
-      noCache: true
+      tags: [session.user.id]
     })
 
     return response?.data
@@ -46,25 +46,31 @@ export const getCurrentUserInfo = async () => {
 }
 
 export const updateUsername = async (username: string) => {
+  const session = await auth()
+  if (!session) return null
+
   const response = await fetchBase<ApiResponse<IUser>>({
     method: 'PUT',
     endpoint: '/users/username',
     body: JSON.stringify({ username })
   })
 
-  revalidateTag('me')
+  revalidateTag(session.user.id)
 
   return response?.data
 }
 
 export const updateUserAvatar = async (formData: FormData) => {
+  const session = await auth()
+  if (!session) return null
+
   const response = await fetchBase<ApiResponse<IUser>>({
     method: 'PUT',
     endpoint: '/users/avatar',
     body: formData
   })
 
-  revalidateTag('me')
+  revalidateTag(session.user.id)
 
   return response?.data
 }

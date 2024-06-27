@@ -1,4 +1,5 @@
 import UserProfile from '@/components/home/player/user-profile'
+import { getUserProfile } from '@/server/actions/user'
 
 type Props = {
   params: {
@@ -12,8 +13,9 @@ export const generateMetadata = ({ params }: Props) => {
   }
 }
 
-export default function PlayerProfilePage({ params }: Props) {
+export default async function PlayerProfilePage({ params }: Props) {
   const { name } = params
+  const userProfile = await getUserProfile(name)
 
-  return <UserProfile username={name} />
+  return <UserProfile userProfile={userProfile} />
 }

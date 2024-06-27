@@ -17,7 +17,11 @@ export const createCheckoutSession = async (product: string, userId: string) => 
     noCache: true
   })
 
-  revalidateTag('me')
+  revalidateTag(userId)
 
   return response?.data
+}
+
+export const checkoutSuccess = async (userId: string) => {
+  revalidateTag(userId)
 }

@@ -1,8 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
-
-prisma.$extends({
+const prisma = new PrismaClient().$extends({
   query: {
     gameLog: {
       async update({ args, query }) {
@@ -25,6 +23,8 @@ prisma.$extends({
             },
           },
         })
+
+        return query(args)
       },
       async create({ args, query }) {
         const { data } = args

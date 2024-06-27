@@ -26,7 +26,7 @@ export const getAllStacks = async ({ pageParam = 1, filterOption = 'all', search
   const response = await fetchBase<ApiResponse<IStack[]>>({
     method: 'GET',
     endpoint,
-    tags: ['stacks']
+    noCache: true
   })
 
   return response?.data

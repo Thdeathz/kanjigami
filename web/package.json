@@ -52,7 +52,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@tanstack/react-query-devtools": "^5.32.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

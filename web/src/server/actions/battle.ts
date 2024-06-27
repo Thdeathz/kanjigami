@@ -63,7 +63,8 @@ export const getUserStats = async (slug?: string) => {
 export const adminGetAllBattles = async (page?: string) => {
   const response = await fetchBase<PaginationApiResponse<IBattle[]>>({
     method: 'GET',
-    endpoint: makeEndpoint('/events', { page, offset: 10 })
+    endpoint: makeEndpoint('/events/creator', { page, offset: 10 }),
+    noCache: true
   })
 
   return {

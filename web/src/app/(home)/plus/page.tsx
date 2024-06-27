@@ -42,7 +42,7 @@ export default async function PlusPage({ searchParams }: Props) {
       {user && (
         <>
           <Suspense key={success} fallback={null}>
-            <SuccessToast success={success} canceled={canceled} isPlus={user.isPlus} />
+            <SuccessToast success={success} canceled={canceled} isPlus={user.isPlus} userId={user.id} />
           </Suspense>
 
           <div className="mx-auto w-full max-w-[25rem]">

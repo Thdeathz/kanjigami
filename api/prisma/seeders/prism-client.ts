@@ -23,6 +23,8 @@ const prisma = new PrismaClient().$extends({
             },
           },
         })
+
+        return query(args)
       },
       async create({ args, query }) {
         const { data } = args
