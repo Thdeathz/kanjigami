@@ -4,9 +4,9 @@ import React, { useState } from 'react'
 
 import { FlipCardGameContent } from '@/@types/game'
 import { socket } from '@/components/connect-socket'
+import GameTime from '@/components/game/game-time'
 import Loading from '@/components/loading'
 import useGameEvent from '@/hooks/game/use-game-event'
-import GameTime from '@/components/game/game-time'
 
 import BlindCardGameContent from './GameContent'
 

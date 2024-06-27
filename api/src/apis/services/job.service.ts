@@ -6,9 +6,34 @@ import gameService from '@/apis/services/game.service'
 import redisService from '@/apis/services/redis.service'
 import io from '@/servers/init.socket'
 
-const startNextRound = async (event: IStartEventData) => {
+const startNextRound = async (executeTime: Date, event: IStartEventData) => {
   const currentRound = event.rounds.find((round) => round.status === 'ONGOING')
   const nextRound = event.rounds.find((round) => round.status === 'UPCOMING')
+
+  const isValidNextRound =
+    nextRound &&
+    Math.abs(
+      new Date(executeTime).getTime() -
+        (new Date(event.startAt).getTime() + nextRound.order * event.duration * 60 * 1000),
+    ) <=
+      30 * 1000
+  const isFinalRoundEnd =
+    Math.abs(
+      new Date(executeTime).getTime() -
+        (new Date(event.startAt).getTime() + event.rounds.length * event.duration * 60 * 1000),
+    ) <=
+    30 * 1000
+
+  console.log(
+    '===> current time, next round start time',
+    new Date(executeTime).getTime(),
+    new Date(event.startAt).getTime() + (nextRound?.order || 0) * event.duration * 60 * 1000,
+    new Date(event.startAt).getTime() + event.rounds.length * event.duration * 60 * 1000,
+    isValidNextRound,
+    isFinalRoundEnd,
+  )
+
+  if (!isValidNextRound && !isFinalRoundEnd) return
 
   // update current round status in database
   if (currentRound) await eventService.updateRoundStatus(currentRound.id, 'FINISHED')
@@ -63,7 +88,7 @@ const startNextRound = async (event: IStartEventData) => {
 
 const battleJob = (event: IStartEventData) => {
   // init event job
-  scheduleJob(new Date(event.startAt), async () => {
+  scheduleJob(new Date(event.startAt), async (executeTime) => {
     const foundEvent = await eventService.getStartEventData(event.slug)
     if (!foundEvent) return
 
@@ -74,21 +99,21 @@ const battleJob = (event: IStartEventData) => {
     await redisService.set('event', event.slug.toString(), foundEvent)
 
     // start round 1 immediately
-    startNextRound(foundEvent)
+    startNextRound(executeTime, foundEvent)
   })
 
   const eventRoundStartTime = new Date(event.startAt).getTime()
-  const eventRoundEndTime = new Date(event.startAt).getTime() + (event.rounds.length + 1) * event.duration * 60 * 1000
+  const eventRoundEndTime = new Date(event.startAt).getTime() + event.rounds.length * event.duration * 60 * 1000
 
   console.log('===> event time', eventRoundStartTime, eventRoundEndTime)
 
   // init round job run every 1 minute after event start
-  scheduleJob({ start: eventRoundStartTime, end: eventRoundEndTime, rule: `*/${event.duration} * * * *` }, async () => {
+  scheduleJob({ start: eventRoundStartTime, end: eventRoundEndTime, rule: `* * * * *` }, async (executeTime) => {
     const foundEvent = await redisService.get<IStartEventData>('event', event.slug.toString())
     if (!foundEvent) return
 
     // start next round
-    await startNextRound(foundEvent)
+    await startNextRound(executeTime, foundEvent)
   })
 }
 

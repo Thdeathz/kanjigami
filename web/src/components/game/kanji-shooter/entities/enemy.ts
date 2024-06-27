@@ -82,7 +82,7 @@ class Enemy extends Sprite {
       this.draw(ctx)
       ctx.save()
       ctx.fillStyle = this.color
-      ctx.fillText(this.keyword.romaji, this.position.x, this.position.y)
+      ctx.fillText(this.keyword.content, this.position.x, this.position.y)
       ctx.restore()
     }
   }

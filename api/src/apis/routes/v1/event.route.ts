@@ -4,6 +4,7 @@ import {
   createNewEvent,
   deleteEvent,
   getAllEvents,
+  getEventByCreator,
   getEventBySlug,
   getUserEventStats,
   getUserPlayedEventsList,
@@ -16,6 +17,8 @@ import { createNewEventSchema } from '@/apis/validations/event.validation'
 const router = Router()
 
 router.route('/').get(getAllEvents).post(verifyAccessToken, validateRequest(createNewEventSchema), createNewEvent)
+
+router.route('/creator').get(verifyAccessToken, getEventByCreator)
 
 router.route('/played').get(verifyAccessToken, getUserPlayedEventsList)
 

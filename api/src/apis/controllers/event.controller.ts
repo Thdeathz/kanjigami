@@ -17,14 +17,12 @@ export const getAllEvents: RequestHandler = async (req, res) => {
   const status = req.query.status as string
   const search = req.query.search as string
 
-  const { events, total } = await eventService.getAllEvents(
-    {
-      page,
-      offset,
-    },
+  const { events, total } = await eventService.getAllEvents({
+    page,
+    offset,
     status,
     search,
-  )
+  })
 
   res.json(makeResponse.pagination('Get all events success', StatusCodes.OK, events, total, offset, page))
 }
@@ -97,4 +95,19 @@ export const deleteEvent: RequestHandler = async (req, res) => {
   await eventService.deleteEvent(slug)
 
   res.json(makeResponse.defaultResponse('Delete event success', StatusCodes.OK))
+}
+
+/**
+ * @desc Get event by creator
+ * @route GET /events/creator
+ * @access Private
+ */
+export const getEventByCreator: RequestHandler = async (req, res) => {
+  const user = req.user as JwtPayload
+  const page = parseInt(<string>req.query.page) || 1
+  const offset = parseInt(<string>req.query.offset) || 6
+
+  const { events, total } = await eventService.getAllEvents({ page, offset, createdBy: user.id })
+
+  res.json(makeResponse.pagination('Get event by creator success', StatusCodes.OK, events, total, offset, page))
 }

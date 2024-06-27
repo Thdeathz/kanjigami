@@ -2,23 +2,8 @@ import React from 'react'
 
 import { IGameStackDetail } from '@/@types/game'
 import ButtonStart from '@/components/game/button-start'
+import LobbyInfoItem from '@/components/game/lobby-info-item'
 import { Panel } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
-
-type LobbyInfoItemProps = {
-  label: string
-  className?: string
-  children: React.ReactNode
-}
-
-function LobbyInfoItem({ label, className, children }: LobbyInfoItemProps) {
-  return (
-    <div className={cn('grid grid-cols-2 items-center gap-2 border', className)}>
-      <p className="border-r px-2 py-1 font-medium">{label}</p>
-      <div className="">{children}</div>
-    </div>
-  )
-}
 
 type Props = {
   gameStack: IGameStackDetail

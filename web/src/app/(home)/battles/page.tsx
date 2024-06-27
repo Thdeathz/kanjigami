@@ -41,12 +41,11 @@ export default async function BattlesPage({
         title="Online battles"
         description="Compete with players around the world and learn more kanji"
       >
-        {/* <Filter currentStatus={status.toUpperCase() as BattleStatus} /> */}
         {user?.isPlus && (
           <div className="flex gap-4">
             <Button link="/battles/create">Create a battle</Button>
 
-            <Button>My battles</Button>
+            <Button link="/battles/my-battle">My battles</Button>
           </div>
         )}
       </PageHeader>

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { MouseEvent, useEffect, useState } from 'react'
 
 import { ActiveCard, IImageContent, IWordContent } from '@/@types/game'

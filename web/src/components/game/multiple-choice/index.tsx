@@ -4,11 +4,11 @@ import React, { useState } from 'react'
 
 import { IMultipleChoiceGameContent } from '@/@types/game'
 import { socket } from '@/components/connect-socket'
+import GameTime from '@/components/game/game-time'
 import Loading from '@/components/loading'
 import useGameEvent from '@/hooks/game/use-game-event'
 
 import MultipleChoiceGameContent from './GameContent'
-import GameTime from '@/components/game/game-time'
 
 type Props = {
   sessionId: string

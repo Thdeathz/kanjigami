@@ -4,11 +4,11 @@ import { useState } from 'react'
 
 import { IKanjiShooterContent } from '@/@types/game'
 import { socket } from '@/components/connect-socket'
+import GameTime from '@/components/game/game-time'
 import Game from '@/components/game/kanji-shooter/entities/game'
 import KanjiShooterGameContent from '@/components/game/kanji-shooter/game-content'
 import Loading from '@/components/loading'
 import useGameEvent from '@/hooks/game/use-game-event'
-import GameTime from '@/components/game/game-time'
 
 type Props = {
   sessionId: string

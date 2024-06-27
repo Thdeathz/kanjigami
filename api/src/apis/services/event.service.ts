@@ -13,7 +13,7 @@ import eventTransformer, {
 } from '@/apis/transformers/event.transformer'
 import HttpError from '@/apis/utils/http-error'
 
-const getFilter = (status?: string, search?: string) => {
+const getFilter = (status?: string, search?: string, createdBy?: string) => {
   let returnFilter = {}
 
   if (status) returnFilter = { ...returnFilter, status }
@@ -26,11 +26,19 @@ const getFilter = (status?: string, search?: string) => {
       },
     }
 
+  if (createdBy) returnFilter = { ...returnFilter, createdBy }
+
   return returnFilter
 }
 
-const getAllEvents = async ({ page, offset }: PaginationRequest, status?: string, search?: string) => {
-  const where = getFilter(status, search)
+interface GetAllEventProps extends PaginationRequest {
+  status?: string
+  search?: string
+  createdBy?: string
+}
+
+const getAllEvents = async ({ page, offset, status, search, createdBy }: GetAllEventProps) => {
+  const where = getFilter(status, search, createdBy)
 
   const total = await prisma.event.count({
     where,

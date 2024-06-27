@@ -1,11 +1,11 @@
 'use client'
 
-import { checkoutSuccess } from '@/server/actions/plus'
-import { revalidateTag } from 'next/cache'
 import { useEffect } from 'react'
 import Confetti from 'react-confetti'
 import { toast } from 'sonner'
 import { useWindowSize } from 'usehooks-ts'
+
+import { checkoutSuccess } from '@/server/actions/plus'
 
 type Props = {
   success?: string

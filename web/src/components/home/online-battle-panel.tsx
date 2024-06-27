@@ -60,8 +60,10 @@ export default function OnlineBattlePanel({ battleData }: Props) {
             <span className="whitespace-nowrap text-default-text-lightest">{timeLabel}</span>
             {battleData.status === 'UPCOMING' ? (
               <CountDown endTime={battleData.startAt} />
-            ) : (
+            ) : battleData.status === 'FINISHED' ? (
               <span className="text-default-text-lightest">{timeDifference}</span>
+            ) : (
+              <span className="text-default-text-lightest">Ongoing battle</span>
             )}
           </div>
         </div>
