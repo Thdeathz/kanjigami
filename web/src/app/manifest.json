@@ -10,5 +10,23 @@
   "background_color": "#FFFFFF",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "description": "Kanjigami is a web app for learning Japanese kanji through game.",
+  "screenshots": [
+    {
+      "src": "https://storage.googleapis.com/kanjigami.pro/screenshot/online-battle.png",
+      "sizes": "640x1136",
+      "type": "image/png"
+    },
+    {
+      "src": "https://storage.googleapis.com/kanjigami.pro/screenshot/online-battle-playing.png",
+      "sizes": "640x1136",
+      "type": "image/png"
+    },
+    {
+      "src": "https://storage.googleapis.com/kanjigami.pro/screenshot/kanji-shooter-game.png",
+      "sizes": "640x1136",
+      "type": "image/png"
+    }
+  ]
 }
