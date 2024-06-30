@@ -4,6 +4,7 @@ import OngoingBattleLeaderboard from '@/components/home/battles/battle-detail/on
 
 import { Panel } from '../ui/card'
 
+import ButtonGuideToPlay from './button-guide-to-play'
 import ButtonStart from './button-start'
 import LobbyInfoItem from './lobby-info-item'
 
@@ -16,7 +17,7 @@ type Props = {
 
 export default function OnlineMenu({ gameStack, battleSlug, roundIndex, user }: Props) {
   return (
-    <div className="mx-auto grid w-[50vw] grid-cols-2 gap-4">
+    <div className="relative mx-auto grid w-[50vw] grid-cols-2 gap-4">
       <Panel>
         <h1 className="mb-4 text-center text-2xl font-semibold">{gameStack.game.name}</h1>
 
@@ -45,6 +46,8 @@ export default function OnlineMenu({ gameStack, battleSlug, roundIndex, user }: 
 
         <OngoingBattleLeaderboard slug={battleSlug} />
       </Panel>
+
+      {gameStack.game.name === 'Kanji Shooter' && <ButtonGuideToPlay />}
     </div>
   )
 }

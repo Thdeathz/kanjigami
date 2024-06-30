@@ -9,9 +9,10 @@ import ProfileStats from './profile-stats'
 
 type Props = {
   user: IUserData
+  isCurrentUser?: boolean
 }
 
-export default function MainProfile({ user }: Props) {
+export default function MainProfile({ user, isCurrentUser = false }: Props) {
   return (
     <div className="mt-24 w-full rounded-2xl bg-main-profile-light p-8 dark:bg-main-profile-dark">
       <div className="flex">
@@ -31,10 +32,12 @@ export default function MainProfile({ user }: Props) {
         </div>
 
         <div className="w-full">
-          <Button link="/settings" variant="primary" className="float-right">
-            <span className="hidden sm:block">Edit profile</span>
-            <AiFillEdit className="block sm:hidden" />
-          </Button>
+          {isCurrentUser && (
+            <Button link="/settings" variant="primary" className="float-right">
+              <span className="hidden sm:block">Edit profile</span>
+              <AiFillEdit className="block sm:hidden" />
+            </Button>
+          )}
         </div>
       </div>
 

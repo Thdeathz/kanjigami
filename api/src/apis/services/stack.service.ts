@@ -334,6 +334,7 @@ const getStackDetailToEdit = async (slug: string) => {
       name: true,
       description: true,
       image: true,
+      authorId: true,
       topics: {
         select: {
           name: true,

@@ -21,6 +21,8 @@ export default async function EditStackPage({ params }: Props) {
     return <RequirePlus />
   }
 
+  if (!stack) return <p>Stack not found</p>
+
   return (
     <div className="space-y-8 sm:space-y-12">
       <PageHeader icon={<BsStack />} title={stack?.name ?? 'Unknown'} />

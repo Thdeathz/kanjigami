@@ -156,9 +156,13 @@ export const getStackByAuthor: RequestHandler = async (req, res) => {
  * @access Private
  */
 export const getStackDetailToEdit: RequestHandler = async (req, res) => {
+  const user = req.user as JwtPayload
   const slug = req.params.slug
 
   const stack = await stackService.getStackDetailToEdit(slug)
+
+  if (stack.authorId !== user.id)
+    return res.json(makeResponse.defaultResponse('You are not the author of this stack', StatusCodes.FORBIDDEN))
 
   res.json(makeResponse.defaultResponse('Get stack detail to edit success', StatusCodes.OK, stack))
 }

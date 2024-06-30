@@ -2,13 +2,14 @@ import type { Socket } from 'socket.io'
 
 import { IGetGameContentRequest } from '../@types/game'
 
+import { getBattleTopUser } from './online-battle.controller'
+
 import { IStartEventData } from '@/apis/@types/event'
 import { IGameData, IWord } from '@/apis/@types/game'
 import gameService from '@/apis/services/game.service'
 import redisService from '@/apis/services/redis.service'
 import io from '@/servers/init.socket'
 import { IJoinedUser } from '@/sockets/@types/event'
-import { getBattleTopUser } from '@/sockets/events/online-battle.event'
 
 const handleGetContent = async (socket: Socket, { sessionId, userId, type }: IGetGameContentRequest) => {
   const gameData = await redisService.get<IGameData<IWord>>('game', sessionId)
@@ -26,7 +27,7 @@ const handleGetContent = async (socket: Socket, { sessionId, userId, type }: IGe
 
   socket.emit('game:content', {
     words: gameData.words,
-    gameTime: gameTime - 5,
+    gameTime: gameTime - 3,
   })
 }
 
