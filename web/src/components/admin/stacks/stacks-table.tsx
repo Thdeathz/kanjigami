@@ -6,6 +6,7 @@ import { AiTwotoneDelete, AiTwotoneEdit } from 'react-icons/ai'
 import Loading from '@/components/loading'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Panel } from '@/components/ui/card'
 import { PagePagination } from '@/components/ui/pagination'
 import { DefaultTable } from '@/components/ui/table'
 import { useAdminGetAllStacksQuery } from '@/data/stack'
@@ -22,7 +23,7 @@ export default function StacksTable({ page }: Props) {
   if (!stacks || !stacks.data) return <p>Stacks empty.</p>
 
   return (
-    <>
+    <Panel>
       <DefaultTable
         columns={[
           {
@@ -61,9 +62,9 @@ export default function StacksTable({ page }: Props) {
           {
             title: 'Action',
             dataIndex: 'action',
-            render: () => (
+            render: (_, row) => (
               <div className="flex-center gap-4">
-                <Button variant="primary" shape="circle">
+                <Button variant="primary" shape="circle" link={`/stacks/${row.slug}/edit`}>
                   <AiTwotoneEdit />
                 </Button>
                 <Button variant="danger" shape="circle">
@@ -83,6 +84,6 @@ export default function StacksTable({ page }: Props) {
       />
 
       <PagePagination className="mt-4" currentPage={Number(page)} availablePages={stacks.pagination?.totalPages ?? 0} />
-    </>
+    </Panel>
   )
 }

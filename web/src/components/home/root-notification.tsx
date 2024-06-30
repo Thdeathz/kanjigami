@@ -41,10 +41,13 @@ export default function RootNotification({ notifications }: Props) {
 
               <p>
                 {noti.action}{' '}
-                <Link className="text-default-link" href={`/stacks/${noti.link}`}>
+                <Link
+                  className="text-default-link"
+                  href={noti.type === 'EVENT' ? `/battles/${noti.link}` : `/stacks/${noti.link}`}
+                >
                   #{noti.link}
                 </Link>{' '}
-                with {noti.point} point 🚀.
+                with {noti.point} point {noti.type === 'EVENT' ? '👑' : '🚀'}.
               </p>
 
               <p className="text-default-text-lightest">{noti.createdAt}</p>

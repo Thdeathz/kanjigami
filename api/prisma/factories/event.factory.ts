@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { BattleStatus, BattleType, GameLogType, GameStack, User } from '@prisma/client'
+import { BattleStatus, BattleType, GameLogType, GameStack, User, UserRole } from '@prisma/client'
 
 type GameLog = {
   point: number
@@ -36,7 +36,7 @@ const eventFactory = async (users: User[], gameStacks: GameStack[]) => {
 
     const duration = faker.number.int({ min: 10, max: 20 })
     const joinedUsers: User[] = faker.helpers.shuffle(users).slice(0, 20)
-    const createdBy = faker.helpers.arrayElement(joinedUsers)
+    const createdBy = users.find((user) => user.role === UserRole.ADMIN)!
 
     let startAt = faker.date.future()
     if (status === BattleStatus.FINISHED) startAt = faker.date.past()

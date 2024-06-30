@@ -2,7 +2,8 @@ import type { RequestHandler } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
 import { JwtPayload } from '../@types/auth'
-import { StacksFilterOption } from '../@types/stack'
+import { ICreateStackRequest, IGameStackRequest, StacksFilterOption } from '../@types/stack'
+import uploadService from '../services/upload.service'
 
 import kanjiService from '@/apis/services/kanji.service'
 import stackService from '@/apis/services/stack.service'
@@ -23,16 +24,14 @@ export const getAllStacks: RequestHandler = async (req, res) => {
 
   const user = req.user as JwtPayload
 
-  const { stacks, total } = await stackService.getAllStacks(
-    {
-      page,
-      offset,
-    },
-    user?.id,
+  const { stacks, total } = await stackService.getAllStacks({
+    page,
+    offset,
+    currentUserId: user?.id,
     filter,
-    search?.trim(),
+    search: search?.trim(),
     topic,
-  )
+  })
 
   res.json(makeResponse.pagination('Get all stacks success', StatusCodes.OK, stacks, total, offset, page))
 }
@@ -104,4 +103,76 @@ export const searchStacks: RequestHandler = async (req, res) => {
   const stacks = await stackService.searchStack(search)
 
   res.json(makeResponse.defaultResponse('Search stacks success', StatusCodes.OK, stacks))
+}
+
+/**
+ * @desc Create stack
+ * @route POST /stacks
+ * @access Private
+ */
+export const createStack: RequestHandler = async (req, res) => {
+  const user = req.user as JwtPayload
+
+  const images = req.files as Express.Multer.File[]
+  const data = req.body as ICreateStackRequest
+
+  const imageUrl: string[] = []
+  for (const image of images) {
+    const extension = image?.originalname.split('.').pop()
+    if (!extension) return
+
+    const url = await uploadService.upload({ fileBuffer: image.buffer, prefix: 'thumbnail/', extension })
+    imageUrl.push(url)
+  }
+
+  const stack = await stackService.createStack(data, imageUrl, user.id)
+
+  res.json(makeResponse.defaultResponse('Create stack success', StatusCodes.CREATED, stack))
+}
+
+/**
+ * @desc Get all stacks by author
+ * @route GET /stacks/author
+ * @access Private
+ */
+export const getStackByAuthor: RequestHandler = async (req, res) => {
+  const page = parseInt(<string>req.query.page) || 1
+  const offset = parseInt(<string>req.query.offset) || 10
+
+  const user = req.user as JwtPayload
+
+  const { stacks, total } = await stackService.getAllStacks({
+    page,
+    offset,
+    authorId: user?.id,
+  })
+
+  res.json(makeResponse.pagination('Get all stacks success', StatusCodes.OK, stacks, total, offset, page))
+}
+
+/**
+ * @desc Get stack detail to edit
+ * @route GET /stacks/:slug/edit
+ * @access Private
+ */
+export const getStackDetailToEdit: RequestHandler = async (req, res) => {
+  const slug = req.params.slug
+
+  const stack = await stackService.getStackDetailToEdit(slug)
+
+  res.json(makeResponse.defaultResponse('Get stack detail to edit success', StatusCodes.OK, stack))
+}
+
+/**
+ * @desc Edit game stack
+ * @route PUT /stacks/:slug/game
+ * @access Private
+ */
+export const editGameStack: RequestHandler = async (req, res) => {
+  const slug = req.params.slug
+  const data = req.body as IGameStackRequest[]
+
+  await stackService.editGameStack(slug, data)
+
+  res.json(makeResponse.defaultResponse('Edit game stack success', StatusCodes.OK))
 }

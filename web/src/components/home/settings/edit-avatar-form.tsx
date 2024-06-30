@@ -67,7 +67,13 @@ export default function EditAvatarForm({ currentAvatar }: Props) {
             </div>
           )}
 
-          <Input id="avatar" className="w-full sm:w-min" type="file" onChange={handleFileChange} />
+          <Input
+            id="avatar"
+            className="w-full sm:w-min"
+            type="file"
+            accept=".png, .jpg, .jpeg, .webp"
+            onChange={handleFileChange}
+          />
         </div>
       </div>
       <div className="pt-2 font-medium tracking-[0.2px] text-default-text-light">

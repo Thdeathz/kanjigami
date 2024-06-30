@@ -341,10 +341,21 @@ const saveScoreOnlineGame = async (roundId: string, userId: string, { score, tim
   return gameLog
 }
 
+const getAllGame = async () => {
+  return await prisma.game.findMany({
+    select: {
+      id: true,
+      name: true,
+      image: true,
+    },
+  })
+}
+
 export default {
   getGameStackDetail,
   getGameData,
   saveScoreOfflineGame,
   saveScoreOnlineGame,
   getResult,
+  getAllGame,
 }

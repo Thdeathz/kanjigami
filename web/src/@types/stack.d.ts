@@ -1,3 +1,5 @@
+import { IFile } from '.'
+
 export interface IStack {
   id: string
   name: string
@@ -84,4 +86,39 @@ export interface ISearchStackResult {
   numberFollowed: number
 }
 
-export interface ICreateWordRequest {}
+export interface ICreateStackRequest {
+  name: string
+  description: string
+  topic: string
+  image?: string
+  words: ICreateWordRequest[]
+  games: IGameStackRequest[]
+}
+
+export interface ICreateWordRequest {
+  id: number
+  image: IFile
+  content: string
+  hiragana: string
+  romaji: string
+  meaning: string
+  examples: INewWordExampleRequest[]
+}
+
+export interface INewWordExampleRequest {
+  id: number
+  content: string
+  romaji: string
+  meaning: string
+}
+
+export interface IGameStackRequest {
+  id: number
+  game: {
+    id: string
+    name: string
+    image: string
+  }
+  numberOfWords: number
+  timeLimit: number
+}

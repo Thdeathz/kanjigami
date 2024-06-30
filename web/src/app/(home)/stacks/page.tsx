@@ -42,7 +42,7 @@ export default async function KanjiStackPage({
           <div className="flex gap-4">
             <Button link="/stacks/create">Create new stack</Button>
 
-            <Button>My stacks</Button>
+            <Button link="/stacks/my-stack">My stacks</Button>
           </div>
         )}
       </PageHeader>

@@ -1,5 +1,6 @@
 'use client'
 
+import { useTransition } from 'react'
 import { toast } from 'sonner'
 
 import { IUserInfo } from '@/@types/auth'
@@ -8,6 +9,7 @@ import PlusBadge from '@/components/plus-badge'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useCreateCheckoutSessionMutation } from '@/data/plus'
+import { createSubscriptionManagementLink } from '@/server/actions/plus'
 
 type PricingItemProps = {
   title: string
@@ -50,12 +52,12 @@ function CreateCheckoutSession({ disabled, productId, userId }: CreateCheckoutSe
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="flex-center">
       <Button variant="primary" disabled={isPending || disabled} onClick={handleCreateCheckoutSession}>
         {isPending ? <Loading /> : 'Upgrade to PLUS'}
       </Button>
 
-      <Button>Gift PLUS</Button>
+      {/* <Button>Gift PLUS</Button> */}
     </div>
   )
 }
@@ -65,6 +67,22 @@ type Props = {
 }
 
 export default function PricingPanel({ user }: Props) {
+  const [isPending, startTransition] = useTransition()
+
+  const onCreateBillingManagementLink = () => {
+    startTransition(async () => {
+      try {
+        const result = await createSubscriptionManagementLink()
+
+        if (!result) return
+
+        window.location.href = result.url
+      } catch (error) {
+        toast.error('Failed to create billing management link. Please try again later.')
+      }
+    })
+  }
+
   if (user.isPlus) {
     return (
       <div className="space-y-6">
@@ -75,6 +93,12 @@ export default function PricingPanel({ user }: Props) {
         <p className="text-center font-medium text-default-text-light">
           You&apos;re a PLUS member and we couldn&apos;t be more thrilled. Thank you for supporting us ❤️
         </p>
+
+        <div className="flex-center">
+          <Button variant="primary" isLoading={isPending} onClick={onCreateBillingManagementLink}>
+            Manage billing
+          </Button>
+        </div>
       </div>
     )
   }

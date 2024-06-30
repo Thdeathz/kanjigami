@@ -64,11 +64,10 @@ export function AdminSidebarMenu() {
   return (
     <div className="border-r border-solid border-border-1">
       <SideSection>
-        <SideLink link="/admin" icon={<FaHome />} title="Dashboard" />
+        <SideLink link="/admin" icon={<FaHome />} title="Home" />
       </SideSection>
 
       <SideSection title="Setting">
-        <SideLink link="/admin/home" icon={<FaHome />} title="Home" />
         <SideLink link="/admin/battles" icon={<RiSwordFill />} title="Battle" />
         <SideLink link="/admin/stacks" icon={<BsStack />} title="Stack" />
       </SideSection>

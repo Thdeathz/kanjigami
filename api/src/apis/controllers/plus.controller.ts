@@ -3,6 +3,8 @@ import type { RequestHandler } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import type Stripe from 'stripe'
 
+import { JwtPayload } from '../@types/auth'
+
 import { ICheckoutSessionCustomerMetadata, ICheckoutSessionRequest } from '@/apis/@types/plus'
 import checkoutService from '@/apis/services/checkout.service'
 import userService from '@/apis/services/user.service'
@@ -41,6 +43,11 @@ export const createCheckoutSession: RequestHandler = async (req, res) => {
   res.json(makeResponse.defaultResponse('Checkout session created', StatusCodes.OK, { url: session.url }))
 }
 
+/**
+ * @desc Handle stripe webhook
+ * @route POST /plus/webhook
+ * @access Public
+ */
 export const stripeWebhook: RequestHandler = async (req, res) => {
   let data
   let eventType: Stripe.Event['type']
@@ -72,11 +79,45 @@ export const stripeWebhook: RequestHandler = async (req, res) => {
   // Handle the checkout.session.completed event
   if (eventType === 'checkout.session.completed') {
     const customerData = (await stripe.customers.retrieve(data.customer)) as any
+    console.log('==> customerData', data.customer, customerData)
     const userData = customerData.metadata as ICheckoutSessionCustomerMetadata
 
-    const { userId } = await checkoutService.saveCheckoutSession(userData.userId, data.id, userData.product)
+    const { userId } = await checkoutService.saveCheckoutSession(
+      userData.userId,
+      data.id,
+      userData.product,
+      data.customer,
+    )
     await userService.updateUserPlan(userId)
   }
 
+  // Handle the customer.subscription.updated event
+  if (eventType === 'customer.subscription.updated') {
+    const customerData = (await stripe.customers.retrieve(data.customer)) as any
+    const userData = customerData.metadata as ICheckoutSessionCustomerMetadata
+
+    if (data.status === 'canceled') {
+      await checkoutService.cancelCheckoutSession(userData.userId, new Date(data.cancel_at))
+    }
+  }
+
   res.status(200).end()
+}
+
+export const createSubscriptionManagementLink: RequestHandler = async (req, res) => {
+  const user = req.user as JwtPayload
+
+  const customer = await checkoutService.getCheckoutSession(user.id)
+
+  if (!customer) {
+    res.json(makeResponse.defaultResponse('Customer not found', StatusCodes.NOT_FOUND))
+    return
+  }
+
+  const link = await stripe.billingPortal.sessions.create({
+    customer: customer.customerId,
+    return_url: `${process.env.WEB_URL}/plus`,
+  })
+
+  res.json(makeResponse.defaultResponse('Billing portal link created', StatusCodes.OK, { url: link.url }))
 }

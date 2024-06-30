@@ -37,7 +37,7 @@ export default function CardWrapper({
         width="300"
         height="300"
         priority
-        className="aspect-4/3 w-full rounded-[0.4rem] border-[3px] border-default-stack"
+        className="aspect-4/3 w-full rounded-[0.4rem] border-[3px] border-default-stack object-cover"
       />
 
       {children}

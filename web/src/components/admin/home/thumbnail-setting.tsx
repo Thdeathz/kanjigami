@@ -81,6 +81,7 @@ export default function ThumbnailSetting({ thumbnails }: Props) {
                 type="file"
                 className="absolute left-0 top-0 z-10 h-full w-full cursor-pointer opacity-0"
                 onChange={(e) => onFileChange(e, image.id)}
+                accept=".png, .jpg, .jpeg, .webp"
               />
 
               <div className="flex-center invisible absolute left-0 top-0 h-full w-full cursor-pointer opacity-0 backdrop-blur-sm transition-all duration-200 group-hover:visible group-hover:bg-underlay group-hover:opacity-100">

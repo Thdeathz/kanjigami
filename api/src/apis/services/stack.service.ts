@@ -1,9 +1,16 @@
 import { PaginationRequest } from '../@types'
-import { StacksFilterOption } from '../@types/stack'
+import { ICreateStackRequest, IGameStackRequest, StacksFilterOption } from '../@types/stack'
 import prisma from '../databases/init.prisma'
 import stackTransformer, { StackDetailResponse, StacksResponse } from '../transformers/stack.transformer'
+import HttpError from '../utils/http-error'
 
-const getFilter = (filter?: StacksFilterOption, currentUserId?: string, search?: string, topic?: string) => {
+const getFilter = (
+  filter?: StacksFilterOption,
+  currentUserId?: string,
+  search?: string,
+  topic?: string,
+  authorId?: string,
+) => {
   let returnFilter = {}
 
   if (filter === 'played' && currentUserId)
@@ -56,17 +63,25 @@ const getFilter = (filter?: StacksFilterOption, currentUserId?: string, search?:
       },
     }
 
+  if (authorId)
+    returnFilter = {
+      ...returnFilter,
+      authorId: authorId,
+    }
+
   return returnFilter
 }
 
-const getAllStacks = async (
-  { page, offset }: PaginationRequest,
-  currentUserId?: string,
-  filter?: StacksFilterOption,
-  search?: string,
-  topic?: string,
-) => {
-  const where = getFilter(filter, currentUserId, search, topic)
+interface GetAllStacksProps extends PaginationRequest {
+  currentUserId?: string
+  filter?: StacksFilterOption
+  search?: string
+  topic?: string
+  authorId?: string
+}
+
+const getAllStacks = async ({ page, offset, currentUserId, filter, search, topic, authorId }: GetAllStacksProps) => {
+  const where = getFilter(filter, currentUserId, search, topic, authorId)
 
   const total = await prisma.stack.count({
     where,
@@ -264,9 +279,178 @@ const searchStack = async (search: string) => {
   return { ...stack, numberWords, numberFollowed }
 }
 
+const createStack = async (data: ICreateStackRequest, imageUrl: string[], createdBy: string) => {
+  const topics = [data.topic]
+
+  const stack = await prisma.stack.create({
+    data: {
+      name: data.name,
+      description: data.description,
+      image: imageUrl.shift() as string,
+      topics: {
+        connectOrCreate: topics.map((topic) => ({
+          where: {
+            name: topic,
+          },
+          create: {
+            name: topic,
+          },
+        })),
+      },
+      words: {
+        create: data.words.map((word) => ({
+          content: word.content,
+          hiragana: word.hiragana,
+          romaji: word.romaji,
+          meaning: word.meaning,
+          image: imageUrl.shift() as string,
+          examples: {
+            create: word.examples.map((example) => ({
+              content: example.content,
+              romaji: example.romaji,
+              meaning: example.meaning,
+            })),
+          },
+        })),
+      },
+      author: {
+        connect: {
+          id: createdBy,
+        },
+      },
+    },
+  })
+
+  return stack
+}
+
+const getStackDetailToEdit = async (slug: string) => {
+  const stack = await prisma.stack.findUnique({
+    where: {
+      slug: Number(slug),
+    },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      image: true,
+      topics: {
+        select: {
+          name: true,
+        },
+      },
+      words: {
+        select: {
+          id: true,
+          content: true,
+          hiragana: true,
+          romaji: true,
+          meaning: true,
+          image: true,
+          examples: {
+            select: {
+              id: true,
+              content: true,
+              romaji: true,
+              meaning: true,
+            },
+          },
+        },
+      },
+      games: {
+        select: {
+          id: true,
+          game: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+            },
+          },
+          numberOfWords: true,
+          timeLimit: true,
+        },
+      },
+    },
+  })
+
+  return {
+    ...stack,
+    topic: stack?.topics.map((topic) => topic.name).join(', '),
+  }
+}
+
+const editGameStack = async (slug: string, data: IGameStackRequest[]) => {
+  const stack = await prisma.stack.findUnique({
+    where: {
+      slug: Number(slug),
+    },
+    select: {
+      id: true,
+      games: {
+        select: {
+          id: true,
+          game: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      },
+    },
+  })
+
+  if (!stack) {
+    throw new HttpError(404, 'Stack not found')
+  }
+
+  for (const game of data) {
+    const isHasGame = stack?.games.find((each) => each.game.id === game.game.id)
+
+    if (!isHasGame) {
+      await prisma.gameStack.create({
+        data: {
+          game: {
+            connect: {
+              id: game.game.id,
+            },
+          },
+          stack: {
+            connect: {
+              id: stack?.id,
+            },
+          },
+          numberOfWords: game.numberOfWords,
+          timeLimit: game.timeLimit,
+        },
+      })
+    } else {
+      await prisma.gameStack.update({
+        where: {
+          id: isHasGame.id,
+        },
+        data: {
+          game: {
+            connect: {
+              id: game.game.id,
+            },
+          },
+          numberOfWords: game.numberOfWords,
+          timeLimit: game.timeLimit,
+        },
+      })
+    }
+  }
+
+  return stack
+}
+
 export default {
   getAllStacks,
   getStackBySlug,
   followStack,
   searchStack,
+  createStack,
+  getStackDetailToEdit,
+  editGameStack,
 }

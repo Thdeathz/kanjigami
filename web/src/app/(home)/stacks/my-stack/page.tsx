@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 
-import BattlesTable from '@/components/admin/battles/battles-table'
+import StacksTable from '@/components/admin/stacks/stacks-table'
 import PageHeader from '@/components/home/page-header'
 import RequirePlus from '@/components/home/require-plus'
 import Loading from '@/components/loading'
@@ -13,7 +13,7 @@ type Props = {
   }
 }
 
-export default async function MyBattle({ searchParams }: Props) {
+export default async function MyStack({ searchParams }: Props) {
   const page = searchParams.page || '1'
   const user = await getCurrentUserInfo()
 
@@ -23,12 +23,12 @@ export default async function MyBattle({ searchParams }: Props) {
 
   return (
     <div className="space-y-8 sm:space-y-12">
-      <PageHeader title="My battles" description="My battle which i had created" />
+      <PageHeader title="My stacks" description="My stack which i had created" />
 
-      <SectionDivider title="Battles" />
+      <SectionDivider title="Stacks" />
 
       <Suspense key={page} fallback={<Loading className="text-4xl" />}>
-        <BattlesTable page={page} />
+        <StacksTable page={page} />
       </Suspense>
     </div>
   )

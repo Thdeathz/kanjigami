@@ -2,18 +2,21 @@ import Image from 'next/image'
 
 type Props = {
   index: number
+  image: string
+  title: string
+  description: string
 }
 
-export default function BenefitItem({ index }: Props) {
+export default function BenefitItem({ index, image, title, description }: Props) {
   return (
     <div className="space-y-8 rounded-2xl border-2 border-border-1 p-6 sm:p-8">
       <Image
-        src="/images/lock.png"
+        src={image}
         alt="thumbnail"
         priority
         width={1920}
         height={1080}
-        className="aspect-video w-full rounded-lg object-cover"
+        className="aspect-video w-full rounded-lg object-cover shadow-glory"
       />
 
       <div className="flex items-start justify-center gap-4">
@@ -22,11 +25,8 @@ export default function BenefitItem({ index }: Props) {
         </div>
 
         <div className="font-medium">
-          <h6 className="text-lg font-semibold text-default-brand">Amazing benefit</h6>
-          <p className="text-default-text-lightest">
-            Benefit description, benefit description, benefit description, benefit description, benefit description,
-            benefit description, benefit description, benefit description
-          </p>
+          <h6 className="text-lg font-semibold text-default-brand">{title}</h6>
+          <p className="text-default-text-lightest">{description}</p>
         </div>
       </div>
     </div>

@@ -50,7 +50,7 @@ export default async function PlusPage({ searchParams }: Props) {
               <PricingPanel user={user} />
             </Panel>
             <p className="mt-3 text-sm font-medium text-default-text-lightest">
-              Cancel anytime. 100% refund if cancelled within 7 days. <br /> Additional taxes may apply.
+              Cancel anytime. Additional taxes may apply.
             </p>
           </div>
         </>
@@ -60,15 +60,26 @@ export default async function PlusPage({ searchParams }: Props) {
         <h3 className="text-2xl font-semibold text-default-heading">Plus membership benefits ✨</h3>
 
         <div className="mt-4 gap-8 space-y-4 sm:grid sm:grid-cols-auto-fill-benefit sm:space-y-0">
-          <BenefitItem index={1} />
+          <BenefitItem
+            index={1}
+            image="https://storage.googleapis.com/kanjigami.pro/screenshot/create-battle-benefit-dark.png"
+            title="Create your own battles"
+            description="Create your own battles with custom words. Challenge your friends and see who knows more!"
+          />
 
-          <BenefitItem index={2} />
+          <BenefitItem
+            index={2}
+            image="https://storage.googleapis.com/kanjigami.pro/screenshot/create-stack-benefit-dark.png"
+            title="Create your own stacks"
+            description="Create your own stacks with custom words. Share them with your friends and see who can memorize more!"
+          />
 
-          <BenefitItem index={3} />
-
-          <BenefitItem index={4} />
-
-          <BenefitItem index={5} />
+          <BenefitItem
+            index={3}
+            image="https://storage.googleapis.com/kanjigami.pro/screenshot/plus-badge-benefit-dark.png"
+            title="Exclusive Plus badge"
+            description="A shiny badge that shows you are a Plus member. Show off your badge in battles and stacks!"
+          />
         </div>
       </div>
     </div>
