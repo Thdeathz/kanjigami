@@ -37,7 +37,12 @@ export default function StackDetailOnlineContent({ slug, openWord, notifications
           ))}
         </div>
         {/* <ButtonDownLoad stack={stack} /> */}
-        {isLoggedIn && <ButtonBookmark stackId={stack.id} isFollowed={stack.isFollowed} />}
+        {isLoggedIn && (
+          <div className="flex-center gap-4">
+            <ButtonBookmark stackId={stack.id} isFollowed={stack.isFollowed} />
+            {/* <ButtonReport /> */}
+          </div>
+        )}
       </PageHeader>
 
       <RootNotification notifications={notifications} />

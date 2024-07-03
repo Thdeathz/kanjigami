@@ -9,10 +9,10 @@ const topicFactory = async () => {
 
   await Promise.all(
     Array.from({ length: 25 }).map(async () => {
-      const name = faker.word.noun()
+      const name = faker.helpers.uniqueArray(faker.lorem.words, 1)
 
       topics.push({
-        name,
+        name: name[0],
       })
     }),
   )

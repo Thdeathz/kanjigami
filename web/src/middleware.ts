@@ -44,7 +44,7 @@ export default auth(async (req) => {
 
   if (isAdminRoute && !isAdmin) return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
 
-  if (!isAdminRoute && isAdmin) return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT_ADMIN, nextUrl))
+  // if (!isAdminRoute && isAdmin) return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT_ADMIN, nextUrl))
 
   if (!token && !isPublicRoute) {
     return NextResponse.redirect(new URL('/login', nextUrl))

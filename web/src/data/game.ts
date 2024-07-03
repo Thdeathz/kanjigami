@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { getGameResult, getGameStackDetail, startGame } from '@/server/actions/game'
+import { getAllGames, getGameResult, getGameStackDetail, startGame } from '@/server/actions/game'
 
 export const useGetGameStackQuery = (id: string) =>
   useQuery({
@@ -18,4 +18,10 @@ export const useGetGameResultQuery = (id: string) =>
   useQuery({
     queryKey: ['stacks', 'game-result', id],
     queryFn: async () => getGameResult(id)
+  })
+
+export const useGetAllGamesQuery = () =>
+  useQuery({
+    queryKey: ['games'],
+    queryFn: async () => getAllGames()
   })

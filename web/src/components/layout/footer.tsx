@@ -22,8 +22,8 @@ export default function Footer() {
       <p className="text-center text-base text-default-text-lightest">© 2023Thdeathz - Kanji game website</p>
       <div className="flex items-center justify-center gap-6 text-default-link">
         <FooterLink link="/" title="FAQs" ariaLabel="FAQ page link" />
-        <FooterLink link="/" title="Contact" ariaLabel="Contact us page link" />
-        <FooterLink link="/" title="Privacy & Terms" ariaLabel="Privacy and terms page link" />
+        <FooterLink link="/contact" title="Contact" ariaLabel="Contact us page link" />
+        <FooterLink link="/privacy-and-terms" title="Privacy & Terms" ariaLabel="Privacy and terms page link" />
 
         <Link href="https://github.com/Thdeathz" target="_blank" aria-label="Github link">
           <BsGithub />

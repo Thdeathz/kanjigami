@@ -74,3 +74,14 @@ export const getGameResult: RequestHandler = async (req, res) => {
     .status(StatusCodes.OK)
     .json(makeResponse.defaultResponse('Get game result success', StatusCodes.OK, result))
 }
+
+/**
+ * @desc Get all game
+ * @route GET /games
+ * @access Public
+ */
+export const getAllGame: RequestHandler = async (req, res) => {
+  const games = await gameService.getAllGame()
+
+  return res.status(StatusCodes.OK).json(makeResponse.defaultResponse('Get all game success', StatusCodes.OK, games))
+}

@@ -3,7 +3,9 @@ import { scheduleJob } from 'node-schedule'
 import { IStartEventData } from '@/apis/@types/event'
 import eventService from '@/apis/services/event.service'
 import gameService from '@/apis/services/game.service'
+import notificationService from '@/apis/services/notification.service'
 import redisService from '@/apis/services/redis.service'
+import roundService from '@/apis/services/round.service'
 import io from '@/servers/init.socket'
 
 const startNextRound = async (executeTime: Date, event: IStartEventData) => {
@@ -36,11 +38,12 @@ const startNextRound = async (executeTime: Date, event: IStartEventData) => {
   if (!isValidNextRound && !isFinalRoundEnd) return
 
   // update current round status in database
-  if (currentRound) await eventService.updateRoundStatus(currentRound.id, 'FINISHED')
+  if (currentRound) await roundService.updateRoundStatus(currentRound.id, 'FINISHED')
 
   // update event status in database if all rounds are finished
   if (!nextRound && currentRound) {
     await eventService.updateEventStatus(event.slug, 'FINISHED')
+    await notificationService.recordEventHighestScore(event.id)
     await redisService.del('event', event.slug.toString())
     await redisService.del('event', `${event.slug}:users`)
     io.to(event.slug.toString()).emit('battle:finished', event.slug.toString())

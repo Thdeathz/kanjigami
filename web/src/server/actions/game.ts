@@ -3,7 +3,7 @@
 import { revalidateTag } from 'next/cache'
 
 import { ApiResponse } from '@/@types'
-import { IGameResult, IGameStackDetail } from '@/@types/game'
+import { IGame, IGameResult, IGameStackDetail } from '@/@types/game'
 import fetchBase from '@/lib/fetch-base'
 import { auth } from '@/server/auth'
 
@@ -39,6 +39,15 @@ export const getGameResult = async (id: string) => {
 
   revalidateTag('leaderboard')
   revalidateTag(session.user.id)
+
+  return response?.data
+}
+
+export const getAllGames = async () => {
+  const response = await fetchBase<ApiResponse<IGame[]>>({
+    method: 'GET',
+    endpoint: `/games`
+  })
 
   return response?.data
 }

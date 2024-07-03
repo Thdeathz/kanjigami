@@ -37,7 +37,7 @@ export default function StackCard({ stackId, name, image, slug, userPoint, isFol
     <motion.div variants={grid.item(0.2)}>
       <CardWrapper link={`/stacks/${slug}`} imageUrl={image}>
         <div className="p-2">
-          <h2 className="mb-2 text-lg font-semibold text-default-heading">{name}</h2>
+          <h2 className="mb-2 truncate text-lg font-semibold text-default-heading">{name}</h2>
 
           <UserHiScore score={userPoint} />
 

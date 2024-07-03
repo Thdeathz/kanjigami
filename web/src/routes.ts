@@ -10,7 +10,9 @@ export const publicRoutes: RegExp[] = [
   /\/battles/,
   /\/stacks/,
   /\/plus/,
-  /\/downloads/
+  /\/downloads/,
+  /\/privacy-and-terms/,
+  /\/contact/
 ]
 
 export const adminRoutesPrefix: string = '/admin'

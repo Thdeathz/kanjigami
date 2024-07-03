@@ -103,7 +103,56 @@ const recordNewHighScore = async (gameStackId: string, userId: string) => {
   }
 }
 
+const recordEventHighestScore = async (eventId: string) => {
+  const currentEvent = await prisma.event.findUnique({
+    where: {
+      id: eventId,
+    },
+    select: {
+      slug: true,
+      rounds: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  })
+
+  if (!currentEvent) return
+
+  const currentHighScore = await prisma.gameLog.groupBy({
+    by: ['userId'],
+    where: {
+      roundId: {
+        in: currentEvent.rounds.map((round) => round.id),
+      },
+    },
+    _sum: {
+      point: true,
+    },
+    orderBy: {
+      _sum: {
+        point: 'desc',
+      },
+    },
+    take: 1,
+  })
+
+  if (currentHighScore.length > 0) {
+    await prisma.notification.create({
+      data: {
+        userId: currentHighScore[0].userId,
+        action: 'got rank 1 on event',
+        type: NotificationType.EVENT,
+        link: currentEvent.slug.toString(),
+        point: currentHighScore[0]._sum.point,
+      },
+    })
+  }
+}
+
 export default {
   getNewestNotification,
   recordNewHighScore,
+  recordEventHighestScore,
 }

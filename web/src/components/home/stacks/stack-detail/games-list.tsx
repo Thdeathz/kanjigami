@@ -8,6 +8,8 @@ type Props = {
 }
 
 export default function GamesList({ games }: Props) {
+  if (games.length === 0) return null
+
   return (
     <Panel theme="secondary">
       <ScrollArea>

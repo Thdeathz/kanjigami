@@ -3,9 +3,19 @@
 import { revalidateTag } from 'next/cache'
 
 import { ApiResponse, PaginationApiResponse } from '@/@types'
-import { IKanjiDetail, ISearchStackResult, IStack, IStackDetail, IWordDetail } from '@/@types/stack'
+import {
+  ICreateStackRequest,
+  IGameStackRequest,
+  IKanjiDetail,
+  ISearchStackResult,
+  IStack,
+  IStackDetail,
+  IWordDetail
+} from '@/@types/stack'
 import fetchBase from '@/lib/fetch-base'
 import { makeEndpoint } from '@/lib/utils'
+
+import { auth } from '../auth'
 
 type GetAllStacksProps = {
   pageParam?: number
@@ -63,7 +73,7 @@ export const getKanjiDetail = async (kanji: string) => {
 export const adminGetAllStacks = async (pageParam?: string) => {
   const response = await fetchBase<PaginationApiResponse<IStack[]>>({
     method: 'GET',
-    endpoint: makeEndpoint('/stacks', { page: pageParam }),
+    endpoint: makeEndpoint('/stacks/author', { page: pageParam }),
     tags: ['stacks']
   })
 
@@ -86,6 +96,44 @@ export const followStack = async (id: string) => {
   const response = await fetchBase<ApiResponse<string>>({
     method: 'POST',
     endpoint: `/stacks/${id}/follow`
+  })
+
+  revalidateTag('stacks')
+
+  return response?.data
+}
+
+export const adminCreateStack = async (data: FormData) => {
+  const response = await fetchBase<ApiResponse<string>>({
+    method: 'POST',
+    endpoint: '/stacks',
+    body: data
+  })
+
+  revalidateTag('stacks')
+
+  return response?.data
+}
+
+export const getStackDetailToEdit = async (slug: string) => {
+  const session = await auth()
+
+  if (!session) return null
+
+  const response = await fetchBase<ApiResponse<ICreateStackRequest>>({
+    method: 'GET',
+    endpoint: `/stacks/${slug}/edit`,
+    noCache: true
+  })
+
+  return response?.data
+}
+
+export const editGameStack = async (slug: string, data: IGameStackRequest[]) => {
+  const response = await fetchBase<ApiResponse<string>>({
+    method: 'POST',
+    endpoint: `/stacks/${slug}/game`,
+    body: JSON.stringify(data)
   })
 
   revalidateTag('stacks')

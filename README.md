@@ -1,4 +1,6 @@
-# Next-express starter template
+# Kanjigami
+
+Learn kanji through games and battles.
 
 ## Tech stacks
 

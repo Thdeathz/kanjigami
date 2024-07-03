@@ -19,7 +19,7 @@ function Card({ word, onClick }: Props) {
       className={`card relative cursor-pointer active:scale-95 ${word.isVisible ? '' : 'invisible'}`}
       onClick={onClick}
     >
-      <div className="card-back aspect-ratio absolute h-full w-full rounded-lg bg-white">
+      <div className="card-front aspect-ratio absolute h-full w-full rounded-lg bg-white">
         {word.type === 'image' && (
           <div className="relative h-full w-full">
             <Image
@@ -41,7 +41,7 @@ function Card({ word, onClick }: Props) {
         )}
       </div>
 
-      <div className="card-front aspect-ratio absolute h-full w-full">
+      <div className="card-back aspect-ratio absolute h-full w-full">
         <Image
           src="/images/lock.png"
           alt="bg"

@@ -5,7 +5,6 @@ import StacksTable from '@/components/admin/stacks/stacks-table'
 import PageHeader from '@/components/home/page-header'
 import Loading from '@/components/loading'
 import { Button } from '@/components/ui/button'
-import { Panel } from '@/components/ui/card'
 
 type Props = {
   searchParams: {
@@ -23,9 +22,7 @@ export default function AdminStacksPage({ searchParams }: Props) {
       </PageHeader>
 
       <Suspense key={page} fallback={<Loading className="text-4xl" />}>
-        <Panel>
-          <StacksTable page={page} />
-        </Panel>
+        <StacksTable page={page} />
       </Suspense>
     </div>
   )

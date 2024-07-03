@@ -25,7 +25,7 @@ export default async function MyBattle({ searchParams }: Props) {
     <div className="space-y-8 sm:space-y-12">
       <PageHeader title="My battles" description="My battle which i had created" />
 
-      <SectionDivider title="Thumbnail" />
+      <SectionDivider title="Battles" />
 
       <Suspense key={page} fallback={<Loading className="text-4xl" />}>
         <BattlesTable page={page} />
