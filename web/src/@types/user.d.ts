@@ -14,6 +14,7 @@ export interface IUserData {
   image: string
   score: number
   rank?: IUserRank
+  state?: 'NORMAL' | 'PLUS' | 'BANNED'
 }
 
 export interface IUserStats {

@@ -4,7 +4,7 @@ import { cva } from 'class-variance-authority'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 import { BsStack, BsTrophyFill } from 'react-icons/bs'
-import { FaChartArea, FaHome, FaUser } from 'react-icons/fa'
+import { FaChartArea, FaHome, FaUser, FaUsers } from 'react-icons/fa'
 import { RiSettings3Fill, RiSwordFill } from 'react-icons/ri'
 import { useScreen } from 'usehooks-ts'
 
@@ -70,6 +70,7 @@ export function AdminSidebarMenu() {
       <SideSection title="Setting">
         <SideLink link="/admin/battles" icon={<RiSwordFill />} title="Battle" />
         <SideLink link="/admin/stacks" icon={<BsStack />} title="Stack" />
+        <SideLink link="/admin/users" icon={<FaUsers />} title="User" />
       </SideSection>
     </div>
   )

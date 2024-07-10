@@ -1,6 +1,8 @@
-import { UserState } from '@prisma/client'
+import { ReportType, UserState } from '@prisma/client'
 import bcrypt from 'bcrypt'
 import { StatusCodes } from 'http-status-codes'
+
+import { PaginationRequest } from '../@types'
 
 import prisma from '@/apis/databases/init.prisma'
 import gameLogService from '@/apis/services/game-log.service'
@@ -41,19 +43,31 @@ const getUserById = async (id: string) => {
   return result
 }
 
-const getAllUsers = async () => {
-  const result = await prisma.user.findMany({
+const getAllUsers = async ({ page, offset }: PaginationRequest) => {
+  const total = await prisma.user.count()
+
+  if (total === 0) return { total, users: [] }
+
+  const users = await prisma.user.findMany({
+    skip: (page - 1) * offset,
+    take: offset,
     select: {
       id: true,
       email: true,
       name: true,
       role: true,
+      state: true,
+      image: true,
+      score: true,
     },
   })
 
-  if (!result) throw new HttpError(StatusCodes.NOT_FOUND, 'Users not found')
+  if (!users) throw new HttpError(StatusCodes.NOT_FOUND, 'Users not found')
 
-  return result
+  return {
+    total,
+    users,
+  }
 }
 
 const checkDuplicateEmail = async (email: string, name: string) => {
@@ -211,6 +225,24 @@ const searchUserByUsername = async (username: string) => {
   })
 }
 
+const createUserReport = async (comment: string) => {
+  const admin = await prisma.user.findFirst({
+    where: {
+      role: 'ADMIN',
+    },
+  })
+
+  if (!admin) throw new HttpError(StatusCodes.NOT_FOUND, 'Admin not found')
+
+  return await prisma.report.create({
+    data: {
+      type: ReportType.GENERAL,
+      userId: admin.id,
+      description: comment,
+    },
+  })
+}
+
 export default {
   getUserByEmail,
   getUserById,
@@ -224,4 +256,5 @@ export default {
   updateUserAvatar,
   updateUserPlan,
   searchUserByUsername,
+  createUserReport,
 }

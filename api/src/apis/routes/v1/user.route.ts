@@ -2,6 +2,7 @@ import { UserRole } from '@prisma/client'
 import { Router } from 'express'
 
 import {
+  createUserReport,
   getAllUsers,
   getCurrentUserData,
   getUserProfile,
@@ -10,6 +11,7 @@ import {
   updateUsername,
 } from '@/apis/controllers/user.controller'
 import { checkHasRole } from '@/apis/middlewares/check-role'
+import limitRequest from '@/apis/middlewares/request-limiter'
 import { verifyAccessToken } from '@/apis/middlewares/verify-jwt'
 import upload from '@/configs/init.multer'
 
@@ -26,5 +28,7 @@ router.route('/me').get(verifyAccessToken, getCurrentUserData)
 router.route('/username').put(verifyAccessToken, updateUsername)
 
 router.route('/avatar').put(verifyAccessToken, upload.single('file'), updateUserAvatar)
+
+router.route('/report').post(limitRequest(3), createUserReport)
 
 export default router
