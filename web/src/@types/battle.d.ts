@@ -48,6 +48,7 @@ export interface ITopUser {
     id: string
     image: string
     name: string
+    isPlus?: boolean
   }
   point: number
   time: string

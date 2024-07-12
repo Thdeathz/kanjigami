@@ -42,7 +42,7 @@ export default function SideLeaderboardItem({ top = 'default', topUser }: SideLe
 
   return (
     <motion.div className={cn(sideLeaderboardItemVariants({ top }))} variants={grid.item()}>
-      <UserAvatar src={topUser.user.image} alt={topUser.user.name} plus />
+      <UserAvatar src={topUser.user.image} alt={topUser.user.name} plus={topUser.user.isPlus} />
 
       <div className="leading-[18px]">
         <div className="flex gap-1">
