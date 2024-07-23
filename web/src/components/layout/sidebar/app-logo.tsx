@@ -11,6 +11,7 @@ export default function AppLogo() {
         alt="app-icon"
         width="28"
         height="28"
+        priority
         className="aspect-square group-hover:invert"
       />
 

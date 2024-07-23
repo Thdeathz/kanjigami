@@ -2,8 +2,6 @@ import type { RequestHandler } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
 import { JwtPayload } from '@/apis/@types/auth'
-import { CACHE_KEY } from '@/apis/enum/cache-key'
-import redisService from '@/apis/services/redis.service'
 import uploadService from '@/apis/services/upload.service'
 import userService from '@/apis/services/user.service'
 import makeResponse from '@/apis/utils/make-response'
@@ -14,14 +12,20 @@ import makeResponse from '@/apis/utils/make-response'
  * @access Private
  */
 export const getAllUsers: RequestHandler = async (req, res) => {
-  let users = await redisService.hGet(CACHE_KEY.USERS, { type: 'list' })
+  const page = parseInt(<string>req.query.page) || 1
+  const offset = parseInt(<string>req.query.offset) || 10
+  // let users = await redisService.hGet(CACHE_KEY.USERS, { type: 'list' })
 
-  if (!users) {
-    users = await userService.getAllUsers()
-    await redisService.hSet(CACHE_KEY.USERS, { type: 'list' }, users)
-  }
+  // if (!users) {
+  //   users = await userService.getAllUsers()
+  //   await redisService.hSet(CACHE_KEY.USERS, { type: 'list' }, users)
+  // }
 
-  return res.status(StatusCodes.OK).json(makeResponse.defaultResponse('Get all users success', StatusCodes.OK, users))
+  const { total, users } = await userService.getAllUsers({ page, offset })
+
+  return res
+    .status(StatusCodes.OK)
+    .json(makeResponse.pagination('Get all users success', StatusCodes.OK, users, total, offset, page))
 }
 
 /**
@@ -101,4 +105,18 @@ export const searchUserByUsername: RequestHandler = async (req, res) => {
   return res
     .status(StatusCodes.OK)
     .json(makeResponse.defaultResponse('Search user by username success', StatusCodes.OK, data))
+}
+
+export const createUserReport: RequestHandler = async (req, res) => {
+  const comment = req.body.comment as string
+
+  if (!comment) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json(makeResponse.defaultResponse('Comment is required', StatusCodes.BAD_REQUEST))
+  }
+
+  await userService.createUserReport(comment)
+
+  return res.status(StatusCodes.OK).json(makeResponse.defaultResponse('Create user report success', StatusCodes.OK))
 }

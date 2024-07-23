@@ -6,6 +6,7 @@ import './fonts.css'
 import './colors.css'
 import './custom.css'
 // import './fonts'
+import GoogleAnalytics from '@/components/google-analytics'
 import JsonLd from '@/components/json-ld'
 import Footer from '@/components/layout/footer'
 import Navbar from '@/components/layout/navbar'
@@ -16,7 +17,7 @@ const APP_NAME = 'Kanjigami'
 const APP_DEFAULT_TITLE = 'Kanjigami'
 const APP_TITLE_TEMPLATE = '%s | Kanjigami'
 const APP_DESCRIPTION =
-  '⚔️ 漢字ガミー Learn Japanese kanji through an engaging, game-based platform. Master kanji characters with interactive lessons, fun challenges, and community support. Perfect for all skill levels, Kanjigami makes learning Japanese kanji an adventure!'
+  '⚔️ 漢字ガミー Learn Japanese kanji through game . Master kanji characters with interactive lessons, fun challenges. Kanjigami makes learning Japanese kanji an adventure!'
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
@@ -82,6 +83,8 @@ export default function RootLayout({
         </Providers>
 
         <JsonLd data={structuredData} />
+
+        <GoogleAnalytics />
       </body>
     </html>
   )

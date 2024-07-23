@@ -24,7 +24,7 @@ export default function HomeSection({ title, description, icon, viewButton, clas
           )}
 
           <div className="flex w-full flex-col items-start justify-between">
-            <h2 className="text-2xl font-semibold leading-[1.4] text-default-heading">{title}</h2>
+            <h1 className="text-2xl font-semibold leading-[1.4] text-default-heading">{title}</h1>
             {description && (
               <p className="text-base font-medium leading-[1.5] text-default-text-light">{description}</p>
             )}

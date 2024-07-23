@@ -35,6 +35,9 @@ COPY --from=builder --chown=expressjs:nodejs /app/dist ./
 COPY --from=builder --chown=expressjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=expressjs:nodejs /app/tsconfig.json ./
 
+# Copy mail template
+COPY --from=builder --chown=expressjs:nodejs /app/src/templates/verify-email.template.html ./src/templates/verify-email.template.html
+
 USER expressjs
 
 EXPOSE 3500

@@ -36,7 +36,6 @@ export default function Thumbnail({ thumbnails }: Props) {
                 alt={image.alt}
                 width={1920}
                 height={1080}
-                priority
                 className="aspect-video w-full rounded-lg object-cover lg:h-[30rem]"
               />
             </CarouselItem>

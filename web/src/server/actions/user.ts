@@ -2,7 +2,7 @@
 
 import { revalidateTag } from 'next/cache'
 
-import { ApiResponse } from '@/@types'
+import { ApiResponse, PaginationApiResponse } from '@/@types'
 import { IUserInfo } from '@/@types/auth'
 import { IUser, IUserData, IUserProfile } from '@/@types/user'
 import fetchBase from '@/lib/fetch-base'
@@ -79,6 +79,29 @@ export const searchUserByUsername = async (username: string) => {
   const response = await fetchBase<ApiResponse<IUserData[]>>({
     method: 'GET',
     endpoint: `/users/search?username=${username}`
+  })
+
+  return response?.data
+}
+
+export const adminGetAllUsers = async (page: string) => {
+  const response = await fetchBase<PaginationApiResponse<IUserData[]>>({
+    method: 'GET',
+    endpoint: `/users?page=${page}`,
+    noCache: true
+  })
+
+  return {
+    data: response?.data,
+    pagination: response?.pagination
+  }
+}
+
+export const addNewReport = async (comment: string) => {
+  const response = await fetchBase<ApiResponse<IUserData[]>>({
+    method: 'POST',
+    endpoint: '/users/report',
+    body: JSON.stringify({ comment })
   })
 
   return response?.data

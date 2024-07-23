@@ -56,6 +56,7 @@ export const getBattleTopUser = (joinedUsers: IJoinedUser[]) =>
     }))
     .sort((a, b) => b.point - a.point && a.time - b.time)
     .slice(0, 15)
+    .reverse()
 
 const handleBattleJoin = async (
   socket: Socket,
